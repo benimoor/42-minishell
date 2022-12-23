@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/08 16:33:14 by ergrigor          #+#    #+#             */
-/*   Updated: 2022/12/21 04:39:46 by ergrigor         ###   ########.fr       */
+/*   Updated: 2022/12/23 17:26:56 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@
 # include <stdio.h>
 # include <errno.h>
 # include <stdlib.h>
+# include <sys/wait.h>
+# include <fcntl.h>
 # include <limits.h>
 # include <unistd.h>
 # include "../libft/libft.h"
@@ -72,6 +74,13 @@ typedef struct s_env
 	struct s_env	*next;
 	struct s_env	*prev;
 }					t_env;
+
+int	hd_count;
+
+//here doc
+char	*mdn_norm(t_token *token, int flag1, int *flag, char **res);
+char	*make_doc_name(t_token *token, int *flag);
+int	hd_maker(t_token *token);
 //tokenization
 int			first_checker(char *cmd_line);
 int			*tokenization(char *cmd_line);
