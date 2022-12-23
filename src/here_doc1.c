@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/23 16:37:57 by ergrigor          #+#    #+#             */
-/*   Updated: 2022/12/23 18:10:01 by ergrigor         ###   ########.fr       */
+/*   Updated: 2022/12/23 22:31:14 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,20 +68,69 @@ char	*get_doc_name()
 	char	*name;
 
 	index = ft_itoa(hd_count);
-	name = ft_strdup("/tmp/mini_hd");
+	name = ft_strdup("/tmp/.mini_hd");
 	name = ft_free_strjoin(name, index);
 	free(index);
 	return (name);
 }
 
+int	no_var(char *line, size_t len)
+{
+	int	i;
+
+	i = 0;
+	while (line[i] && i < len)
+	{
+		if (line[i] == '$')
+		{
+			return (1);
+		}
+		i++;
+	}
+	return (0);
+}
+
+char	*remake_var_line(char *line, int len)
+{
+	int		i;
+	int		j;
+	char	*tmp;
+	char	*str;
+
+	i = 0;
+	str = ft_strdup("");
+	while (line[i] && i < len)
+	{
+		j = i;
+		while (line[i] && line[i] != '$')
+			i++;
+		if (i != 0)
+		{
+			tmp = ft_substr(line, j, i);
+			str = ft_free_strjoin(str, tmp);
+			free(tmp);
+		}
+		if (line[i] == '$')
+		{
+			tmp = get_env_value(env, line, &i);
+			str = ft_free_strjoin(str, tmp);
+			free(tmp);
+		}
+	}
+	return(str);
+}
+
 void put_in_file(char *line, int fd, int flag, size_t len)
 {
-	
-	if (flag == 0)
+	char	*new_line;
+
+	if (flag == 1 || (flag == 0 && no_var(line, ft_strlen(line)) == 0))
 		write(fd, line, len);
 	else
 	{
-		
+		new_line = remake_var_line(line, ft_strlen(line));
+		write(fd, new_line, ft_strlen(new_line));
+		free(new_line);
 	}
 }
 
@@ -104,6 +153,7 @@ void	make_doc(char *doc, int flag)
 			if (ft_strlen(line) != ft_strlen(doc)
 				&& ft_strncmp(line, doc, ft_strlen(line)) != 0)
 			{
+				printf("%d\n", flag);
 				line = ft_free_strjoin(line, "\n");
 				put_in_file(line, file, flag, ft_strlen(line));
 				free(line);

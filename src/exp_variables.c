@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 19:40:45 by ergrigor          #+#    #+#             */
-/*   Updated: 2022/11/14 15:17:09 by ergrigor         ###   ########.fr       */
+/*   Updated: 2022/12/23 22:33:54 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -219,24 +219,20 @@ char	*get_env_value(t_env *env, char *str, int *i)
 
 	j = *i;
 	ptr = env;
-	while (str[j] && str[j] != ' ' && str[j] != '\0' && str[j] != '\'')
+	while (str[j] && str[j] != ' ' && str[j] != '\0' && str[j] != '\''
+		&& str[j] != '"' && str[j] != '\n')
 		j++;
 	int a = *i + 1;
 	tmp = ft_substr(str, a, (j - (*i) - 1));
-	
-	//printf("\n\n%s\n\n", tmp);
 	*i = j;
 	while (ptr)
 	{
-		if (ft_strcmp(ptr->val_name, tmp) == 0)
+		if (ft_strncmp(ptr->val_name, tmp, ft_strlen(tmp)) == 0
+			&& ft_strlen(ptr->val_name) == ft_strlen(tmp))
 			break ;
-		if (ptr->next == NULL)
-		{
-			ptr = NULL;
-			break ;
-		}
 		ptr = ptr->next;
 	}
+	// printf("\n\n%s\n\n", ptr->val_value);
 	if (ptr == NULL)
 		return (free(tmp), ft_strdup(""));
 	return (free(tmp), ft_strdup(ptr->val_value));

@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/08 16:30:31 by ergrigor          #+#    #+#             */
-/*   Updated: 2022/12/23 17:34:19 by ergrigor         ###   ########.fr       */
+/*   Updated: 2022/12/23 22:17:20 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,7 +182,6 @@ int	main(int argc, char **argv, char **_env)
 {
 	char		*cmd_line;
 	int			status;
-	t_env		*env;
 	t_token		*tokens;
 
 	env = pars_env(_env);
@@ -192,11 +191,11 @@ int	main(int argc, char **argv, char **_env)
 		if (empty_line(cmd_line) != 1)
 			add_history(cmd_line);
 		tokens = lexer(cmd_line);
+		//print_env(env);
 		status = lex_analyser(tokens);
 		// if (status == 0)
 		// 	printf("xosqi toshnia\n");
 		// tokenprint(tokens);
-		//print_env(env);
 		// lexer(&all_cmd);
 	}
 	return (0);
