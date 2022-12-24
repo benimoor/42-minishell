@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/08 16:33:14 by ergrigor          #+#    #+#             */
-/*   Updated: 2022/12/23 21:56:49 by ergrigor         ###   ########.fr       */
+/*   Updated: 2022/12/24 19:12:16 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include "tokens.h"
 # include <stdio.h>
 # include <errno.h>
+# include <signal.h>
 # include <stdlib.h>
 # include <sys/wait.h>
 # include <fcntl.h>
@@ -77,11 +78,13 @@ typedef struct s_env
 
 int	hd_count;
 t_env		*env;
+char	*dollar;
 
 //here doc
 char	*mdn_norm(t_token *token, int flag1, int *flag, char **res);
 char	*make_doc_name(t_token *token, int *flag);
 int	hd_maker(t_token *token);
+char	*get_pid();
 //tokenization
 int			first_checker(char *cmd_line);
 int			*tokenization(char *cmd_line);

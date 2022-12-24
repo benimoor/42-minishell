@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/23 16:37:57 by ergrigor          #+#    #+#             */
-/*   Updated: 2022/12/23 22:31:14 by ergrigor         ###   ########.fr       */
+/*   Updated: 2022/12/24 21:47:36 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,13 +62,32 @@ char	*make_doc_name(t_token *token, int *flag)
 	return (NULL);
 }
 
+char	*get_pid()
+{
+	char	*name;
+	pid_t	pid;
+	int		status;
+
+	pid = fork();
+	if (pid == 0)
+		exit(0);
+	else
+	{
+		wait(&status);
+		name = ft_itoa((int)pid - 1);
+	}
+	return (name);
+}
+
 char	*get_doc_name()
 {
 	char	*index;
 	char	*name;
 
 	index = ft_itoa(hd_count);
-	name = ft_strdup("/tmp/.mini_hd");
+	name = ft_strdup("/tmp/.mini_hd_");
+	name = ft_free_strjoin(name, dollar);
+	name = ft_free_strjoin(name, "_");
 	name = ft_free_strjoin(name, index);
 	free(index);
 	return (name);
@@ -117,7 +136,7 @@ char	*remake_var_line(char *line, int len)
 			free(tmp);
 		}
 	}
-	return(str);
+	return (str);
 }
 
 void put_in_file(char *line, int fd, int flag, size_t len)
@@ -153,7 +172,6 @@ void	make_doc(char *doc, int flag)
 			if (ft_strlen(line) != ft_strlen(doc)
 				&& ft_strncmp(line, doc, ft_strlen(line)) != 0)
 			{
-				printf("%d\n", flag);
 				line = ft_free_strjoin(line, "\n");
 				put_in_file(line, file, flag, ft_strlen(line));
 				free(line);
@@ -166,6 +184,7 @@ void	make_doc(char *doc, int flag)
 			}
 		}
 		close(file);
+		exit(0);
 	}
 	else
 	{

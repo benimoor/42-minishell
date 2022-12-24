@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/08 16:30:31 by ergrigor          #+#    #+#             */
-/*   Updated: 2022/12/23 22:17:20 by ergrigor         ###   ########.fr       */
+/*   Updated: 2022/12/24 22:40:40 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,12 @@ int	lex_analyser(t_token *token)
 
 	ptr = token;
 	hd_count = 0;
+	if (ptr->type == PIPE || (ptr->type == SPACE_TK
+			&& ptr->next && ptr->next->type == PIPE))
+	{
+		printf ("PIPE Error\n");
+		return (1);
+	}
 	while (ptr)
 	{
 		if (ptr->type == DOUBLE_QUOTES)
@@ -95,7 +101,7 @@ int	lex_analyser(t_token *token)
 			else
 			{
 				printf("Error DBQT\n");
-				break ;
+				return (1);
 			}
 		}
 		else if (ptr->type == SINGLE_QUOTES)
@@ -113,7 +119,7 @@ int	lex_analyser(t_token *token)
 		else if (ptr->type == RED_INPUT || ptr->type == RED_OUTPUT
 			|| ptr->type == RED_OUTPUT_APP)
 		{
-			if (ptr->next->type == SPACE_TK)
+			if (ptr->next && ptr->next->type == SPACE_TK)
 				ptr = ptr->next;
 			if (ptr->next && ptr->next->type == DOUBLE_QUOTES)
 			{
@@ -122,13 +128,11 @@ int	lex_analyser(t_token *token)
 					ptr = ptr->next;
 				if (ptr == NULL)
 				{
-					printf("Error REDIRECTION ARG");
-					break ;
+					printf("Error REDIRECTION ARG\n");
+					return (1);
 				}
 				else
-					printf("Success\n");
 				ptr = ptr->next->next;
-				// sleep(10);
 			}
 			else if (ptr->next && ptr->next->type == SINGLE_QUOTES)
 			{
@@ -137,43 +141,47 @@ int	lex_analyser(t_token *token)
 					ptr = ptr->next;
 				if (ptr == NULL)
 				{
-					printf("Error REDIRECTION ARG");
-					break ;
+					printf("Error REDIRECTION ARG\n");
+					return (1);
 				}
-				else
-					printf("Success\n");
 				ptr = ptr->next;
 			}
 			else if (ptr->next && ptr->next->type == WORD)
 			{
 				ptr = ptr->next->next;
 			}
+			else
+			{
+				printf("Error REDIRECTION ARG\n");
+				return (1);
+			}
 		}
 		else if (ptr->type == WORD)
 		{
 			ptr = ptr->next;
-			printf("Success\n");
 		}
 		else if (ptr->type == HERE_DOC && hd_maker(ptr) == -1)
 			return (-1);
 		else if (ptr->type == PIPE)
 		{
 			ptr = ptr->next;
-			if (ptr->type == SPACE_TK)
+			if (ptr && ptr->type == SPACE_TK)
 				ptr = ptr->next;
 			if (!ptr || ptr->type == PIPE)
 			{
 				printf ("PIPE Error\n");
-				break ;
+				return (1);
 			}
-			else
-				printf("success");
 		}
-		else// if (ptr->type == SPACE_TK)
+		else if (ptr->type == SPACE_TK)
 		{
 			ptr = ptr->next;
 		}
-		
+		else
+		{
+			printf("ptr->type? %d\n", ptr->type);
+			ptr = ptr->next;
+		}	
 	}
 	return (0);
 }
@@ -185,6 +193,7 @@ int	main(int argc, char **argv, char **_env)
 	t_token		*tokens;
 
 	env = pars_env(_env);
+	dollar = get_pid();
 	while (1)
 	{
 		cmd_line = readline("Say - Hello myalmo > ");
@@ -193,8 +202,8 @@ int	main(int argc, char **argv, char **_env)
 		tokens = lexer(cmd_line);
 		//print_env(env);
 		status = lex_analyser(tokens);
-		// if (status == 0)
-		// 	printf("xosqi toshnia\n");
+		if (status == 0)
+			printf("xosqi toshnia\n");
 		// tokenprint(tokens);
 		// lexer(&all_cmd);
 	}
