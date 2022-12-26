@@ -1,0 +1,26 @@
+/usr/bin/ld: objs/cmd_get_name_args.o:(.bss+0x0): multiple definition of `hd_count'; objs/cmd_command_init.o:(.bss+0x0): first defined here
+/usr/bin/ld: objs/cmd_get_name_args.o:(.bss+0x8): multiple definition of `env'; objs/cmd_command_init.o:(.bss+0x8): first defined here
+/usr/bin/ld: objs/env.o:(.bss+0x0): multiple definition of `hd_count'; objs/cmd_command_init.o:(.bss+0x0): first defined here
+/usr/bin/ld: objs/env.o:(.bss+0x8): multiple definition of `env'; objs/cmd_command_init.o:(.bss+0x8): first defined here
+/usr/bin/ld: objs/env_helpers.o:(.bss+0x0): multiple definition of `hd_count'; objs/cmd_command_init.o:(.bss+0x0): first defined here
+/usr/bin/ld: objs/env_helpers.o:(.bss+0x8): multiple definition of `env'; objs/cmd_command_init.o:(.bss+0x8): first defined here
+/usr/bin/ld: objs/exp_variables.o:(.bss+0x0): multiple definition of `hd_count'; objs/cmd_command_init.o:(.bss+0x0): first defined here
+/usr/bin/ld: objs/exp_variables.o:(.bss+0x8): multiple definition of `env'; objs/cmd_command_init.o:(.bss+0x8): first defined here
+/usr/bin/ld: objs/here_doc1.o:(.bss+0x0): multiple definition of `hd_count'; objs/cmd_command_init.o:(.bss+0x0): first defined here
+/usr/bin/ld: objs/here_doc1.o:(.bss+0x8): multiple definition of `env'; objs/cmd_command_init.o:(.bss+0x8): first defined here
+/usr/bin/ld: objs/lexer.o:(.bss+0x0): multiple definition of `hd_count'; objs/cmd_command_init.o:(.bss+0x0): first defined here
+/usr/bin/ld: objs/lexer.o:(.bss+0x8): multiple definition of `env'; objs/cmd_command_init.o:(.bss+0x8): first defined here
+/usr/bin/ld: objs/main.o:(.bss+0x0): multiple definition of `hd_count'; objs/cmd_command_init.o:(.bss+0x0): first defined here
+/usr/bin/ld: objs/main.o:(.bss+0x8): multiple definition of `env'; objs/cmd_command_init.o:(.bss+0x8): first defined here
+/usr/bin/ld: objs/_test_cmd.o:(.bss+0x0): multiple definition of `hd_count'; objs/cmd_command_init.o:(.bss+0x0): first defined here
+/usr/bin/ld: objs/_test_cmd.o:(.bss+0x8): multiple definition of `env'; objs/cmd_command_init.o:(.bss+0x8): first defined here
+/usr/bin/ld: objs/tok_checker.o:(.bss+0x0): multiple definition of `hd_count'; objs/cmd_command_init.o:(.bss+0x0): first defined here
+/usr/bin/ld: objs/tok_checker.o:(.bss+0x8): multiple definition of `env'; objs/cmd_command_init.o:(.bss+0x8): first defined here
+/usr/bin/ld: objs/tok_quot_tokenizer.o:(.bss+0x0): multiple definition of `hd_count'; objs/cmd_command_init.o:(.bss+0x0): first defined here
+/usr/bin/ld: objs/tok_quot_tokenizer.o:(.bss+0x8): multiple definition of `env'; objs/cmd_command_init.o:(.bss+0x8): first defined here
+/usr/bin/ld: objs/tok_tokenizer.o:(.bss+0x0): multiple definition of `hd_count'; objs/cmd_command_init.o:(.bss+0x0): first defined here
+/usr/bin/ld: objs/tok_tokenizer.o:(.bss+0x8): multiple definition of `env'; objs/cmd_command_init.o:(.bss+0x8): first defined here
+/usr/bin/ld: objs/utils1.o:(.bss+0x0): multiple definition of `hd_count'; objs/cmd_command_init.o:(.bss+0x0): first defined here
+/usr/bin/ld: objs/utils1.o:(.bss+0x8): multiple definition of `env'; objs/cmd_command_init.o:(.bss+0x8): first defined here
+collect2: error: ld returned 1 exit status
+make: *** [Makefile:26: minishell] Error 1

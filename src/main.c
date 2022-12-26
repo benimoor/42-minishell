@@ -6,11 +6,15 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/08 16:30:31 by ergrigor          #+#    #+#             */
-/*   Updated: 2022/12/24 22:40:40 by ergrigor         ###   ########.fr       */
+/*   Updated: 2022/12/26 12:00:00 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.h"
+
+t_env	*env;
+char	*dollar;
+int		hd_count;
 
 void	print_env(t_env *env)
 {
@@ -76,6 +80,50 @@ void	tokenprint(t_token *tokens)
 	printf("--------------------\n");
 }
 
+int	hd_count_check(t_token * token)
+{
+	int		count;
+	int		flag;
+	t_token	*ptr;
+
+	count = 0;
+	ptr = token;
+	while (ptr)
+	{
+		if (ptr && ptr->type == HERE_DOC)
+		{
+			if (ptr->next && ptr->next->type == SPACE_TK)
+				ptr = ptr->next->next;
+			else
+				ptr = ptr->next;
+			if (!ptr)
+				return (count);
+			else if (ptr->type == WORD)
+			{
+				count++;
+				ptr = ptr->next;
+			}
+			else if (ptr->type == DOUBLE_QUOTES || ptr->type == SINGLE_QUOTES)
+			{
+				flag = ptr->type;
+				ptr = ptr->next;
+				while (ptr && ptr->type != flag)
+					ptr = ptr->next;
+				if (!ptr)
+					return (count);
+				else
+					count++;
+				ptr = ptr->next;
+			}
+			else
+				return (count);
+		}
+		else
+			ptr = ptr->next;
+	}
+	return (count);
+}
+
 int	lex_analyser(t_token *token)
 {
 	t_token	*ptr;
@@ -87,6 +135,11 @@ int	lex_analyser(t_token *token)
 			&& ptr->next && ptr->next->type == PIPE))
 	{
 		printf ("PIPE Error\n");
+		return (1);
+	}
+	if (hd_count_check(ptr) > 16)
+	{
+		printf ("maximum here-document count exceeded\n");
 		return (1);
 	}
 	while (ptr)

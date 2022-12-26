@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/08 16:33:14 by ergrigor          #+#    #+#             */
-/*   Updated: 2022/12/24 19:12:16 by ergrigor         ###   ########.fr       */
+/*   Updated: 2022/12/26 09:57:15 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,9 +76,9 @@ typedef struct s_env
 	struct s_env	*prev;
 }					t_env;
 
-int	hd_count;
-t_env		*env;
-char	*dollar;
+extern int	hd_count;
+extern t_env		*env;
+extern char	*dollar;
 
 //here doc
 char	*mdn_norm(t_token *token, int flag1, int *flag, char **res);
