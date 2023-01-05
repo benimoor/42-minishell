@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/08 16:33:14 by ergrigor          #+#    #+#             */
-/*   Updated: 2022/12/26 09:57:15 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/01/05 19:16:08 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,20 +37,22 @@ typedef struct s_command
 	int		in;
 	int		out;
 	int		err;
-	int		hd;
-	char	**hd_words;
 }			t_command;
 
-typedef struct s_element
+typedef struct s_element	t_element;
+
+struct s_element
 {
 	t_command	*command;
 	int			delimiter;
 	int			type;
-}				t_element;
+	t_element	*next;
+}	;
 
 // token types -> | & ; () < > SPACE TAB NEWLINE  {1..8}
 // int type 0 -> is word, int type{1..8} is token
-typedef struct s_token	t_token;
+typedef struct s_token		t_token;
+
 struct s_token
 {
 	int				len;
@@ -70,21 +72,30 @@ typedef struct s_cmd
 
 typedef struct s_env
 {
+	int				hidden;
 	char			*val_name;
 	char			*val_value;
 	struct s_env	*next;
 	struct s_env	*prev;
 }					t_env;
 
-extern int	hd_count;
-extern t_env		*env;
-extern char	*dollar;
+typedef struct s_global
+{
+	t_env		*env;	
+	t_token		*token;
+	t_element	*next;
+	int			fd_index;
+	int			all_fd[OPEN_MAX];
+	int			hd_count;
+}	t_global;
 
+extern t_global	*global;
 //here doc
 char	*mdn_norm(t_token *token, int flag1, int *flag, char **res);
 char	*make_doc_name(t_token *token, int *flag);
-int	hd_maker(t_token *token);
+int		hd_maker(t_token *token);
 char	*get_pid();
+
 //tokenization
 int			first_checker(char *cmd_line);
 int			*tokenization(char *cmd_line);
@@ -112,8 +123,9 @@ char	*change_var_cmd(char *str, int *i, t_env *env);
 char	*get_env_value(t_env *env, char *str, int *i);
 
 //env 
-t_env		*pars_env(char **env);
-char		**get_arr_env(t_env *l_env);
+void	add_hiden_values(t_env *env_new);
+t_env	*pars_env(char **env);
+char	**get_arr_env(t_env *l_env);
 
 //expansion
 void	get_variables(t_env *env, t_element **elem);

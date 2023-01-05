@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CMakeRunConfigurationManager" shouldGenerate="true" shouldDeleteObsolete="true" buildAllGenerated="false">
+    <generated />
+  </component>
+  <component name="CMakeSettings">
+    <configurations>
+      <configuration PROFILE_NAME="Debug" CONFIG_NAME="Debug" />
+    </configurations>
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="9f416f1c-ec05-451d-9a39-4e2075eab98d" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/readline/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/readline/Makefile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/readline/bind.o" beforeDir="false" afterPath="$PROJECT_DIR$/readline/bind.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/readline/callback.o" beforeDir="false" afterPath="$PROJECT_DIR$/readline/callback.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/readline/colors.o" beforeDir="false" afterPath="$PROJECT_DIR$/readline/colors.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/readline/compat.o" beforeDir="false" afterPath="$PROJECT_DIR$/readline/compat.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/readline/complete.o" beforeDir="false" afterPath="$PROJECT_DIR$/readline/complete.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/readline/config.h" beforeDir="false" afterPath="$PROJECT_DIR$/readline/config.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/readline/config.log" beforeDir="false" afterPath="$PROJECT_DIR$/readline/config.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/readline/config.status" beforeDir="false" afterPath="$PROJECT_DIR$/readline/config.status" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/readline/display.o" beforeDir="false" afterPath="$PROJECT_DIR$/readline/display.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/readline/doc/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/readline/doc/Makefile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/readline/examples/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/readline/examples/Makefile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/readline/funmap.o" beforeDir="false" afterPath="$PROJECT_DIR$/readline/funmap.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/readline/histexpand.o" beforeDir="false" afterPath="$PROJECT_DIR$/readline/histexpand.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/readline/histfile.o" beforeDir="false" afterPath="$PROJECT_DIR$/readline/histfile.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/readline/history.o" beforeDir="false" afterPath="$PROJECT_DIR$/readline/history.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/readline/histsearch.o" beforeDir="false" afterPath="$PROJECT_DIR$/readline/histsearch.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/readline/input.o" beforeDir="false" afterPath="$PROJECT_DIR$/readline/input.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/readline/isearch.o" beforeDir="false" afterPath="$PROJECT_DIR$/readline/isearch.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/readline/keymaps.o" beforeDir="false" afterPath="$PROJECT_DIR$/readline/keymaps.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/readline/kill.o" beforeDir="false" afterPath="$PROJECT_DIR$/readline/kill.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/readline/libhistory.a" beforeDir="false" afterPath="$PROJECT_DIR$/readline/libhistory.a" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/readline/libreadline.a" beforeDir="false" afterPath="$PROJECT_DIR$/readline/libreadline.a" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/readline/macro.o" beforeDir="false" afterPath="$PROJECT_DIR$/readline/macro.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/readline/mbutil.o" beforeDir="false" afterPath="$PROJECT_DIR$/readline/mbutil.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/readline/misc.o" beforeDir="false" afterPath="$PROJECT_DIR$/readline/misc.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/readline/nls.o" beforeDir="false" afterPath="$PROJECT_DIR$/readline/nls.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/readline/parens.o" beforeDir="false" afterPath="$PROJECT_DIR$/readline/parens.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/readline/parse-colors.o" beforeDir="false" afterPath="$PROJECT_DIR$/readline/parse-colors.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/readline/readline.o" beforeDir="false" afterPath="$PROJECT_DIR$/readline/readline.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/readline/rltty.o" beforeDir="false" afterPath="$PROJECT_DIR$/readline/rltty.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/readline/search.o" beforeDir="false" afterPath="$PROJECT_DIR$/readline/search.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/readline/shell.o" beforeDir="false" afterPath="$PROJECT_DIR$/readline/shell.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/readline/shlib/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/readline/shlib/Makefile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/readline/shlib/bind.so" beforeDir="false" afterPath="$PROJECT_DIR$/readline/shlib/bind.so" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/readline/shlib/callback.so" beforeDir="false" afterPath="$PROJECT_DIR$/readline/shlib/callback.so" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/readline/shlib/colors.so" beforeDir="false" afterPath="$PROJECT_DIR$/readline/shlib/colors.so" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/readline/shlib/compat.so" beforeDir="false" afterPath="$PROJECT_DIR$/readline/shlib/compat.so" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/readline/shlib/complete.so" beforeDir="false" afterPath="$PROJECT_DIR$/readline/shlib/complete.so" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/readline/shlib/display.so" beforeDir="false" afterPath="$PROJECT_DIR$/readline/shlib/display.so" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/readline/shlib/funmap.so" beforeDir="false" afterPath="$PROJECT_DIR$/readline/shlib/funmap.so" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/readline/shlib/histexpand.so" beforeDir="false" afterPath="$PROJECT_DIR$/readline/shlib/histexpand.so" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/readline/shlib/histfile.so" beforeDir="false" afterPath="$PROJECT_DIR$/readline/shlib/histfile.so" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/readline/shlib/history.so" beforeDir="false" afterPath="$PROJECT_DIR$/readline/shlib/history.so" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/readline/shlib/histsearch.so" beforeDir="false" afterPath="$PROJECT_DIR$/readline/shlib/histsearch.so" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/readline/shlib/input.so" beforeDir="false" afterPath="$PROJECT_DIR$/readline/shlib/input.so" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/readline/shlib/isearch.so" beforeDir="false" afterPath="$PROJECT_DIR$/readline/shlib/isearch.so" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/readline/shlib/keymaps.so" beforeDir="false" afterPath="$PROJECT_DIR$/readline/shlib/keymaps.so" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/readline/shlib/kill.so" beforeDir="false" afterPath="$PROJECT_DIR$/readline/shlib/kill.so" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/readline/shlib/macro.so" beforeDir="false" afterPath="$PROJECT_DIR$/readline/shlib/macro.so" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/readline/shlib/mbutil.so" beforeDir="false" afterPath="$PROJECT_DIR$/readline/shlib/mbutil.so" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/readline/shlib/misc.so" beforeDir="false" afterPath="$PROJECT_DIR$/readline/shlib/misc.so" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/readline/shlib/nls.so" beforeDir="false" afterPath="$PROJECT_DIR$/readline/shlib/nls.so" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/readline/shlib/parens.so" beforeDir="false" afterPath="$PROJECT_DIR$/readline/shlib/parens.so" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/readline/shlib/parse-colors.so" beforeDir="false" afterPath="$PROJECT_DIR$/readline/shlib/parse-colors.so" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/readline/shlib/rltty.so" beforeDir="false" afterPath="$PROJECT_DIR$/readline/shlib/rltty.so" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/readline/shlib/search.so" beforeDir="false" afterPath="$PROJECT_DIR$/readline/shlib/search.so" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/readline/shlib/signals.so" beforeDir="false" afterPath="$PROJECT_DIR$/readline/shlib/signals.so" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/readline/shlib/terminal.so" beforeDir="false" afterPath="$PROJECT_DIR$/readline/shlib/terminal.so" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/readline/shlib/text.so" beforeDir="false" afterPath="$PROJECT_DIR$/readline/shlib/text.so" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/readline/shlib/tilde.so" beforeDir="false" afterPath="$PROJECT_DIR$/readline/shlib/tilde.so" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/readline/shlib/undo.so" beforeDir="false" afterPath="$PROJECT_DIR$/readline/shlib/undo.so" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/readline/shlib/util.so" beforeDir="false" afterPath="$PROJECT_DIR$/readline/shlib/util.so" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/readline/shlib/vi_mode.so" beforeDir="false" afterPath="$PROJECT_DIR$/readline/shlib/vi_mode.so" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/readline/shlib/xfree.so" beforeDir="false" afterPath="$PROJECT_DIR$/readline/shlib/xfree.so" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/readline/shlib/xmalloc.so" beforeDir="false" afterPath="$PROJECT_DIR$/readline/shlib/xmalloc.so" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/readline/signals.o" beforeDir="false" afterPath="$PROJECT_DIR$/readline/signals.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/readline/terminal.o" beforeDir="false" afterPath="$PROJECT_DIR$/readline/terminal.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/readline/text.o" beforeDir="false" afterPath="$PROJECT_DIR$/readline/text.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/readline/tilde.o" beforeDir="false" afterPath="$PROJECT_DIR$/readline/tilde.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/readline/undo.o" beforeDir="false" afterPath="$PROJECT_DIR$/readline/undo.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/readline/util.o" beforeDir="false" afterPath="$PROJECT_DIR$/readline/util.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/readline/vi_mode.o" beforeDir="false" afterPath="$PROJECT_DIR$/readline/vi_mode.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/readline/xfree.o" beforeDir="false" afterPath="$PROJECT_DIR$/readline/xfree.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/readline/xmalloc.o" beforeDir="false" afterPath="$PROJECT_DIR$/readline/xmalloc.o" afterDir="false" />
+    </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FUSProjectUsageTrigger">
+    <session id="2082133613">
+      <usages-collector id="statistics.lifecycle.project">
+        <counts>
+          <entry key="project.closed" value="2" />
+          <entry key="project.open.time.2" value="2" />
+          <entry key="project.opened" value="2" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.open">
+        <counts>
+          <entry key="Makefile" value="1" />
+          <entry key="c" value="2" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.open">
+        <counts>
+          <entry key="ObjectiveC" value="2" />
+          <entry key="PLAIN_TEXT" value="1" />
+        </counts>
+      </usages-collector>
+    </session>
+  </component>
+  <component name="FileEditorManager">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Makefile">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="480">
+              <caret line="32" column="20" selection-start-line="32" selection-start-column="20" selection-end-line="32" selection-end-column="20" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/lexer.c">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-3816" />
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main.c">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-1234" />
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsGulpfileManager">
+    <detection-done>true</detection-done>
+    <sorting>DEFINITION_ORDER</sorting>
+  </component>
+  <component name="ProjectFrameBounds">
+    <option name="x" value="324" />
+    <option name="y" value="47" />
+    <option name="width" value="1400" />
+    <option name="height" value="1000" />
+  </component>
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="minish" type="b2602c69:ProjectViewProjectNode" />
+              <item name="minish" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="minish" type="b2602c69:ProjectViewProjectNode" />
+              <item name="minish" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="Scope" />
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="9f416f1c-ec05-451d-9a39-4e2075eab98d" name="Default Changelist" comment="" />
+      <created>1672927176302</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1672927176302</updated>
+      <workItem from="1672927178320" duration="28000" />
+      <workItem from="1672927215446" duration="54000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="82000" />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="324" y="47" width="1400" height="1000" extended-state="0" />
+    <editor active="true" />
+    <layout>
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2533137" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Run" order="2" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Version Control" order="8" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Terminal" order="9" />
+      <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
+      <window_info anchor="right" id="make" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="Database" order="3" />
+    </layout>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/Makefile">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="480">
+          <caret line="32" column="20" selection-start-line="32" selection-start-column="20" selection-end-line="32" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/lexer.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-3816" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1234" />
+      </provider>
+    </entry>
+  </component>
+</project>

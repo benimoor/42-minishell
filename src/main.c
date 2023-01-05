@@ -6,15 +6,13 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/08 16:30:31 by ergrigor          #+#    #+#             */
-/*   Updated: 2022/12/26 12:00:00 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/01/05 19:05:39 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.h"
 
-t_env	*env;
-char	*dollar;
-int		hd_count;
+t_global	*global;
 
 void	print_env(t_env *env)
 {
@@ -130,7 +128,7 @@ int	lex_analyser(t_token *token)
 	int		res;
 
 	ptr = token;
-	hd_count = 0;
+	global->hd_count = 0;
 	if (ptr->type == PIPE || (ptr->type == SPACE_TK
 			&& ptr->next && ptr->next->type == PIPE))
 	{
@@ -243,22 +241,21 @@ int	main(int argc, char **argv, char **_env)
 {
 	char		*cmd_line;
 	int			status;
-	t_token		*tokens;
 
-	env = pars_env(_env);
-	dollar = get_pid();
+	global = ft_calloc(sizeof(t_global), 1);
+	global->env = pars_env(_env);
 	while (1)
 	{
 		cmd_line = readline("Say - Hello myalmo > ");
 		if (empty_line(cmd_line) != 1)
 			add_history(cmd_line);
-		tokens = lexer(cmd_line);
-		//print_env(env);
-		status = lex_analyser(tokens);
-		if (status == 0)
-			printf("xosqi toshnia\n");
-		// tokenprint(tokens);
-		// lexer(&all_cmd);
+		print_env(global->env);
+		// global->tokens = lexer(cmd_line);
+		// status = lex_analyser(tokens);
+		// if (status == 0)
+		// 	printf("xosqi toshnia\n");
+		// // tokenprint(tokens);
+		// // lexer(&all_cmd);
 	}
 	return (0);
 }

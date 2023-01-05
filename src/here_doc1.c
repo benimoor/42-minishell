@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/23 16:37:57 by ergrigor          #+#    #+#             */
-/*   Updated: 2022/12/24 21:47:36 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/01/05 19:04:56 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,17 +79,34 @@ char	*get_pid()
 	return (name);
 }
 
+char	*get_dollar()
+{
+	t_env	*tmp;
+
+	tmp = global->env;
+	while (tmp)
+	{
+		if (ft_strlen(tmp->val_name) == 1
+			&& ft_strncmp(tmp->val_name, "$", 1) == 0)
+			return (ft_strdup(tmp->val_name));
+		tmp = tmp->next;
+	}
+	return (NULL);
+}
 char	*get_doc_name()
 {
 	char	*index;
+	char	*tmp;
 	char	*name;
 
-	index = ft_itoa(hd_count);
+	tmp = get_dollar();
+	index = ft_itoa(global->hd_count);
 	name = ft_strdup("/tmp/.mini_hd_");
-	name = ft_free_strjoin(name, dollar);
+	name = ft_free_strjoin(name, tmp);
 	name = ft_free_strjoin(name, "_");
 	name = ft_free_strjoin(name, index);
 	free(index);
+	free(tmp);
 	return (name);
 }
 
@@ -131,7 +148,7 @@ char	*remake_var_line(char *line, int len)
 		}
 		if (line[i] == '$')
 		{
-			tmp = get_env_value(env, line, &i);
+			tmp = get_env_value(global->env, line, &i);
 			str = ft_free_strjoin(str, tmp);
 			free(tmp);
 		}
@@ -198,7 +215,7 @@ int	hd_maker(t_token *token)
 	char	*doc;
 	int		flag;
 
-	hd_count++;
+	global->hd_count++;
 	flag = 0;
 	if (token->next && token->next->type == SPACE_TK)
 		ptr = token->next->next;
@@ -207,19 +224,14 @@ int	hd_maker(t_token *token)
 	else
 	{
 		token = ptr;
-		printf("Syntax Error\n");
-		return -1;
+		return (ft_putstr_fd("Syntax Error\n", 2), -1);
 	}
 	doc = make_doc_name(ptr, &flag);
 	token = ptr;
 	if (doc != NULL)
 		make_doc(doc, flag);
-		// printf("%s\n", doc);÷
 	else
-	{
-		printf("Syntax Error\n");
-		return -1;
-	}
+		return (ft_putstr_fd("Syntax Error\n", 2), -1);
 	free(doc);
 	return (0);
 }
