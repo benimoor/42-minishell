@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/08 16:30:31 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/01/05 19:05:39 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/01/05 21:30:41 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ void	print_env(t_env *env)
 	ptr = env;
 	while (ptr)
 	{
-		printf("%s=%s\n", ptr->val_name, ptr->val_value);
+		if (ptr->hidden != 1)
+			printf("%s=%s\n", ptr->val_name, ptr->val_value);
 		ptr = ptr->next;
 	}
 }
@@ -128,18 +129,13 @@ int	lex_analyser(t_token *token)
 	int		res;
 
 	ptr = token;
+	global->fd_index = 3;
 	global->hd_count = 0;
 	if (ptr->type == PIPE || (ptr->type == SPACE_TK
 			&& ptr->next && ptr->next->type == PIPE))
-	{
-		printf ("PIPE Error\n");
-		return (1);
-	}
+		return (ft_putstr_fd("PIPE Error\n", 2), 1);
 	if (hd_count_check(ptr) > 16)
-	{
-		printf ("maximum here-document count exceeded\n");
-		return (1);
-	}
+		return (ft_putstr_fd("maximum here-document count exceeded\n", 2), 1);
 	while (ptr)
 	{
 		if (ptr->type == DOUBLE_QUOTES)
@@ -170,42 +166,8 @@ int	lex_analyser(t_token *token)
 		else if (ptr->type == RED_INPUT || ptr->type == RED_OUTPUT
 			|| ptr->type == RED_OUTPUT_APP)
 		{
-			if (ptr->next && ptr->next->type == SPACE_TK)
-				ptr = ptr->next;
-			if (ptr->next && ptr->next->type == DOUBLE_QUOTES)
-			{
-				ptr = ptr->next->next;
-				while (ptr->next && ptr->next->type != DOUBLE_QUOTES)
-					ptr = ptr->next;
-				if (ptr == NULL)
-				{
-					printf("Error REDIRECTION ARG\n");
-					return (1);
-				}
-				else
-				ptr = ptr->next->next;
-			}
-			else if (ptr->next && ptr->next->type == SINGLE_QUOTES)
-			{
-				ptr = ptr->next->next;
-				while (ptr && ptr->type != SINGLE_QUOTES)
-					ptr = ptr->next;
-				if (ptr == NULL)
-				{
-					printf("Error REDIRECTION ARG\n");
-					return (1);
-				}
-				ptr = ptr->next;
-			}
-			else if (ptr->next && ptr->next->type == WORD)
-			{
-				ptr = ptr->next->next;
-			}
-			else
-			{
-				printf("Error REDIRECTION ARG\n");
-				return (1);
-			}
+			if (make_open(&ptr) != 0)
+				return (-1);
 		}
 		else if (ptr->type == WORD)
 		{
@@ -230,6 +192,7 @@ int	lex_analyser(t_token *token)
 		}
 		else
 		{
+			printf("stuc?\n");
 			printf("ptr->type? %d\n", ptr->type);
 			ptr = ptr->next;
 		}	
@@ -244,16 +207,17 @@ int	main(int argc, char **argv, char **_env)
 
 	global = ft_calloc(sizeof(t_global), 1);
 	global->env = pars_env(_env);
+	//makefd();
 	while (1)
 	{
 		cmd_line = readline("Say - Hello myalmo > ");
 		if (empty_line(cmd_line) != 1)
 			add_history(cmd_line);
-		print_env(global->env);
-		// global->tokens = lexer(cmd_line);
-		// status = lex_analyser(tokens);
-		// if (status == 0)
-		// 	printf("xosqi toshnia\n");
+		//print_env(global->env);
+		global->tokens = lexer(cmd_line);
+		status = lex_analyser(global->tokens);
+		if (status == 0)
+			printf("xosqi toshnia\n");
 		// // tokenprint(tokens);
 		// // lexer(&all_cmd);
 	}

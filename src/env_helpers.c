@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 18:34:26 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/01/05 19:16:37 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/01/05 19:35:37 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,13 +57,13 @@ static char	*get_val(char *env_line)
 	return (value);
 }
 
-void	add_hiden_values(t_env *env_new)
+void	add_hidden_values(t_env **env_new)
 {
 	t_env	*list_env;
 	t_env	*env_start;
 
 	list_env = ft_calloc(sizeof(t_env), 1);
-	env_start = list_env;
+	env_start = *env_new;
 	list_env->hidden = 1;
 	list_env->val_name = ft_strdup("$");
 	list_env->val_value = get_pid();
@@ -72,9 +72,9 @@ void	add_hiden_values(t_env *env_new)
 	list_env->next->hidden = 1;
 	list_env->next->val_name = ft_strdup("?");
 	list_env->next->val_value = ft_itoa(0);
-	list_env->next->next = env_new;
-	list_env->next->next->prev = list_env->next;
-	env_new = list_env;
+	list_env->next->next = env_start;
+	env_start->prev = list_env->next;
+	*env_new = list_env;
 }
 
 //get the linked list from char** ENV
@@ -103,6 +103,6 @@ t_env	*pars_env(char **env)
 		list_env = list_env->next;
 		index++;
 	}
-	add_hidden_values(env_start);
+	add_hidden_values(&env_start);
 	return (env_start);
 }

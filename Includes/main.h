@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/08 16:33:14 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/01/05 19:16:08 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/01/05 21:39:03 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,19 +82,29 @@ typedef struct s_env
 typedef struct s_global
 {
 	t_env		*env;	
-	t_token		*token;
+	t_token		*tokens;
 	t_element	*next;
 	int			fd_index;
 	int			all_fd[OPEN_MAX];
 	int			hd_count;
 }	t_global;
 
+//jnjelu
+void	printlen(char *str, int len);
+
 extern t_global	*global;
+
+//expansion
+char	*remake_var_line(char *line, int len);
+
 //here doc
 char	*mdn_norm(t_token *token, int flag1, int *flag, char **res);
 char	*make_doc_name(t_token *token, int *flag);
 int		hd_maker(t_token *token);
 char	*get_pid();
+
+//open
+int	make_open(t_token **token);
 
 //tokenization
 int			first_checker(char *cmd_line);
@@ -123,7 +133,7 @@ char	*change_var_cmd(char *str, int *i, t_env *env);
 char	*get_env_value(t_env *env, char *str, int *i);
 
 //env 
-void	add_hiden_values(t_env *env_new);
+void	add_hidden_values(t_env **env_new);
 t_env	*pars_env(char **env);
 char	**get_arr_env(t_env *l_env);
 

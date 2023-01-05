@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/23 16:37:57 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/01/05 19:04:56 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/01/05 21:43:46 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,7 +138,7 @@ char	*remake_var_line(char *line, int len)
 	while (line[i] && i < len)
 	{
 		j = i;
-		while (line[i] && line[i] != '$')
+		while (line[i] && line[i] != '$' && i < len)
 			i++;
 		if (i != 0)
 		{
