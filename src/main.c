@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/08 16:30:31 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/01/05 21:30:41 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/01/05 23:09:14 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -213,11 +213,11 @@ int	main(int argc, char **argv, char **_env)
 		cmd_line = readline("Say - Hello myalmo > ");
 		if (empty_line(cmd_line) != 1)
 			add_history(cmd_line);
-		//print_env(global->env);
+		// print_env(global->env);
 		global->tokens = lexer(cmd_line);
 		status = lex_analyser(global->tokens);
 		if (status == 0)
-			printf("xosqi toshnia\n");
+			make_struct();
 		// // tokenprint(tokens);
 		// // lexer(&all_cmd);
 	}

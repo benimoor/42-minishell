@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/08 16:33:14 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/01/05 21:39:03 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/01/05 23:09:40 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ typedef struct s_global
 {
 	t_env		*env;	
 	t_token		*tokens;
-	t_element	*next;
+	t_element	*elem;
 	int			fd_index;
 	int			all_fd[OPEN_MAX];
 	int			hd_count;
@@ -96,6 +96,9 @@ extern t_global	*global;
 
 //expansion
 char	*remake_var_line(char *line, int len);
+
+//t_elem maker
+void	make_struct(void);
 
 //here doc
 char	*mdn_norm(t_token *token, int flag1, int *flag, char **res);

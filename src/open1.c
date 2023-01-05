@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 19:49:39 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/01/05 21:44:00 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/01/05 21:45:38 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,16 +43,13 @@ char	*get_qtfile_name(t_token *ptr)
 	while (ptr && ptr->type != flag)
 	{
 		tmp = remake_var_line(ptr->str, ptr->len);
-		printf("tmp is [%s]\n", tmp);
 		res = ft_free_strjoin(res, tmp);
-		printf("res is [%s]\n", res);
 		free(tmp);
 		ptr = ptr->next;
 		if (!ptr)
 			return (ft_putstr_fd("syntax error\n", 2), free(res), NULL);
 	}
 	ptr = ptr->next;
-	printf("%s\n", res);
 	return (res);
 }
 

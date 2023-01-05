@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/23 16:37:57 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/01/05 21:43:46 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/01/05 23:01:45 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -201,6 +201,7 @@ void	make_doc(char *doc, int flag)
 			}
 		}
 		close(file);
+		global->all_fd[global->fd_index++] = open(name, O_RDONLY);
 		exit(0);
 	}
 	else
