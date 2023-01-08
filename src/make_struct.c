@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 22:58:08 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/01/08 09:35:48 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/01/08 10:03:40 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,7 @@ char	*concate_quotes(t_token **tok)
 		else
 			tmp2 = ft_substr(ptr->next->str, 0, ptr->next->len);
 		tmp = ft_free_strjoin(tmp, tmp2);
+		//printf("res is [%s]\n", tmp);
 		free(tmp2);
 		ptr = ptr->next;
 	}

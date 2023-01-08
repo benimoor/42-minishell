@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/23 16:37:57 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/01/05 23:01:45 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/01/08 10:08:42 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,13 +146,13 @@ char	*remake_var_line(char *line, int len)
 			str = ft_free_strjoin(str, tmp);
 			free(tmp);
 		}
-		if (line[i] == '$')
+		if (line[i] == '$' && i < len)
 		{
 			tmp = get_env_value(global->env, line, &i);
 			str = ft_free_strjoin(str, tmp);
 			free(tmp);
 		}
-	}
+	}	
 	return (str);
 }
 
