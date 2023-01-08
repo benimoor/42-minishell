@@ -32,7 +32,7 @@ datadir = ${datarootdir}
 
 top_srcdir = ..
 #BUILD_DIR = .
-BUILD_DIR = /Users/ergrigor/Desktop/minish/readline
+BUILD_DIR = /home/kali/Desktop/minish/readline
 installdir = $(datadir)/readline
 
 INSTALL = /usr/bin/install -c

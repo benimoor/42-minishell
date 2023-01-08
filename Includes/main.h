@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/08 16:33:14 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/01/05 23:09:40 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/01/08 08:16:35 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ typedef struct s_global
 	t_token		*tokens;
 	t_element	*elem;
 	int			fd_index;
-	int			all_fd[OPEN_MAX];
+	int			all_fd[FOPEN_MAX];
 	int			hd_count;
 }	t_global;
 
@@ -127,8 +127,8 @@ void		get_cmd_args(int *i, int *arr, t_element *elem, char *line);
 char		*ft_str_start_trim(char const *s1, char const *set);
 void		skip_spaces(int *i, int *arr);
 int			empty_line(char *line);
-char	*ft_free_strjoin(char *s1, char *s2);
-void print_elem(t_element *elem);
+char		*ft_free_strjoin(char *s1, char *s2);
+void		print_elem(t_element *elem);
 //variable expansion
 char	*get_env_value(t_env *env, char *str, int *i);
 void	get_var_cmd(t_env *env, t_command *cmd);
