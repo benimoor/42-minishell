@@ -40,7 +40,8 @@ fclean: clean
 re: fclean all
 
 readline:
-	@cd readline && ./configure && make
+	@cd readline && ./configure && make 
+#&& make install
 push:
 	@git add .
 	@git commit -m "$m"

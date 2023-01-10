@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 19:40:45 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/01/10 12:59:06 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/01/10 14:48:20 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -221,6 +221,11 @@ char	*get_env_value(t_env *env, char *str, int *i)
 	a = *i + 1;
 	j = a;
 	ptr = env;
+	if (ft_isdigit(str[a]) == 1 && str[a] != '0')
+	{
+		*i = a + 1;
+		return (ft_strdup(""));
+	}
 	while (str[j] && str[j] != ' ' && str[j] != '\0' && str[j] != '\''
 		&& str[j] != '"' && str[j] != '\n' && str[j] != '$')
 		j++;
@@ -290,7 +295,7 @@ char	*change_var_cmd(char *str, int *i, t_env *env)
 	char	*end;
 	char	*tmp;
 	int		j;
-	
+
 	start = 0x0;
 	end = 0x0;
 	if (*i != 0)

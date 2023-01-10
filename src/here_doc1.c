@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/23 16:37:57 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/01/10 13:00:11 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/01/10 14:47:22 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ char	*get_dollar()
 	{
 		if (ft_strlen(tmp->val_name) == 1
 			&& ft_strncmp(tmp->val_name, "$", 1) == 0)
-			return (ft_strdup(tmp->val_name));
+			return (ft_strdup(tmp->val_value));
 		tmp = tmp->next;
 	}
 	return (NULL);
