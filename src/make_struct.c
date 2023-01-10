@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 22:58:08 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/01/08 10:03:40 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/01/10 14:05:47 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,18 +18,21 @@ void	skip_redir(t_token **tok)
 	int		flag;
 
 	ptr = *tok;
-	if (ptr->next->type == SPACE_TK)
+	if (ptr->next && ptr->next->type == SPACE_TK)
 		ptr = ptr->next->next;
 	else
 		ptr = ptr->next;
-	if (ptr->type == WORD)
-		ptr = ptr->next->next;
-	else if (ptr->type == SINGLE_QUOTES || ptr->type == DOUBLE_QUOTES)
+	if (ptr && ptr->type == WORD)
+		ptr = ptr->next;
+	else if (ptr && ptr->type == SINGLE_QUOTES || ptr->type == DOUBLE_QUOTES)
 	{
 		flag = ptr->type;
-		while (ptr->next->type != flag)
+		while (ptr->next && ptr->next->type != flag)
 			ptr = ptr->next;
-		ptr = ptr->next->next;
+		if (ptr->next->next)
+			ptr = ptr->next->next;
+		else
+			ptr = NULL;
 	}	
 	*tok = ptr;
 }
@@ -134,12 +137,12 @@ void	fill_cmd(t_command *cmd, int arg_count, t_token	**tok)
 	{
 		if (ptr->type == HERE_DOC || ptr->type == RED_INPUT)
 		{
-			cmd->in = dup2(global->all_fd[hd++], 0);
+			//cmd->in = dup2(global->all_fd[hd++], 0);
 			skip_redir(&ptr);
 		}
 		else if (ptr->type == RED_OUTPUT || ptr->type == RED_OUTPUT_APP)
 		{
-			cmd->out = dup2(global->all_fd[hd++], 1);
+			//cmd->out = dup2(global->all_fd[hd++], 1);
 			skip_redir(&ptr);
 		}
 		else if (ptr->type == WORD)
@@ -173,9 +176,9 @@ t_command	*make_cmd(t_token **tok)
 	cmd->out = 1;
 	cmd->err = 2;
 	fill_cmd(cmd, arg_count(*tok), tok);
-	if (cmd->args)
+	if (cmd && cmd->args)
 		cmd->cmd = cmd->args[0];
-	if (cmd->args)
+	if (cmd && cmd->args)
 	{
 		printf("cmd is [%s]\n", cmd->cmd);
 		while (cmd->args[i])
