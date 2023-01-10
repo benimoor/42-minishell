@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/23 16:37:57 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/01/08 10:08:42 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/01/10 13:00:11 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,7 +140,7 @@ char	*remake_var_line(char *line, int len)
 		j = i;
 		while (line[i] && line[i] != '$' && i < len)
 			i++;
-		if (i != 0)
+		if (i != 0 && line[i] != '$')
 		{
 			tmp = ft_substr(line, j, i);
 			str = ft_free_strjoin(str, tmp);
@@ -152,7 +152,7 @@ char	*remake_var_line(char *line, int len)
 			str = ft_free_strjoin(str, tmp);
 			free(tmp);
 		}
-	}	
+	}
 	return (str);
 }
 

@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 19:40:45 by ergrigor          #+#    #+#             */
-/*   Updated: 2022/12/23 22:33:54 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/01/10 12:59:06 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -216,13 +216,14 @@ char	*get_env_value(t_env *env, char *str, int *i)
 	char	*tmp;
 	t_env	*ptr;
 	int		j;
+	int		a;
 
-	j = *i;
+	a = *i + 1;
+	j = a;
 	ptr = env;
 	while (str[j] && str[j] != ' ' && str[j] != '\0' && str[j] != '\''
-		&& str[j] != '"' && str[j] != '\n')
+		&& str[j] != '"' && str[j] != '\n' && str[j] != '$')
 		j++;
-	int a = *i + 1;
 	tmp = ft_substr(str, a, (j - (*i) - 1));
 	*i = j;
 	while (ptr)
