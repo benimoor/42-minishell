@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/08 16:30:31 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/01/11 07:46:06 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/01/11 22:17:04 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,7 @@ int	lex_analyser(t_token *token)
 	global->hd_count = 0;
 	if (ptr->type == PIPE || (ptr->type == SPACE_TK
 			&& ptr->next && ptr->next->type == PIPE))
-		return (ft_putstr_fd("PIPE Error\n", 2), 1);
+		return (set_status(258), ft_putstr_fd("PIPE Error\n", 2), 1);
 	if (hd_count_check(ptr) > 16)
 		return (ft_putstr_fd("maximum here-document count exceeded\n", 2), 1);
 	while (ptr)
@@ -146,10 +146,7 @@ int	lex_analyser(t_token *token)
 			if (ptr && ptr->type == DOUBLE_QUOTES)
 				ptr = ptr->next;
 			else
-			{
-				printf("Error DBQT\n");
-				return (1);
-			}
+				return (set_status(258), ft_putstr_fd("Error DBQT\n", 2), 1);
 		}
 		else if (ptr->type == SINGLE_QUOTES)
 		{
@@ -158,33 +155,27 @@ int	lex_analyser(t_token *token)
 			if (ptr->next && ptr->next->type == SINGLE_QUOTES)
 				ptr = ptr->next->next;
 			else
-			{
-				printf("Error SQT\n");
-				break ;
-			}
+				return (set_status(258), ft_putstr_fd("Error SQT\n", 2), 1);
 		}
 		else if (ptr->type == RED_INPUT || ptr->type == RED_OUTPUT
 			|| ptr->type == RED_OUTPUT_APP)
 		{
 			if (make_open(&ptr) != 0)
-				return (-1);
+				return (set_status(1), ft_putstr_fd("Can not open file\n", 2), 1);
 		}
 		else if (ptr->type == WORD)
 		{
 			ptr = ptr->next;
 		}
 		else if (ptr->type == HERE_DOC && hd_maker(ptr) == -1)
-			return (-1);
+			return (set_status(1), ft_putstr_fd("Can not open file\n", 2), 1);
 		else if (ptr->type == PIPE)
 		{
 			ptr = ptr->next;
 			if (ptr && ptr->type == SPACE_TK)
 				ptr = ptr->next;
 			if (!ptr || ptr->type == PIPE)
-			{
-				printf ("PIPE Error\n");
-				return (1);
-			}
+				return (set_status(258), ft_putstr_fd("PIPE Error\n", 2), 1);
 		}
 		else if (ptr->type == SPACE_TK)
 		{
@@ -197,30 +188,42 @@ int	lex_analyser(t_token *token)
 			ptr = ptr->next;
 		}	
 	}
+	set_status(0);
 	return (0);
 }
 
 int	main(int argc, char **argv, char **_env)
 {
+	struct termios gago;
 	char		*cmd_line;
 	int			status;
 
 	global = ft_calloc(sizeof(t_global), 1);
 	global->env = pars_env(_env);
 	//makefd();
+	rl_catch_signals = 0;
+	if (tcgetattr(0, &gago) < 0)
+		ft_putstr_fd("Error\n", 2);
 	while (1)
 	{
+		if (tcsetattr(0, TCSANOW, &gago) < 0)
+			ft_putstr_fd("Error\n", 2);
+		signal_call(1);
 		cmd_line = readline("Say - Hello myalmo > ");
+		if (cmd_line == NULL)
+			return (ft_putstr_fd("exit\n", 1), 1);
 		if (empty_line(cmd_line) != 1)
+		{
 			add_history(cmd_line);
 		// print_env(global->env);
-		global->tokens = lexer(cmd_line);
-		status = lex_analyser(global->tokens);
+			global->tokens = lexer(cmd_line);
+			status = lex_analyser(global->tokens);
 		
-		if (status == 0)
-		{
-			make_struct();
-		}// // tokenprint(tokens);
+			if (status == 0)
+			{
+				make_struct();
+			}// // tokenprint(tokens);
+		}
 		// // lexer(&all_cmd);
 	}
 	return (0);

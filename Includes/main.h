@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/08 16:33:14 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/01/11 07:52:51 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/01/11 22:12:20 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 // libs
 # include "tokens.h"
 # include <stdio.h>
+# include <termios.h>
 # include <errno.h>
 # include <signal.h>
 # include <stdlib.h>
@@ -85,8 +86,9 @@ typedef struct s_global
 	t_token		*tokens;
 	t_element	*elem;
 	int			fd_index;
-	int			all_fd[FOPEN_MAX];
+	int			all_fd[OPEN_MAX];
 	int			hd_count;
+	int			signal;
 }	t_global;
 
 //jnjelu
@@ -145,5 +147,11 @@ char	**get_arr_env(t_env *l_env);
 void	get_variables(t_env *env, t_element **elem);
 
 t_token	*lexer(char *line);
+
+
+
+
+void	signal_call(int i);
+int	set_status(int status);
 
 #endif

@@ -2,12 +2,14 @@ NAME = minishell
 INC = ./Includes/
 LIBFT = ./libft/
 
+PREFIX = $(shell find ${HOME} -name readline_out 2>/dev/null)
+
 LIB_LIBFT = $(LIBFT)/libft.a
 CC = cc
 OBJS_DIR = objs
 SRCS_DIR = src
-FLAGS =  -I $(INC) #-ggdb #-fsanitize=address
-LINKERS = -lreadline -L$(LIBFT) -lft
+FLAGS =  -I $(INC) -I./readline/readline_out/include #-ggdb #-fsanitize=address
+LINKERS = -L./readline/readline_out/lib -lreadline -L$(LIBFT) -lft
 SRCS = $(wildcard $(SRCS_DIR)/*.c)
 OBJS = $(patsubst $(SRCS_DIR)/%.c, $(OBJS_DIR)/%.o, $(SRCS))
 RM = rm -rf
@@ -23,7 +25,7 @@ all: $(NAME)
 
 
 $(NAME): $(LIB_LIBFT) $(OBJS) | $(OBJS_DIR)
-	$(CC) $(FLAGS) -o $(NAME) $(OBJS) $(LINKERS)
+	$(CC) $(FLAGS) $(OBJS) $(LINKERS) -o $(NAME)
 
 $(LIB_LIBFT):
 	make -C ./libft
@@ -40,7 +42,7 @@ fclean: clean
 re: fclean all
 
 readline:
-	@cd readline && ./configure && make 
+	@cd readline && make clean && ./configure --prefix=$(PREFIX) && make && make install
 #&& make install
 push:
 	@git add .

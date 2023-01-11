@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 22:58:08 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/01/10 14:05:47 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/01/11 20:57:20 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	skip_redir(t_token **tok)
 		ptr = ptr->next;
 	if (ptr && ptr->type == WORD)
 		ptr = ptr->next;
-	else if (ptr && ptr->type == SINGLE_QUOTES || ptr->type == DOUBLE_QUOTES)
+	else if (ptr && (ptr->type == SINGLE_QUOTES || ptr->type == DOUBLE_QUOTES))
 	{
 		flag = ptr->type;
 		while (ptr->next && ptr->next->type != flag)
@@ -123,6 +123,52 @@ char	*concate_quotes(t_token **tok)
 	return (tmp);
 }
 
+char	*concate_string(t_token **token)
+{
+	t_token	*ptr;
+	char	*res;
+	char	*tmp;
+	char	*tmp2;
+	int		flag;
+
+	ptr = *token;
+	res = ft_strdup("");
+	while (ptr && ptr->type != SPACE_TK && ptr->type != PIPE)
+	{
+		if (ptr->type == WORD)
+		{
+			tmp = remake_var_line(ptr->str, ptr->len);
+			res = ft_free_strjoin(res, tmp);
+			free(tmp);
+			ptr = ptr->next;
+		}
+		else if (ptr->type == DOUBLE_QUOTES || ptr->type == SINGLE_QUOTES)
+		{
+			flag = ptr->type;
+			tmp2 = ft_strdup("");
+			while (ptr->next->type != flag)
+			{
+				tmp = ft_substr(ptr->next->str, 0, ptr->next->len);
+				tmp2 = ft_free_strjoin(tmp2, tmp);
+				free(tmp);
+				ptr = ptr->next;
+			}
+			ptr = ptr->next->next;
+			if (flag == DOUBLE_QUOTES)
+			{
+				tmp = remake_var_line(tmp2, ft_strlen(tmp2));
+				free(tmp2);
+			}
+			else
+				tmp = tmp2;
+			res = ft_free_strjoin(res, tmp);
+			free(tmp);
+		}
+	}
+	*token = ptr;
+	return (res);
+}
+
 void	fill_cmd(t_command *cmd, int arg_count, t_token	**tok)
 {
 	t_token	*ptr;
@@ -145,20 +191,9 @@ void	fill_cmd(t_command *cmd, int arg_count, t_token	**tok)
 			//cmd->out = dup2(global->all_fd[hd++], 1);
 			skip_redir(&ptr);
 		}
-		else if (ptr->type == WORD)
+		else if (ptr->type == WORD || ptr->type == DOUBLE_QUOTES || ptr->type == SINGLE_QUOTES)
 		{
-			if (ptr->next && (ptr->next->type == DOUBLE_QUOTES
-					|| ptr->next->type == SINGLE_QUOTES))
-				cmd->args[i++] = concate_word(&ptr);
-			else
-			{
-				cmd->args[i++] = remake_var_line(ptr->str, ptr->len);
-				ptr = ptr->next;
-			}
-		}
-		else if (ptr->type == DOUBLE_QUOTES || ptr->type == SINGLE_QUOTES)
-		{
-			cmd->args[i++] = concate_quotes(&ptr);
+			cmd->args[i++] = concate_string(&ptr);
 		}
 		else if (ptr->type == SPACE_TK)
 			ptr = ptr->next;
@@ -185,6 +220,7 @@ t_command	*make_cmd(t_token **tok)
 			printf("[%s] ", cmd->args[i++]);
 		printf("\n");
 	}
+	return (cmd);
 	// while (*tok && (*tok)->type != PIPE)
 	// {
 	// 	cmd->args = ft

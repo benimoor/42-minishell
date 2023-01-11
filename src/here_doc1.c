@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/23 16:37:57 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/01/11 07:54:23 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/01/11 22:11:00 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,6 +170,18 @@ void put_in_file(char *line, int fd, int flag, size_t len)
 	}
 }
 
+void	hd_wait(int *status, pid_t *pid)
+{
+	waitpid(*pid, status, 0);
+	if (WIFEXITED(*status))
+		set_status(WEXITSTATUS(*status));
+	else if (WIFSIGNALED(*status))
+	{
+		write(1, "\n", 1);
+		set_status(WTERMSIG(*status) + 128);
+	}
+}
+
 void	make_doc(char *doc, int flag)
 {
 	pid_t	pid;
@@ -178,14 +190,22 @@ void	make_doc(char *doc, int flag)
 	char	*name;
 	int		file;
 
+	signal (SIGQUIT, SIG_IGN);
+	signal (SIGINT, SIG_IGN);
 	pid = fork();
 	if (pid == 0)
 	{
+		signal_call(2);
 		name = get_doc_name();
 		file = open(name, O_TRUNC | O_WRONLY | O_APPEND | O_CREAT, 0644);
 		while (1)
 		{
 			line = readline("> ");
+			if (!line)
+			{
+				set_status(1);
+				exit(1);
+			}
 			if (ft_strlen(line) != ft_strlen(doc)
 				&& ft_strncmp(line, doc, ft_strlen(line)) != 0)
 			{
@@ -206,7 +226,7 @@ void	make_doc(char *doc, int flag)
 	}
 	else
 	{
-		wait(&status);
+		hd_wait(&status, &pid);
 	}
 }
 

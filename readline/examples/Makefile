@@ -21,7 +21,7 @@ RL_LIBRARY_VERSION = 8.2
 SHELL = /bin/sh
 RM = rm -f
 
-prefix = /usr/local
+prefix = /Users/ergrigor/Desktop/minish/readline/readline_out
 exec_prefix = ${prefix}
 
 datarootdir = ${prefix}/share
@@ -32,7 +32,7 @@ datadir = ${datarootdir}
 
 top_srcdir = ..
 #BUILD_DIR = .
-BUILD_DIR = /home/kali/Desktop/minish/readline
+BUILD_DIR = /Users/ergrigor/Desktop/minish/readline
 installdir = $(datadir)/readline
 
 INSTALL = /usr/bin/install -c

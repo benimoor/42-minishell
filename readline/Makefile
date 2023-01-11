@@ -31,7 +31,7 @@ PACKAGE_TARNAME = readline
 srcdir = .
 
 top_srcdir = .
-BUILD_DIR = /home/kali/Desktop/minish/readline
+BUILD_DIR = /Users/ergrigor/Desktop/minish/readline
 
 INSTALL = /usr/bin/install -c
 INSTALL_PROGRAM = ${INSTALL}
@@ -48,7 +48,7 @@ MV = mv
 
 SHELL = /bin/sh
 
-prefix = /usr/local
+prefix = /Users/ergrigor/Desktop/minish/readline/readline_out
 exec_prefix = ${prefix}
 
 datarootdir = ${prefix}/share
