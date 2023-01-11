@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/08 16:30:31 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/01/10 14:56:43 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/01/11 07:46:06 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -220,7 +220,6 @@ int	main(int argc, char **argv, char **_env)
 		if (status == 0)
 		{
 			make_struct();
-			t_elemt *gago = global->elem;
 		}// // tokenprint(tokens);
 		// // lexer(&all_cmd);
 	}

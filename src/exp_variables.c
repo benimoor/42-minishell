@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 19:40:45 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/01/10 14:48:20 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/01/11 07:53:37 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -225,6 +225,11 @@ char	*get_env_value(t_env *env, char *str, int *i)
 	{
 		*i = a + 1;
 		return (ft_strdup(""));
+	}
+	else if (str[a] == '$')
+	{
+		*i = a + 1;
+		return (get_dollar());
 	}
 	while (str[j] && str[j] != ' ' && str[j] != '\0' && str[j] != '\''
 		&& str[j] != '"' && str[j] != '\n' && str[j] != '$')

@@ -45,6 +45,6 @@ readline:
 push:
 	@git add .
 	@git commit -m "$m"
-	@git push origin Ero
+	@git push
 
 .PHONY: all clean fclean re bonus push readline

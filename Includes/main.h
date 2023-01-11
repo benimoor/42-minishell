@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/08 16:33:14 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/01/08 08:16:35 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/01/11 07:52:51 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ void	printlen(char *str, int len);
 extern t_global	*global;
 
 //expansion
+char	*get_dollar();
 char	*remake_var_line(char *line, int len);
 
 //t_elem maker
