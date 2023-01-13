@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 22:58:08 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/01/11 20:57:20 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/01/13 18:38:18 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -204,8 +204,9 @@ void	fill_cmd(t_command *cmd, int arg_count, t_token	**tok)
 t_command	*make_cmd(t_token **tok)
 {
 	t_command	*cmd;
-	int i = 0;
+	int			i;
 
+	i = 0;
 	cmd = ft_calloc(sizeof(t_command), 1);
 	cmd->in = 0;
 	cmd->out = 1;
@@ -221,10 +222,6 @@ t_command	*make_cmd(t_token **tok)
 		printf("\n");
 	}
 	return (cmd);
-	// while (*tok && (*tok)->type != PIPE)
-	// {
-	// 	cmd->args = ft
-	// }
 }
 
 void	make_elem(t_token	**tok, t_element **elem)
@@ -265,4 +262,9 @@ void	make_struct(void)
 		if (!tok || !tok->next)
 			break ;
 	}
+	ptr = global->elem;
+	while (ptr->next)
+		ptr = ptr->next;
+	free(ptr->next);
+	ptr->next = 0x0;
 }

@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/08 16:30:31 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/01/11 22:17:04 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/01/13 22:53:19 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -194,9 +194,9 @@ int	lex_analyser(t_token *token)
 
 int	main(int argc, char **argv, char **_env)
 {
-	struct termios gago;
-	char		*cmd_line;
-	int			status;
+	struct termios	gago;
+	char			*cmd_line;
+	int				status;
 
 	global = ft_calloc(sizeof(t_global), 1);
 	global->env = pars_env(_env);
@@ -222,7 +222,10 @@ int	main(int argc, char **argv, char **_env)
 			if (status == 0)
 			{
 				make_struct();
-			}// // tokenprint(tokens);
+			}
+			free(cmd_line);
+			//destroy_struct();
+			// // tokenprint(tokens);
 		}
 		// // lexer(&all_cmd);
 	}

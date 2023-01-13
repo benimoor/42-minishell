@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/08 16:33:14 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/01/11 22:12:20 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/01/13 21:55:48 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,5 +153,6 @@ t_token	*lexer(char *line);
 
 void	signal_call(int i);
 int	set_status(int status);
+void	destroy_struct(void);
 
 #endif
