@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/08 16:30:31 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/01/13 22:55:06 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/01/13 22:56:40 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -223,7 +223,7 @@ int	main(int argc, char **argv, char **_env)
 				make_struct();
 			}
 			free(cmd_line);
-			//destroy_struct();
+			destroy_struct();
 			// // tokenprint(tokens);
 		}
 		// // lexer(&all_cmd);
