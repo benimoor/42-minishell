@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/08 16:30:31 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/01/13 22:53:19 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/01/13 22:55:06 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -218,7 +218,6 @@ int	main(int argc, char **argv, char **_env)
 		// print_env(global->env);
 			global->tokens = lexer(cmd_line);
 			status = lex_analyser(global->tokens);
-		
 			if (status == 0)
 			{
 				make_struct();
