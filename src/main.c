@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/08 16:30:31 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/01/13 22:56:40 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/01/14 18:46:25 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,7 +168,7 @@ int	lex_analyser(t_token *token)
 			ptr = ptr->next;
 		}
 		else if (ptr->type == HERE_DOC && hd_maker(ptr) == -1)
-			return (set_status(1), ft_putstr_fd("Can not open file\n", 2), 1);
+			return (set_status(1), 1);
 		else if (ptr->type == PIPE)
 		{
 			ptr = ptr->next;
@@ -198,6 +198,7 @@ int	main(int argc, char **argv, char **_env)
 	char			*cmd_line;
 	int				status;
 
+	//system("leaks checker");
 	global = ft_calloc(sizeof(t_global), 1);
 	global->env = pars_env(_env);
 	//makefd();
@@ -218,13 +219,13 @@ int	main(int argc, char **argv, char **_env)
 		// print_env(global->env);
 			global->tokens = lexer(cmd_line);
 			status = lex_analyser(global->tokens);
+			//tokenprint(global->tokens);
 			if (status == 0)
 			{
 				make_struct();
 			}
 			free(cmd_line);
 			destroy_struct();
-			// // tokenprint(tokens);
 		}
 		// // lexer(&all_cmd);
 	}

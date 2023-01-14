@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/23 16:37:57 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/01/11 22:11:00 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/01/14 16:43:44 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,29 +37,20 @@ char	*make_doc_name(t_token *token, int *flag)
 {
 	char	*res;
 	int		flag1;
+	t_token	*ptr;
 
-	res = ft_strdup("");
-	while (token)
+	ptr = token;
+	while (ptr && ptr->type != SPACE_TK && ptr->type != PIPE)
 	{
-		flag1 = token->type;
-		if (flag1 == SINGLE_QUOTES || flag1 == DOUBLE_QUOTES)
-			return (mdn_norm(token, flag1, flag, &res));
-		else if (token->type == WORD)
+		if (ptr->type == DOUBLE_QUOTES || ptr->type == SINGLE_QUOTES)
 		{
-			res = ft_substr(token->str, 0, token->len);
-			token = token->next;
-			return (res);
+			*flag = 1;
+			break ;
 		}
-		else if (token->type == SPACE_TK)
-		{
-			if (token->next == NULL)
-				return (free(res), NULL);
-			token = token->next;
-		}
-		else
-			return (free(res), NULL);
+		ptr = ptr->next;
 	}
-	return (NULL);
+	res = concate_string(&token);
+	return (res);
 }
 
 char	*get_pid()

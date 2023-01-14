@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 22:58:08 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/01/13 18:38:18 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/01/14 16:48:57 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,10 @@ void	skip_redir(t_token **tok)
 	else
 		ptr = ptr->next;
 	if (ptr && ptr->type == WORD)
+	{
 		ptr = ptr->next;
-	else if (ptr && (ptr->type == SINGLE_QUOTES || ptr->type == DOUBLE_QUOTES))
+	}
+	if (ptr && (ptr->type == SINGLE_QUOTES || ptr->type == DOUBLE_QUOTES))
 	{
 		flag = ptr->type;
 		while (ptr->next && ptr->next->type != flag)
@@ -133,7 +135,8 @@ char	*concate_string(t_token **token)
 
 	ptr = *token;
 	res = ft_strdup("");
-	while (ptr && ptr->type != SPACE_TK && ptr->type != PIPE)
+	while (ptr && ptr->type != SPACE_TK && ptr->type != PIPE  && !(ptr->type == HERE_DOC || ptr->type == RED_OUTPUT_APP
+			|| ptr->type == RED_OUTPUT || ptr->type == RED_INPUT))
 	{
 		if (ptr->type == WORD)
 		{
@@ -181,22 +184,18 @@ void	fill_cmd(t_command *cmd, int arg_count, t_token	**tok)
 	cmd->args = ft_calloc(sizeof(char *), arg_count + 1);
 	while (ptr && ptr->type != PIPE)
 	{
-		if (ptr->type == HERE_DOC || ptr->type == RED_INPUT)
+		if (ptr->type == HERE_DOC || ptr->type == RED_INPUT || ptr->type == RED_OUTPUT || ptr->type == RED_OUTPUT_APP)
 		{
-			//cmd->in = dup2(global->all_fd[hd++], 0);
 			skip_redir(&ptr);
 		}
-		else if (ptr->type == RED_OUTPUT || ptr->type == RED_OUTPUT_APP)
+		else if (ptr->type == SPACE_TK)
 		{
-			//cmd->out = dup2(global->all_fd[hd++], 1);
-			skip_redir(&ptr);
+			ptr = ptr->next;
 		}
-		else if (ptr->type == WORD || ptr->type == DOUBLE_QUOTES || ptr->type == SINGLE_QUOTES)
+		else //if (ptr->type == WORD || ptr->type == DOUBLE_QUOTES || ptr->type == SINGLE_QUOTES)
 		{
 			cmd->args[i++] = concate_string(&ptr);
 		}
-		else if (ptr->type == SPACE_TK)
-			ptr = ptr->next;
 	}
 	*tok = ptr;
 }

@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 18:41:15 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/01/13 23:40:34 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/01/14 00:07:46 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ void	free_elem(t_element	**elem)
 		}
 		if (start == next)
 		{
-			printf("hasav\n");
 			if ((*elem)->type == 1)
 				free(*elem);
 			else
