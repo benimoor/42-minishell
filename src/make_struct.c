@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 22:58:08 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/01/14 16:48:57 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/01/14 20:37:50 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,7 +192,7 @@ void	fill_cmd(t_command *cmd, int arg_count, t_token	**tok)
 		{
 			ptr = ptr->next;
 		}
-		else //if (ptr->type == WORD || ptr->type == DOUBLE_QUOTES || ptr->type == SINGLE_QUOTES)
+		else if (ptr->type == WORD || ptr->type == DOUBLE_QUOTES || ptr->type == SINGLE_QUOTES)
 		{
 			cmd->args[i++] = concate_string(&ptr);
 		}
@@ -233,6 +233,7 @@ void	make_elem(t_token	**tok, t_element **elem)
 		ptr = ptr->next;
 	cmd = make_cmd(&ptr);
 	(*elem)->command = cmd;
+	//printf("[%d]\n", ptr->type);
 	(*elem)->next = ft_calloc(sizeof(t_element), 1);
 	*elem = (*elem)->next;
 	*tok = ptr;
@@ -258,7 +259,7 @@ void	make_struct(void)
 		}
 		else
 			make_elem(&tok, &ptr);
-		if (!tok || !tok->next)
+		if (!tok)
 			break ;
 	}
 	ptr = global->elem;
