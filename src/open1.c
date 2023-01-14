@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 19:49:39 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/01/05 21:45:38 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/01/14 22:41:06 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ char	*get_qtfile_name(t_token *ptr)
 	int		flag;
 
 	flag = ptr->type;
-	printf("%d\n", flag);
 	res = ft_strdup("");
 	ptr = ptr->next;
 	if (ptr->type == flag)
