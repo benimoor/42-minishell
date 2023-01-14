@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 18:34:26 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/01/05 19:35:37 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/01/14 21:17:47 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,24 +57,61 @@ static char	*get_val(char *env_line)
 	return (value);
 }
 
+void	add_env_value(char *name, char *val, int hidden, t_env **env_new)
+{
+	t_env	*ptr;
+	t_env	*tmp;
+
+	ptr = *env_new;
+	while (ptr)
+	{
+		if (ft_strcmp(name, ptr->val_name) == 0)
+		{
+			free(ptr->val_value);
+			ptr->val_value = ft_strdup(val);
+			ptr->hidden = hidden;
+			return ;
+		}
+		ptr = ptr->next;
+	}
+	tmp = ft_calloc(sizeof(t_env), 1);
+	tmp->val_name = ft_strdup(name);
+	tmp->val_value = ft_strdup(val);
+	tmp->hidden = hidden;
+	tmp->next = *env_new;
+	(*env_new)->prev = tmp;
+	*env_new = tmp;
+}
+
+void	check_shlvl(t_env **env)
+{
+	t_env	*ptr;
+	int		tmp;
+
+	ptr = *env;
+	while (ptr)
+	{
+		if (ft_strcmp(ptr->val_name, "SHLVL"))
+		{
+			tmp = ft_atoi(ptr->val_value);
+			free(ptr->val_value);
+			ptr->val_value = ft_itoa(tmp + 1);
+			return ;
+		}
+		ptr = ptr->next;
+	}
+}
+
 void	add_hidden_values(t_env **env_new)
 {
-	t_env	*list_env;
-	t_env	*env_start;
+	char	*tmp;
 
-	list_env = ft_calloc(sizeof(t_env), 1);
-	env_start = *env_new;
-	list_env->hidden = 1;
-	list_env->val_name = ft_strdup("$");
-	list_env->val_value = get_pid();
-	list_env->next = ft_calloc(sizeof(t_env), 1);
-	list_env->next->prev = list_env;
-	list_env->next->hidden = 1;
-	list_env->next->val_name = ft_strdup("?");
-	list_env->next->val_value = ft_itoa(0);
-	list_env->next->next = env_start;
-	env_start->prev = list_env->next;
-	*env_new = list_env;
+	tmp = get_pid();
+	add_env_value("$", tmp, 1, env_new);
+	free(tmp);
+	add_env_value("?", "0", 1, env_new);
+	add_env_value("0", "minishell", 1, env_new);
+	check_shlvl(env_new);
 }
 
 //get the linked list from char** ENV
