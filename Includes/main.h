@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/08 16:33:14 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/01/14 16:16:37 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/01/16 23:54:01 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ void	printlen(char *str, int len);
 
 extern t_global	*global;
 
-//expansion
+// expansion
 char	*get_dollar();
 char	*remake_var_line(char *line, int len);
 
@@ -133,7 +133,6 @@ int			empty_line(char *line);
 char		*ft_free_strjoin(char *s1, char *s2);
 void		print_elem(t_element *elem);
 //variable expansion
-char	*get_env_value(t_env *env, char *str, int *i);
 void	get_var_cmd(t_env *env, t_command *cmd);
 char	*change_var_cmd(char *str, int *i, t_env *env);
 char	*get_env_value(t_env *env, char *str, int *i);
@@ -152,8 +151,34 @@ t_token	*lexer(char *line);
 
 
 void	signal_call(int i);
-int	set_status(int status);
+int		set_status(int status);
 void	destroy_struct(void);
 char	*concate_string(t_token **token);
+
+
+///////////////////////////////////////////////////////
+///////////////////////////////////////////////////////
+///////////////////////////////////////////////////////
+///////////////////////////////////////////////////////
+///////////////////////////////////////////////////////
+///////////////////////////////////////////////////////
+///////////////////////////////////////////////////////
+///////////////////////////////////////////////////////
+///////////////////////////////////////////////////////
+///////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+//ENV PARSING
+// t_env	*pars_env(char **env);
+// char	*get_val(char *env_line);
+// char	*get_val_name(char *env_line);
+// char	**get_arr_env(t_env *l_env);
+// char	*get_env_value(t_env *env, char *str, int *i);
+// void	add_hidden_values(t_env **env_new);
+// //add_hidden_values attributes
+// void	check_shlvl(t_env **env);
+// void	add_env_value(char *name, char *val, int hidden, t_env **env_new);
+// char	*get_pid(void);
+////////////////////////////////////////////////////////////////////////////
 
 #endif

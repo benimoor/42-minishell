@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 22:58:08 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/01/14 20:37:50 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/01/17 00:06:18 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -243,7 +243,7 @@ void	make_struct(void)
 {
 	t_element	*ptr;
 	t_token		*tok;
-
+	
 	ptr = ft_calloc(sizeof(t_element), 1);
 	global->elem = ptr;
 	tok = global->tokens;

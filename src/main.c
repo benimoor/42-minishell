@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/08 16:30:31 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/01/14 20:43:47 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/01/17 00:00:39 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -201,7 +201,10 @@ int	main(int argc, char **argv, char **_env)
 	//system("leaks checker");
 	global = ft_calloc(sizeof(t_global), 1);
 	global->env = pars_env(_env);
-	//makefd();
+	// while(1)
+	// 	;
+	// makefd();
+	//print_env(global->env);
 	rl_catch_signals = 0;
 	if (tcgetattr(0, &gago) < 0)
 		ft_putstr_fd("Error\n", 2);

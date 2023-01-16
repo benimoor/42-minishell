@@ -6,13 +6,13 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 18:34:26 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/01/14 21:17:47 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/01/17 00:14:12 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Includes/main.h"
 
-static char	*get_val_name(char *env_line)
+char	*get_val_name(char *env_line)
 {
 	int		i;
 	char	*value;
@@ -33,7 +33,7 @@ static char	*get_val_name(char *env_line)
 	return (value);
 }
 
-static char	*get_val(char *env_line)
+char	*get_val(char *env_line)
 {
 	int		i;
 	int		tmp;
@@ -81,6 +81,7 @@ void	add_env_value(char *name, char *val, int hidden, t_env **env_new)
 	tmp->next = *env_new;
 	(*env_new)->prev = tmp;
 	*env_new = tmp;
+	// printf("val-value[%s]\n", tmp->val_value);
 }
 
 void	check_shlvl(t_env **env)
@@ -91,7 +92,7 @@ void	check_shlvl(t_env **env)
 	ptr = *env;
 	while (ptr)
 	{
-		if (ft_strcmp(ptr->val_name, "SHLVL"))
+		if (ft_strcmp(ptr->val_name, "SHLVL") == 0)
 		{
 			tmp = ft_atoi(ptr->val_value);
 			free(ptr->val_value);
