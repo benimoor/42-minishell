@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 18:11:25 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/01/19 18:12:44 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/01/19 19:56:20 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ void	make_struct(void)
 	t_token		*tok;
 
 	ptr = ft_calloc(sizeof(t_element), 1);
-	global->elem = ptr;
-	tok = global->tokens;
+	g_lobal->elem = ptr;
+	tok = g_lobal->tokens;
 	while (tok)
 	{
 		if (tok->type == PIPE)
@@ -35,7 +35,7 @@ void	make_struct(void)
 		if (!tok)
 			break ;
 	}
-	ptr = global->elem;
+	ptr = g_lobal->elem;
 	while (ptr->next)
 		ptr = ptr->next;
 	free(ptr->next);

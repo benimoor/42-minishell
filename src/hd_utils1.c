@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 18:08:06 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/01/19 18:10:34 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/01/19 19:56:20 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ char	*get_dollar(void)
 {
 	t_env	*tmp;
 
-	tmp = global->env;
+	tmp = g_lobal->env;
 	while (tmp)
 	{
 		if (ft_strlen(tmp->val_name) == 1
@@ -81,7 +81,7 @@ char	*get_doc_name(void)
 	char	*name;
 
 	tmp = get_dollar();
-	index = ft_itoa(global->hd_count);
+	index = ft_itoa(g_lobal->hd_count);
 	name = ft_strdup("/tmp/.mini_hd_");
 	name = ft_free_strjoin(name, tmp);
 	name = ft_free_strjoin(name, "_");

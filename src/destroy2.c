@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 18:40:40 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/01/19 18:46:27 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/01/19 19:56:20 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ void	close_fd(void)
 	int	i;
 
 	i = 3;
-	while (i < global->fd_index)
-		close(global->all_fd[i++]);
+	while (i < g_lobal->fd_index)
+		close(g_lobal->all_fd[i++]);
 }
 
 void	free_cmd(t_element **elem)

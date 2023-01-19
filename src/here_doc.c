@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 18:05:55 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/01/19 18:07:35 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/01/19 20:07:48 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,9 @@ int	hd_maker(t_token *token)
 	char	*doc;
 	int		flag;
 
-	global->hd_count++;
+	g_lobal->hd_count++;
 	flag = 0;
+	ptr = NULL;
 	if (token->next && token->next->type == SPACE_TK)
 		ptr = token->next->next;
 	else if (token->next && token->next->type != SPACE_TK)
@@ -78,7 +79,7 @@ void	make_doc(char *doc, int flag)
 			}
 		}
 		close(file);
-		global->all_fd[global->fd_index++] = open(name, O_RDONLY);
+		g_lobal->all_fd[g_lobal->fd_index++] = open(name, O_RDONLY);
 		exit(0);
 	}
 	else
@@ -90,7 +91,6 @@ void	make_doc(char *doc, int flag)
 char	*make_doc_name(t_token *token, int *flag)
 {
 	char	*res;
-	int		flag1;
 	t_token	*ptr;
 
 	ptr = token;

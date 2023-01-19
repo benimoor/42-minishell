@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 18:48:25 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/01/19 19:42:07 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/01/19 20:11:39 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	no_var(char *line, size_t len)
 {
-	int	i;
+	size_t	i;
 
 	i = 0;
 	while (line[i] && i < len)

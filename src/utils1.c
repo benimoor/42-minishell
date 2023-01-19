@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   utils1.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 17:49:11 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/01/19 18:05:29 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/01/19 19:56:20 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	set_status(int status)
 {
 	t_env	*ptr;
 
-	ptr = global->env;
+	ptr = g_lobal->env;
 	while (ptr && ptr->val_name[0] != '?')
 		ptr = ptr->next;
 	free(ptr->val_value);
@@ -87,7 +87,7 @@ char	*remake_var_line(char *line, int len)
 		}
 		if (line[i] == '$' && i < len)
 		{
-			tmp = get_env_value(global->env, line, &i);
+			tmp = get_env_value(g_lobal->env, line, &i);
 			str = ft_free_strjoin(str, tmp);
 			free(tmp);
 		}

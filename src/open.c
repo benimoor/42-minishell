@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 18:02:33 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/01/19 18:04:00 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/01/19 19:56:20 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,16 +47,16 @@ int	make_open(t_token **tmp)
 int	open_file(char *file, int flag)
 {
 	if (flag == RED_INPUT)
-		global->all_fd[global->fd_index] = open(file, O_RDONLY);
+		g_lobal->all_fd[g_lobal->fd_index] = open(file, O_RDONLY);
 	else if (flag == RED_OUTPUT)
-		global->all_fd[global->fd_index]
+		g_lobal->all_fd[g_lobal->fd_index]
 			= open(file, O_TRUNC | O_WRONLY | O_CREAT, 0644);
 	else
-		global->all_fd[global->fd_index]
+		g_lobal->all_fd[g_lobal->fd_index]
 			= open(file, O_WRONLY | O_APPEND | O_CREAT, 0644);
-	if (global->all_fd[global->fd_index] < 0)
+	if (g_lobal->all_fd[g_lobal->fd_index] < 0)
 		return (ft_putstr_fd("minishell : file opening error\n", 2), 1);
-	global->fd_index++;
+	g_lobal->fd_index++;
 	return (0);
 }
 

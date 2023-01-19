@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 18:00:05 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/01/19 19:41:05 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/01/19 20:08:14 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,10 @@
 int	lex_analyser(t_token *token)
 {
 	t_token	*ptr;
-	int		res;
 
 	ptr = token;
-	global->fd_index = 3;
-	global->hd_count = 0;
+	g_lobal->fd_index = 3;
+	g_lobal->hd_count = 0;
 	if (ptr->type == PIPE || (ptr->type == SPACE_TK
 			&& ptr->next && ptr->next->type == PIPE))
 		return (set_status(258), ft_putstr_fd("PIPE Error\n", 2), 1);

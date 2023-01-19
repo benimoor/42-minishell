@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 18:21:19 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/01/19 18:21:42 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/01/19 19:56:20 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	handler(int signal)
 	if (signal == SIGINT)
 	{
 		set_status(1);
-		global->signal = 1;
+		g_lobal->signal = 1;
 		rl_replace_line("", 0);
 		write(1, "\n", 1);
 		rl_on_new_line();

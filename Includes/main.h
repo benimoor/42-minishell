@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/08 16:33:14 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/01/19 19:42:21 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/01/19 20:04:11 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,15 +62,6 @@ struct s_token
 	t_token			*next;
 } ;
 
-typedef struct s_cmd
-{
-	t_element			*element;
-	int					exec_mode;
-	int					status;
-	struct s_cmd		*next;
-	struct s_cmd		*prev;
-}				t_cmd;
-
 typedef struct s_env
 {
 	int				hidden;
@@ -91,83 +82,14 @@ typedef struct s_global
 	int			signal;
 }	t_global;
 
-//jnjelu
-// void	printlen(char *str, int len);
-
-extern t_global	*global;
-
-// // expansion
-// char	*get_dollar();
-// char	*remake_var_line(char *line, int len);
-
-// //t_elem maker
-// void	make_struct(void);
-
-// //here doc
-// char	*mdn_norm(t_token *token, int flag1, int *flag, char **res);
-// char	*make_doc_name(t_token *token, int *flag);
-// int		hd_maker(t_token *token);
-// char	*get_pid();
-
-// //open
-// int	make_open(t_token **token);
-
-// //tokenization
-// int			first_checker(char *cmd_line);
-// int			*tokenization(char *cmd_line);
-// void		fnorm_tokenizer(char *cmd_line, int *arr, int len, int *i);
-// void		fnorm_tokenizer2(char *cmd_line, int *arr, int len, int *i);
-// void		quot_editor(int *arr, int len);
-// //void	ft_tokadd_back(t_token **tok, t_token *new);
-
-// //cmd init
-// int			get_cmd_count(int *arr);
-// t_element	**cmd_init(char *line, int *arr);
-// int			arg_counter(int *i, int *arr);
-// void		get_cmd_name(int *i, int *arr, t_element *elem, char *line);
-// void		get_cmd_args(int *i, int *arr, t_element *elem, char *line);
-// //utils
-// char		*ft_str_start_trim(char const *s1, char const *set);
-// void		skip_spaces(int *i, int *arr);
-// int			empty_line(char *line);
-// char		*ft_free_strjoin(char *s1, char *s2);
-// void		print_elem(t_element *elem);
-// //variable expansion
-// void	get_var_cmd(t_env *env, t_command *cmd);
-// char	*change_var_cmd(char *str, int *i, t_env *env);
-// char	*get_env_value(t_env *env, char *str, int *i);
-
-// //env 
-// void	add_hidden_values(t_env **env_new);
-// t_env	*pars_env(char **env);
-// char	**get_arr_env(t_env *l_env);
-
-// //expansion
-// void	get_variables(t_env *env, t_element **elem);
-
-// t_token	*lexer(char *line);
-
-
-
-
-// void	signal_call(int i);
-// int		set_status(int status);
-// void	destroy_struct(void);
-// char	*concate_string(t_token **token);
-
-///////////////////////////////////////////////////////
-///////////////////////////////////////////////////////
-///////////////////////////////////////////////////////
-///////////////////////////////////////////////////////
-///////////////////////////////////////////////////////
-///////////////////////////////////////////////////////
-///////////////////////////////////////////////////////
-///////////////////////////////////////////////////////
-///////////////////////////////////////////////////////
-///////////////////////////////////////////////////////
+extern t_global	*g_lobal;
 
 //////////////////////////////////////////////////////////////////////////////
-//ENV PARSING
+//ENV
+//env_charptr.c
+int			get_env_var_count(t_env *l_env);
+char		*get_line_env(t_env *l_env);
+char		**get_arr_env(t_env *l_env);
 //env_pars1.c
 t_env		*pars_env(char **env);
 char		*get_val_name(char *env_line);

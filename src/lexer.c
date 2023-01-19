@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 17:51:37 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/01/19 17:52:18 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/01/19 20:08:35 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ t_token	*lexer(char *line)
 	t_token	*tokens;
 	t_token	*tmp_tok;
 	int		i;	
-	int		tmp;
 
 	i = 0;
 	tokens = ft_calloc(sizeof(t_token), 1);

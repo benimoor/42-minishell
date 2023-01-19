@@ -6,33 +6,19 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 17:42:37 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/01/19 19:43:10 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/01/19 20:11:06 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.h"
 
-t_global	*global;
+t_global	*g_lobal;
 
-int	main(int argc, char **argv, char **_env)
+int	mshloop(struct termios *gago, char *cmd_line, int status)
 {
-	struct termios	gago;
-	char			*cmd_line;
-	int				status;
-
-	//system("leaks checker");
-	global = ft_calloc(sizeof(t_global), 1);
-	global->env = pars_env(_env);
-	// while(1)
-	// 	;
-	// makefd();
-	//print_env(global->env);
-	rl_catch_signals = 0;
-	if (tcgetattr(0, &gago) < 0)
-		ft_putstr_fd("Error\n", 2);
 	while (1)
 	{
-		if (tcsetattr(0, TCSANOW, &gago) < 0)
+		if (tcsetattr(0, TCSANOW, gago) < 0)
 			ft_putstr_fd("Error\n", 2);
 		signal_call(1);
 		cmd_line = readline("Say - Hello myalmo > ");
@@ -41,10 +27,8 @@ int	main(int argc, char **argv, char **_env)
 		if (empty_line(cmd_line) != 1)
 		{
 			add_history(cmd_line);
-		// print_env(global->env);
-			global->tokens = lexer(cmd_line);
-			status = lex_analyser(global->tokens);
-			//tokenprint(global->tokens);
+			g_lobal->tokens = lexer(cmd_line);
+			status = lex_analyser(g_lobal->tokens);
 			if (status == 0)
 			{
 				make_struct();
@@ -52,7 +36,27 @@ int	main(int argc, char **argv, char **_env)
 			free(cmd_line);
 			destroy_struct();
 		}
-		// // lexer(&all_cmd);
 	}
 	return (0);
+}
+
+int	main(int argc, char **argv, char **_env)
+{
+	struct termios	gago;
+	char			*cmd_line;
+	char			**msh_env;
+	int				status;
+
+	(void)argc;
+	(void)argv;
+	g_lobal = ft_calloc(sizeof(t_global), 1);
+	g_lobal->env = pars_env(_env);
+	msh_env = get_arr_env(g_lobal->env);
+	_env = msh_env;
+	cmd_line = NULL;
+	status = 0;
+	rl_catch_signals = 0;
+	if (tcgetattr(0, &gago) < 0)
+		ft_putstr_fd("Error\n", 2);
+	return (mshloop(&gago, cmd_line, status));
 }
