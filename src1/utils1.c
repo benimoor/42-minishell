@@ -1,41 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   utils1.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/19 17:49:11 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/01/19 18:05:29 by ergrigor         ###   ########.fr       */
+/*   Created: 2022/10/10 20:38:59 by ergrigor          #+#    #+#             */
+/*   Updated: 2023/01/10 13:55:38 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.h"
 
-int	empty_line(char *line)
+static int	first_set_count(char const *str, char const *set)
 {
-	int	i;
+	int	index;
+	int	count;
 
-	i = 0;
-	if (line == NULL || line[0] == '\0')
-		return (1);
-	while (line[i] == ' ')
-		i++;
-	if (line[i] == '\0' && line[i - 1] == ' ')
-		return (2);
-	return (0);
-}
-
-int	set_status(int status)
-{
-	t_env	*ptr;
-
-	ptr = global->env;
-	while (ptr && ptr->val_name[0] != '?')
-		ptr = ptr->next;
-	free(ptr->val_value);
-	ptr->val_value = ft_itoa(status);
-	return (0);
+	index = 0;
+	count = 0;
+	while (set[index])
+	{
+		if (set[index] == *str)
+		{
+			index = 0;
+			count++;
+			str++;
+		}
+		else
+			index++;
+	}
+	return (count);
 }
 
 char	*ft_free_strjoin(char *s1, char *s2)
@@ -65,32 +60,42 @@ char	*ft_free_strjoin(char *s1, char *s2)
 	return (new_str);
 }
 
-char	*remake_var_line(char *line, int len)
+char	*ft_str_start_trim(char const *s1, char const *set)
 {
-	int		i;
-	int		j;
-	char	*tmp;
+	size_t	lenght;
+	size_t	start;
+	size_t	str_len;
 	char	*str;
 
-	i = 0;
-	str = ft_strdup("");
-	while (line[i] && i < len)
+	if (!*set || (first_set_count(s1, set) == 0))
 	{
-		j = i;
-		while (line[i] && line[i] != '$' && i < len)
-			i++;
-		if (i != 0 && line[i] != '$')
-		{
-			tmp = ft_substr(line, j, i);
-			str = ft_free_strjoin(str, tmp);
-			free(tmp);
-		}
-		if (line[i] == '$' && i < len)
-		{
-			tmp = get_env_value(global->env, line, &i);
-			str = ft_free_strjoin(str, tmp);
-			free(tmp);
-		}
+		str = ft_strdup(s1);
+		return (str);
 	}
+	start = first_set_count(s1, set);
+	lenght = ft_strlen(s1) - start;
+	str = ft_substr(s1, start, lenght);
+	str_len = ft_strlen(str);
+	str[str_len] = '\0';
 	return (str);
+}
+
+void	skip_spaces(int *i, int *arr)
+{
+	while (arr[*i] == SPACE_TK || arr[*i] == L_SCOPE || arr[*i] == R_SCOPE)
+		(*i)++;
+}
+
+int	empty_line(char *line)
+{
+	int	i;
+
+	i = 0;
+	if (line == NULL || line[0] == '\0')
+		return (1);
+	while (line[i] == ' ')
+		i++;
+	if (line[i] == '\0' && line[i - 1] == ' ')
+		return (2);
+	return (0);
 }
