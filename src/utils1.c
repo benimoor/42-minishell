@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 17:49:11 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/01/19 19:56:20 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/01/19 21:04:47 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	set_status(int status)
 		ptr = ptr->next;
 	free(ptr->val_value);
 	ptr->val_value = ft_itoa(status);
-	return (0);
+	return (status);
 }
 
 char	*ft_free_strjoin(char *s1, char *s2)

@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 18:05:55 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/01/19 20:07:48 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/01/19 22:46:12 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,34 @@ int	hd_maker(t_token *token)
 	return (0);
 }
 
+void	norm_make_doc(char *name, char *line, char *doc, int flag, int file)
+{
+	signal_call(2);
+	name = get_doc_name();
+	file = open(name, O_TRUNC | O_WRONLY | O_APPEND | O_CREAT, 0644);
+	while (1)
+	{
+		line = readline("> ");
+		if (!line)
+			exit(set_status(1));
+		if (ft_strlen(line) != ft_strlen(doc)
+			&& ft_strncmp(line, doc, ft_strlen(line)) != 0)
+		{
+			line = ft_free_strjoin(line, "\n");
+			put_in_file(line, file, flag, ft_strlen(line));
+			free(line);
+		}
+		else if (ft_strlen(line) == ft_strlen(doc)
+			&& ft_strncmp(line, doc, ft_strlen(doc)) == 0)
+		{
+			free(line);
+			break ;
+		}
+	}
+	close(file);
+	g_lobal->all_fd[g_lobal->fd_index++] = open(name, O_RDONLY);
+}
+
 void	make_doc(char *doc, int flag)
 {
 	pid_t	pid;
@@ -48,44 +76,19 @@ void	make_doc(char *doc, int flag)
 	char	*name;
 	int		file;
 
+	line = NULL;
+	name = NULL;
+	file = 0;
+	pid = fork();
 	signal (SIGQUIT, SIG_IGN);
 	signal (SIGINT, SIG_IGN);
-	pid = fork();
 	if (pid == 0)
 	{
-		signal_call(2);
-		name = get_doc_name();
-		file = open(name, O_TRUNC | O_WRONLY | O_APPEND | O_CREAT, 0644);
-		while (1)
-		{
-			line = readline("> ");
-			if (!line)
-			{
-				set_status(1);
-				exit(1);
-			}
-			if (ft_strlen(line) != ft_strlen(doc)
-				&& ft_strncmp(line, doc, ft_strlen(line)) != 0)
-			{
-				line = ft_free_strjoin(line, "\n");
-				put_in_file(line, file, flag, ft_strlen(line));
-				free(line);
-			}
-			else if (ft_strlen(line) == ft_strlen(doc)
-				&& ft_strncmp(line, doc, ft_strlen(doc)) == 0)
-			{
-				free(line);
-				break ;
-			}
-		}
-		close(file);
-		g_lobal->all_fd[g_lobal->fd_index++] = open(name, O_RDONLY);
+		norm_make_doc(name, line, doc, flag, file);
 		exit(0);
 	}
 	else
-	{
 		hd_wait(&status, &pid);
-	}
 }
 
 char	*make_doc_name(t_token *token, int *flag)

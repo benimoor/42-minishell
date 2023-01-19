@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 18:40:40 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/01/19 19:56:20 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/01/19 20:22:48 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ void	free_cmd(t_element **elem)
 	i = 0;
 	while (ptr->command && ptr->command->args && ptr->command->args[i])
 		free(ptr->command->args[i++]);
-	//printf("hasav1\n");
 	if (ptr->command && ptr->command->args)
 		free(ptr->command->args);
 	free(ptr->command);

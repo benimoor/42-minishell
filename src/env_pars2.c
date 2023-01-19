@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 17:45:50 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/01/19 17:48:13 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/01/19 20:23:16 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ void	add_env_value(char *name, char *val, int hidden, t_env **env_new)
 	tmp->next = *env_new;
 	(*env_new)->prev = tmp;
 	*env_new = tmp;
-	// printf("val-value[%s]\n", tmp->val_value);
 }
 
 char	*get_pid(void)
