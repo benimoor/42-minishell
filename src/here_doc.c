@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 18:05:55 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/01/19 23:03:12 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/01/21 00:24:53 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,10 @@ int	hd_maker(t_token *token)
 	return (0);
 }
 
-void	norm_make_doc(char *line, char *doc, int flag, int file)
+void	norm_make_doc(char *name, char *doc, int flag, int file)
 {
-	char	*name;
+	char	*line;
 
-	name = get_doc_name();
 	file = open(name, O_TRUNC | O_WRONLY | O_APPEND | O_CREAT, 0644);
 	while (1)
 	{
@@ -73,10 +72,10 @@ void	make_doc(char *doc, int flag)
 {
 	pid_t	pid;
 	int		status;
-	char	*line;
+	char	*name;
 	int		file;
 
-	line = NULL;
+	name = get_doc_name();
 	file = 0;
 	pid = fork();
 	signal (SIGQUIT, SIG_IGN);
@@ -84,7 +83,7 @@ void	make_doc(char *doc, int flag)
 	if (pid == 0)
 	{
 		signal_call(2);
-		norm_make_doc(line, doc, flag, file);
+		norm_make_doc(name, doc, flag, file);
 		exit(0);
 	}
 	else
@@ -107,5 +106,12 @@ char	*make_doc_name(t_token *token, int *flag)
 		ptr = ptr->next;
 	}
 	res = concate_string(&token);
+	if (!*res)
+	{
+		if (token && (token->type == RED_INPUT || token->type == RED_OUTPUT
+				|| token->type == RED_OUTPUT_APP))
+				token = token->next;
+		return (NULL);
+	}
 	return (res);
 }

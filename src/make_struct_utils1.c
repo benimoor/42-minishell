@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 18:13:23 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/01/19 18:15:17 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/01/21 01:08:23 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,20 +56,20 @@ void	skip_redir(t_token **tok)
 		ptr = ptr->next->next;
 	else
 		ptr = ptr->next;
-	if (ptr && ptr->type == WORD)
+	while (ptr && (ptr->type == WORD || ptr->type == SINGLE_QUOTES || ptr->type == DOUBLE_QUOTES))
 	{
-		ptr = ptr->next;
-	}
-	if (ptr && (ptr->type == SINGLE_QUOTES || ptr->type == DOUBLE_QUOTES))
-	{
-		flag = ptr->type;
-		while (ptr->next && ptr->next->type != flag)
+		if (ptr && (ptr->type == SINGLE_QUOTES || ptr->type == DOUBLE_QUOTES))
+		{
+			flag = ptr->type;
+			while (ptr->next && ptr->next->type != flag)
+				ptr = ptr->next;
 			ptr = ptr->next;
-		if (ptr->next->next)
-			ptr = ptr->next->next;
+		}
+		else if (ptr && ptr->type == WORD)
+			ptr = ptr->next;
 		else
-			ptr = NULL;
-	}	
+			break ;
+	}
 	*tok = ptr;
 }
 

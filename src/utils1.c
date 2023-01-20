@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 17:49:11 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/01/19 21:04:47 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/01/20 20:54:32 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,11 +76,11 @@ char	*remake_var_line(char *line, int len)
 	str = ft_strdup("");
 	while (line[i] && i < len)
 	{
-		j = i;
-		while (line[i] && line[i] != '$' && i < len)
-			i++;
-		if (i != 0 && line[i] != '$')
+		if (line[i] != '$' && i < len)
 		{
+			j = i;
+			while (line[i] && line[i] != '$' && i < len)
+				i++;
 			tmp = ft_substr(line, j, i);
 			str = ft_free_strjoin(str, tmp);
 			free(tmp);

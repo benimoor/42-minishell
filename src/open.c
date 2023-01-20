@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 18:02:33 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/01/19 19:56:20 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/01/21 01:17:18 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,25 +21,19 @@ int	make_open(t_token **tmp)
 	ptr = *tmp;
 	flag = ptr->type;
 	if (ptr->next && ptr->next->type == SPACE_TK)
-				ptr = ptr->next;
-	if (ptr->next && (ptr->next->type == DOUBLE_QUOTES
-			|| ptr->next->type == SINGLE_QUOTES))
-	{
-		ptr = ptr->next;
-		file = get_qtfile_name(ptr);
-		if (file == NULL)
-			return (1);
-	}
-	else if (ptr->next && ptr->next->type == WORD)
-	{
-		ptr = ptr->next;
-		file = get_file_name(ptr);
-		ptr = ptr->next;
-	}
+				ptr = ptr->next->next;
 	else
-		return (ft_putstr_fd("syntax error\n", 2), 1);
+		ptr = ptr->next;
+	*tmp = ptr;
+	file = concate_string(tmp);
+	if (!file)
+		return (1);
 	if (open_file(file, flag) != 0)
 		return (1);
+	while (ptr && ptr->type != SPACE_TK && ptr->type != PIPE
+		&& ptr->type != RED_INPUT && ptr->type != RED_OUTPUT
+		&& ptr->type != RED_OUTPUT_APP && ptr->type != HERE_DOC)
+		ptr = ptr->next;
 	*tmp = ptr;
 	return (free(file), 0);
 }

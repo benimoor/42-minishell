@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 20:51:09 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/01/19 20:51:19 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/01/20 19:04:46 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,4 +36,14 @@ void	hd_wait(int *status, pid_t *pid)
 		write(1, "\n", 1);
 		set_status(WTERMSIG(*status) + 128);
 	}
+}
+
+int	get_status(void)
+{
+	t_env	*ptr;
+
+	ptr = g_lobal->env;
+	while (ptr && ft_strcmp(ptr->val_name, "?") != 0)
+		ptr = ptr->next;
+	return (ft_atoi(ptr->val_value));
 }

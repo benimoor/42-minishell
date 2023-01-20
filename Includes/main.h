@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/08 16:33:14 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/01/19 20:55:11 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/01/21 01:19:39 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ typedef struct s_global
 	int			signal;
 }				t_global;
 
-extern t_global	*g_lobal;
+extern t_global					*g_lobal;
 
 //////////////////////////////////////////////////////////////////////////////
 //ENV
@@ -113,6 +113,7 @@ char			*remake_var_line(char *line, int len);
 int				no_var(char *line, size_t len);
 int				hd_count_check(t_token *token);
 char			*get_env_value(t_env *env, char *str, int *i);
+int				get_status(void);
 ////////////////////////////////////////////////////////////////////////////
 //LEXER
 //lexer.c

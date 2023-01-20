@@ -6,13 +6,21 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 17:42:37 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/01/19 20:11:06 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/01/20 23:51:02 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.h"
 
 t_global	*g_lobal;
+
+void	makefd(void)
+{
+	g_lobal->fd_index = 3;
+	g_lobal->all_fd[0] = dup(0);
+	g_lobal->all_fd[1] = dup(1);
+	g_lobal->all_fd[2] = dup(2);
+}
 
 int	mshloop(struct termios *gago, char *cmd_line, int status)
 {
@@ -44,15 +52,13 @@ int	main(int argc, char **argv, char **_env)
 {
 	struct termios	gago;
 	char			*cmd_line;
-	char			**msh_env;
 	int				status;
 
 	(void)argc;
 	(void)argv;
 	g_lobal = ft_calloc(sizeof(t_global), 1);
 	g_lobal->env = pars_env(_env);
-	msh_env = get_arr_env(g_lobal->env);
-	_env = msh_env;
+	makefd();
 	cmd_line = NULL;
 	status = 0;
 	rl_catch_signals = 0;

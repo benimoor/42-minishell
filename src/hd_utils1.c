@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 18:08:06 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/01/19 20:57:28 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/01/21 00:30:35 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,10 @@ char	*concate_string(t_token **token)
 	ptr = *token;
 	tmp = NULL;
 	res = ft_strdup("");
+	if (ptr && !(ptr->type != SPACE_TK && ptr->type != PIPE
+			&& !(ptr->type == HERE_DOC || ptr->type == RED_OUTPUT_APP
+				|| ptr->type == RED_OUTPUT || ptr->type == RED_INPUT)))
+		return (free(res), NULL);
 	while (ptr && ptr->type != SPACE_TK && ptr->type != PIPE
 		&& !(ptr->type == HERE_DOC || ptr->type == RED_OUTPUT_APP
 			|| ptr->type == RED_OUTPUT || ptr->type == RED_INPUT))
