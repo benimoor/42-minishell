@@ -8,7 +8,7 @@ LIB_LIBFT = $(LIBFT)/libft.a
 CC = cc
 OBJS_DIR = objs
 SRCS_DIR = src
-FLAGS =  -I $(INC) -I./readline/readline_out/include -Wall -Wextra -Werror #-ggdb #-fsanitize=address
+FLAGS =  -I $(INC) -I./readline/readline_out/include #-Wall -Wextra -Werror #-ggdb #-fsanitize=address
 LINKERS = -L./readline/readline_out/lib -lreadline -L$(LIBFT) -lft
 SRCS = $(wildcard $(SRCS_DIR)/*.c)
 OBJS = $(patsubst $(SRCS_DIR)/%.c, $(OBJS_DIR)/%.o, $(SRCS))

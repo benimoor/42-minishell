@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 17:42:37 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/01/20 23:51:02 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/01/21 21:14:50 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,17 +29,20 @@ int	mshloop(struct termios *gago, char *cmd_line, int status)
 		if (tcsetattr(0, TCSANOW, gago) < 0)
 			ft_putstr_fd("Error\n", 2);
 		signal_call(1);
-		cmd_line = readline("Say - Hello myalmo > ");
+		cmd_line = readline("[KARGIN-Shell]$. ");
 		if (cmd_line == NULL)
 			return (ft_putstr_fd("exit\n", 1), 1);
 		if (empty_line(cmd_line) != 1)
 		{
+			//printf("{%d}\n", is_directory(cmd_line, 0));
+			
 			add_history(cmd_line);
 			g_lobal->tokens = lexer(cmd_line);
 			status = lex_analyser(g_lobal->tokens);
 			if (status == 0)
 			{
 				make_struct();
+				execution();
 			}
 			free(cmd_line);
 			destroy_struct();
@@ -58,6 +61,7 @@ int	main(int argc, char **argv, char **_env)
 	(void)argv;
 	g_lobal = ft_calloc(sizeof(t_global), 1);
 	g_lobal->env = pars_env(_env);
+	g_lobal->real_env = _env;
 	makefd();
 	cmd_line = NULL;
 	status = 0;

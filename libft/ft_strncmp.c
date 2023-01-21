@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 20:10:47 by ergrigor          #+#    #+#             */
-/*   Updated: 2022/11/04 18:55:14 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/01/21 16:31:09 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ int	ft_strcmp(const char *s1, const char *s2)
 	const unsigned char	*str2;
 	int					i;
 
+	if (!s1 || !s2)
+		return (-1);
 	str1 = (const unsigned char *)s1;
 	str2 = (const unsigned char *)s2;
 	i = 0;

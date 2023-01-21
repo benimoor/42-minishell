@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 18:11:25 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/01/19 19:56:20 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/01/21 23:38:12 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,10 @@ void	make_struct(void)
 			break ;
 	}
 	ptr = g_lobal->elem;
-	while (ptr->next)
+	while (ptr->next && ptr->next->next)
 		ptr = ptr->next;
+	if (ptr->next->next)
+		free(ptr->next->next);
 	free(ptr->next);
 	ptr->next = 0x0;
 }
@@ -55,13 +57,13 @@ t_command	*make_cmd(t_token **tok)
 	fill_cmd(cmd, arg_count(*tok), tok);
 	if (cmd && cmd->args)
 		cmd->cmd = cmd->args[0];
-	if (cmd && cmd->args)
-	{
-		printf("cmd is [%s]\n", cmd->cmd);
-		while (cmd->args[i])
-			printf("[%s] ", cmd->args[i++]);
-		printf("\n");
-	}
+	// if (cmd && cmd->args)
+	// {
+	// 	printf("cmd is [%s]\n", cmd->cmd);
+	// 	while (cmd->args[i])
+	// 		printf("[%s] ", cmd->args[i++]);
+	// 	printf("\n");
+	// }
 	return (cmd);
 }
 

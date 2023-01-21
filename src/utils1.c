@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 17:49:11 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/01/20 20:54:32 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/01/21 23:32:51 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,17 @@ char	*remake_var_line(char *line, int len)
 			str = ft_free_strjoin(str, tmp);
 			free(tmp);
 		}
-		if (line[i] == '$' && i < len)
+		if (line[i] == '$' && (!line[i + 1] || line[i + 1] == ' '))
+		{
+			tmp = ft_substr(line, i, 2);
+			str = ft_free_strjoin(str, tmp);
+			free(tmp);
+			if (!line[i + 1])
+				i++;
+			else
+				i += 2;
+		}
+		else if (line[i] == '$' && i < len)
 		{
 			tmp = get_env_value(g_lobal->env, line, &i);
 			str = ft_free_strjoin(str, tmp);

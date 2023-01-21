@@ -1,5 +1,8 @@
 {
 	"files.associations": {
-		"iterator": "c"
+		"iterator": "c",
+		"errno.h": "c",
+		"stat.h": "c",
+		"main.h": "c"
 	}
 }

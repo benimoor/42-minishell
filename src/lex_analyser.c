@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 18:00:05 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/01/21 01:15:24 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/01/21 20:12:51 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,12 @@ int	analyser_part1(t_token **token)
 	t_token	*ptr;
 
 	ptr = *token;
-	if (ptr && (ptr->type == DOUBLE_QUOTES || ptr->type == SINGLE_QUOTES))
+	
+	if (ptr && ptr->type == HERE_DOC && hd_maker(&ptr) == -1)
+	{
+		return (set_status(1));
+	}
+	else if (ptr && (ptr->type == DOUBLE_QUOTES || ptr->type == SINGLE_QUOTES))
 	{
 		if (qt_analyser(&ptr) != 0)
 			return (get_status());
@@ -54,15 +59,11 @@ int	analyser_part1(t_token **token)
 			|| ptr->type == RED_OUTPUT_APP))
 	{
 		if (make_open(&ptr) != 0)
-			return (ft_putstr_fd("Can not open file\n", 2), set_status(1));
+			return (ft_putstr_fd("\n", 2), set_status(1));
 	}
 	else if (ptr && ptr->type == WORD)
 	{
 		ptr = ptr->next;
-	}
-	else if (ptr && ptr->type == HERE_DOC && hd_maker(ptr) == -1)
-	{
-		return (set_status(1));
 	}
 	*token = ptr;
 	return (0);
@@ -73,6 +74,8 @@ int	analyse_part2(t_token **token)
 	t_token	*ptr;
 
 	ptr = *token;
+	if (!ptr || (ptr && ptr->type != PIPE && ptr->type != SPACE_TK))
+		return (0);
 	if (ptr && ptr->type == PIPE)
 	{
 		ptr = ptr->next;
@@ -85,6 +88,12 @@ int	analyse_part2(t_token **token)
 	{
 		ptr = ptr->next;
 	}
+	// else
+	// {
+	// 	if (ptr)
+	// 		ptr = ptr->next;
+	// 	return (0);
+	// }
 	*token = ptr;
 	return (0);
 }

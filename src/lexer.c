@@ -6,11 +6,29 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 17:51:37 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/01/19 20:08:35 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/01/21 16:07:34 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.h"
+
+void	norm_lexer(char *line, int *a, t_token **tokens)
+{
+	int	i;
+
+	i = *a;
+	if (line[i] && is_word_tok(line[i]) == 0)
+		make_word_tok(tokens, line, &i);
+	else if (line[i] && line[i] == '|')
+		make_pipe_tok(tokens, line, &i);
+	else if (line[i] && line[i] == ' ')
+		make_space_tok(tokens, line, &i);
+	else if (line[i] && line[i] == '"')
+		make_dbq_tok(tokens, line, &i);
+	else if (line[i] && line[i] == '\'')
+		make_sqt_tok(tokens, line, &i);
+	*a = i;
+}
 
 t_token	*lexer(char *line)
 {
@@ -22,10 +40,9 @@ t_token	*lexer(char *line)
 	tokens = ft_calloc(sizeof(t_token), 1);
 	while (line[i])
 	{
-		if (line[i] && is_word_tok(line[i]) == 0)
-			make_word_tok(&tokens, line, &i);
-		else if (line[i] && line[i] == '|')
-			make_pipe_tok(&tokens, line, &i);
+		if (line[i] && (is_word_tok(line[i]) == 0 || line[i] == '|'
+				|| line[i] == ' ' || line[i] == '"' || line[i] == '\''))
+			norm_lexer(line, &i, &tokens);
 		else if (line[i] && line[i] == '<' && line[i + 1] != '<')
 			make_redin_tok(&tokens, line, &i);
 		else if (line[i] && line[i] == '<' && line[i + 1] == '<')
@@ -34,12 +51,6 @@ t_token	*lexer(char *line)
 			make_redout_tok(&tokens, line, &i);
 		else if (line[i] && line[i] == '>' && line[i + 1] == '>')
 			make_apply_tok(&tokens, line, &i);
-		else if (line[i] && line[i] == ' ')
-			make_space_tok(&tokens, line, &i);
-		else if (line[i] && line[i] == '"')
-			make_dbq_tok(&tokens, line, &i);
-		else if (line[i] && line[i] == '\'')
-			make_sqt_tok(&tokens, line, &i);
 	}
 	tmp_tok = tokens->next;
 	free(tokens);

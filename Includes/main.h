@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/08 16:33:14 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/01/21 01:19:39 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/01/22 01:10:17 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,9 @@
 # include "tokens.h"
 # include <stdio.h>
 # include <termios.h>
+# include <sys/stat.h>
 # include <errno.h>
+# include <dirent.h>
 # include <signal.h>
 # include <stdlib.h>
 # include <sys/wait.h>
@@ -74,6 +76,7 @@ typedef struct s_global
 	t_env		*env;	
 	t_token		*tokens;
 	t_element	*elem;
+	char		**real_env;
 	int			fd_index;
 	int			all_fd[OPEN_MAX];
 	int			hd_count;
@@ -144,9 +147,9 @@ char			*get_file_name(t_token *ptr);
 char			*get_qtfile_name(t_token *ptr);
 ////HERE_DOC
 ////here_doc.c
-int				hd_maker(t_token *token);
+int				hd_maker(t_token **token);
 void			make_doc(char *doc, int flag);
-char			*make_doc_name(t_token *token, int *flag);
+char			*make_doc_name(t_token **token, int *flag);
 ////hd_utils1.c
 char			*concate_string(t_token **token);
 char			*get_dollar(void);
@@ -177,4 +180,7 @@ void			close_fd(void);
 void			free_cmd(t_element **elem);
 void			free_token(t_token	**token);
 ////////////////////////////////////////////////////////////////////////////
+int				is_directory(char *cmd, int flag);
+void			execution(void);
+void	makefd(void);
 #endif
