@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 18:05:55 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/01/21 19:06:34 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/01/23 20:04:22 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ void	norm_make_doc(char *name, char *doc, int flag, int file)
 {
 	char	*line;
 
-	file = open(name, O_TRUNC | O_WRONLY | O_APPEND | O_CREAT, 0644);
 	while (1)
 	{
 		line = readline("> ");
@@ -63,7 +62,6 @@ void	norm_make_doc(char *name, char *doc, int flag, int file)
 		}
 	}
 	close(file);
-	g_lobal->all_fd[g_lobal->fd_index++] = open(name, O_RDONLY);
 	exit(0);
 }
 
@@ -75,8 +73,7 @@ void	make_doc(char *doc, int flag)
 	int		file;
 
 	name = get_doc_name();
-	file = 0;
-	printf("gago\n");
+	file = open(name, O_TRUNC | O_WRONLY | O_APPEND | O_CREAT | O_RDONLY, 0644);
 	pid = fork();
 	signal (SIGQUIT, SIG_IGN);
 	signal (SIGINT, SIG_IGN);
@@ -88,6 +85,8 @@ void	make_doc(char *doc, int flag)
 	}
 	else
 		hd_wait(&status, &pid);
+	close(file);
+	g_lobal->all_fd[g_lobal->fd_index++] = open(name, O_RDONLY);
 }
 
 char	*make_doc_name(t_token **token, int *flag)
@@ -96,7 +95,6 @@ char	*make_doc_name(t_token **token, int *flag)
 	t_token	*ptr;
 
 	ptr = *token;
-	printf("->%d\n", ptr->type);
 	while (ptr && ptr->type != SPACE_TK && ptr->type != PIPE
 		&& ptr->type != RED_INPUT && ptr->type != RED_OUTPUT
 		&& ptr->type != RED_OUTPUT_APP && ptr->type != HERE_DOC)
@@ -111,7 +109,8 @@ char	*make_doc_name(t_token **token, int *flag)
 	res = concate_string(token);
 	if (!*res)
 	{
-		if (*token && ((*token)->type == RED_INPUT || (*token)->type == RED_OUTPUT
+		if (*token && ((*token)->type == RED_INPUT
+				|| (*token)->type == RED_OUTPUT
 				|| (*token)->type == RED_OUTPUT_APP))
 				(*token) = (*token)->next;
 		return (NULL);

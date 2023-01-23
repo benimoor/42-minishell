@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/08 16:33:14 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/01/22 01:10:17 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/01/24 00:48:41 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ typedef struct s_element	t_element;
 struct s_element
 {
 	t_command	*command;
-	int			delimiter;
+	pid_t		proc_id;
 	int			type;
 	t_element	*next;
 }						;
@@ -182,5 +182,10 @@ void			free_token(t_token	**token);
 ////////////////////////////////////////////////////////////////////////////
 int				is_directory(char *cmd, int flag);
 void			execution(void);
-void	makefd(void);
+void			makefd(void);
+int				pipe_count(t_element *ptr);
+void			pipe_execution(t_element *ptr);
+int				do_pipe_execute(t_element *ptr, int (*pipes)[2], int _pipe_count);
+int				pipe_or_redir_input(t_command *command, int newfd);
+int				pipe_or_redir_out(t_command *command, int newfd);
 #endif

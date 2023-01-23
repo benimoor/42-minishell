@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 19:11:28 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/01/22 01:11:20 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/01/24 00:58:00 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,22 +39,16 @@ int	is_directory(char *cmd, int flag)
 			break ;
 		i++;
 		if (cmd[i] == '\0' && !flag)
-			return (0);
+			return (1);
 	}
 	if (S_ISDIR(_path.st_mode) == 1)
 	{
 		int	fd = open(cmd, O_WRONLY, 0644);
-		fprintf(stderr, "Gago: %s: %s\n", cmd, strerror(errno));
 		return (set_status(126));
 	}
 	else if (access(cmd, X_OK | R_OK) == 0)
 		return (1);
-	// else
-	// {
-	// 	printf("%s\n", strerror(errno));
-	// 	return (2);
-	// }
-	return (0);
+	return (set_status(127));
 }
 
 char	*get_abs_path(char **paths, char *cmd)
@@ -114,19 +108,29 @@ void	_execute(t_element *ptr)
 		printf ("run_builtin(ptr->command)\n");
 	else
 	{
-		pid = fork();
-		if (pid == 0)
-		{
-			path = get_abs_path(get_paths(), ptr->command->cmd);
-			if (execve(path, ptr->command->args, g_lobal->real_env) == -1)
+		if (is_directory(ptr->command->cmd, 0) == 1){
+			pid = fork();
+			if (pid == 0)
 			{
-				set_status(127);
-				exit(127);
+				path = get_abs_path(get_paths(), ptr->command->cmd);
+				if (execve(path, ptr->command->args, g_lobal->real_env) == -1)
+				{
+					set_status(127);
+					exit(127);
+				}
+				exit(0);
 			}
-			exit(0);
+			else
+				hd_wait(&status, &pid);
 		}
-		else
-			hd_wait(&status, &pid);
+		else if (set_status(is_directory(ptr->command->cmd, 0)) > 125)
+		{
+			ft_putstr_fd("Minishell-$: ", 2);
+			ft_putstr_fd(ptr->command->cmd, 2);
+			ft_putstr_fd(": ", 2);
+			ft_putstr_fd(strerror(errno), 2);
+			ft_putstr_fd("\n", 2);
+		}
 	}
 }
 
@@ -140,10 +144,6 @@ void	single_execution(t_element *ptr)
 	_execute(ptr);
 	dup2(g_lobal->all_fd[0], STDIN_FILENO);
 	dup2(g_lobal->all_fd[1], STDOUT_FILENO);
-	close(g_lobal->all_fd[0]);
-	close(g_lobal->all_fd[1]);
-	close(g_lobal->all_fd[2]);
-	makefd();
 }
 
 void	execution(void)
@@ -152,9 +152,145 @@ void	execution(void)
 
 	ptr = g_lobal->elem;
 	if (!ptr->next)
-	{
 		single_execution(ptr);
+	else
+		pipe_execution(ptr);
+	close(g_lobal->all_fd[0]);
+	close(g_lobal->all_fd[1]);
+	close(g_lobal->all_fd[2]);
+	makefd();
+}
+
+void pipe_execution(t_element *ptr)
+{
+	int	status;
+	int	i;
+	int	_pipe_count;
+	int	command_count_execution;
+	int	(*pipes)[2];
+
+	_pipe_count = pipe_count(ptr) - 1;
+	i = -1;
+	pipes = malloc(sizeof(*pipes) * _pipe_count);
+	while(++i < _pipe_count)
+		pipe(pipes[i]);
+	command_count_execution = do_pipe_execute(ptr, pipes, _pipe_count);
+	i = -1;
+}
+
+int	do_pipe_execute(t_element *ptr, int (*pipes)[2], int _pipe_count)
+{
+	int		status;
+	int		i;
+	int		execution_count;
+	int		instream;
+	int		outstream;
+	
+	execution_count = 0;
+	i = 0;
+	status = 0;
+	while (ptr)
+	{
+		if (ptr->type == 1)
+			ptr = ptr->next;
+		else
+		{
+			if (!ptr->command->args || !ptr->command->args[0] || !ptr->command->args[0][0])
+			{
+				ptr = ptr->next;
+				continue ;
+			}
+			else
+			{	
+				dup2(g_lobal->all_fd[0], STDIN_FILENO);			
+				dup2(g_lobal->all_fd[1], STDOUT_FILENO);			
+				ptr->proc_id = fork();
+				if (ptr->proc_id == 0)
+				{
+					if (i == 0)
+					{
+						outstream = pipe_or_redir_out(ptr->command, pipes[i][1]);
+						dup2(outstream, STDOUT_FILENO);
+					}
+					else if (i > 0 && i < _pipe_count)
+					{
+						instream = pipe_or_redir_input(ptr->command, pipes[i - 1][0]);
+						outstream = pipe_or_redir_out(ptr->command, pipes[i][1]);
+						dup2(outstream, STDOUT_FILENO);
+						dup2(instream, STDIN_FILENO);
+					}
+					else
+					{
+						instream = pipe_or_redir_input(ptr->command, pipes[i - 1][0]);
+						dup2(instream, STDIN_FILENO);
+						dup2(ptr->command->out, STDOUT_FILENO);
+						printf("ptr->out %d\ninstream %d\n", ptr->command->out, instream);
+					}
+					
+					int a = -1;
+					while(++a < _pipe_count)
+					{
+						close(pipes[a][0]);
+						close(pipes[a][1]);
+					}
+					if(execve(get_abs_path(get_paths(), ptr->command->cmd), ptr->command->args, g_lobal->real_env) == -1)
+					{
+						fprintf(stderr, "Command Not found\n");
+						exit (set_status(127));
+					}
+				}
+				else
+				{
+					int a = -1;
+					while(++a < _pipe_count)
+					{
+						close(pipes[a][0]);
+						close(pipes[a][1]);
+					}
+					wait(&status);
+					// hd_wait(&status, &pid);
+				}
+			}
+			
+			int a = -1;
+			while(++a < _pipe_count)
+			{
+				close(pipes[a][0]);
+				close(pipes[a][1]);
+			}
+			i++;
+			execution_count++;
+			ptr = ptr->next;
+		}
 	}
-	// else
-	// 	pipe_execution(elem);
+	return (execution_count);
+}
+
+int pipe_count(t_element *ptr)
+{
+	int count;
+	t_element	*pptr;
+
+	count = 0;
+	pptr = ptr;
+	while(pptr)
+	{
+		count++;
+		pptr = pptr->next;
+	}
+	return (count);
+}
+
+int	pipe_or_redir_input(t_command *command, int newfd)
+{
+	if(command->in == g_lobal->all_fd[0] || command->in == 0)
+		return (newfd);
+	return (command->in);
+}
+
+int	pipe_or_redir_out(t_command *command, int newfd)
+{
+	if(command->out == g_lobal->all_fd[1] || command->out == 1)
+		return (newfd);
+	return (command->out);
 }

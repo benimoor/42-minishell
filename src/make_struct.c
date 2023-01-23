@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 18:11:25 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/01/21 23:38:12 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/01/24 00:24:55 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,7 @@ void	make_struct(void)
 	while (tok)
 	{
 		if (tok->type == PIPE)
-		{
-			ptr->delimiter = PIPE;
-			ptr->type = 1;
-			ptr->next = ft_calloc(sizeof(t_element), 1);
-			ptr = ptr->next;
 			tok = tok->next;
-		}
 		else
 			make_elem(&tok, &ptr);
 		if (!tok)
@@ -51,19 +45,12 @@ t_command	*make_cmd(t_token **tok)
 
 	i = 0;
 	cmd = ft_calloc(sizeof(t_command), 1);
-	cmd->in = 0;
-	cmd->out = 1;
-	cmd->err = 2;
+	cmd->in = g_lobal->all_fd[0];
+	cmd->out = g_lobal->all_fd[1];
+	cmd->err = g_lobal->all_fd[2];
 	fill_cmd(cmd, arg_count(*tok), tok);
 	if (cmd && cmd->args)
 		cmd->cmd = cmd->args[0];
-	// if (cmd && cmd->args)
-	// {
-	// 	printf("cmd is [%s]\n", cmd->cmd);
-	// 	while (cmd->args[i])
-	// 		printf("[%s] ", cmd->args[i++]);
-	// 	printf("\n");
-	// }
 	return (cmd);
 }
 
