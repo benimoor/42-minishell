@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 18:11:25 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/01/24 00:24:55 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/01/25 21:05:52 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,9 @@ t_command	*make_cmd(t_token **tok)
 
 	i = 0;
 	cmd = ft_calloc(sizeof(t_command), 1);
-	cmd->in = g_lobal->all_fd[0];
-	cmd->out = g_lobal->all_fd[1];
-	cmd->err = g_lobal->all_fd[2];
+	cmd->in = STDIN_FILENO;
+	cmd->out = STDOUT_FILENO;
+	cmd->err = STDERR_FILENO;
 	fill_cmd(cmd, arg_count(*tok), tok);
 	if (cmd && cmd->args)
 		cmd->cmd = cmd->args[0];
@@ -64,7 +64,6 @@ void	make_elem(t_token	**tok, t_element **elem)
 		ptr = ptr->next;
 	cmd = make_cmd(&ptr);
 	(*elem)->command = cmd;
-	//printf("[%d]\n", ptr->type);
 	(*elem)->next = ft_calloc(sizeof(t_element), 1);
 	*elem = (*elem)->next;
 	*tok = ptr;

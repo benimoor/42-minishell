@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 19:11:28 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/01/24 00:58:00 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/01/25 21:14:43 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,14 +136,17 @@ void	_execute(t_element *ptr)
 
 void	single_execution(t_element *ptr)
 {
-	if (!ptr->command->args || !ptr->command->args[0]
-		|| !ptr->command->args[0][0])
+	if (!ptr->command->args)
 		return ;
 	dup2(ptr->command->in, STDIN_FILENO);
 	dup2(ptr->command->out, STDOUT_FILENO);
 	_execute(ptr);
 	dup2(g_lobal->all_fd[0], STDIN_FILENO);
 	dup2(g_lobal->all_fd[1], STDOUT_FILENO);
+	close(g_lobal->all_fd[0]);
+	close(g_lobal->all_fd[1]);
+	close(g_lobal->all_fd[2]);
+	makefd();
 }
 
 void	execution(void)
@@ -155,115 +158,65 @@ void	execution(void)
 		single_execution(ptr);
 	else
 		pipe_execution(ptr);
-	close(g_lobal->all_fd[0]);
-	close(g_lobal->all_fd[1]);
-	close(g_lobal->all_fd[2]);
-	makefd();
 }
 
 void pipe_execution(t_element *ptr)
 {
-	int	status;
+	int	(*sisk)[2];
+	int	pip_count;
 	int	i;
-	int	_pipe_count;
-	int	command_count_execution;
-	int	(*pipes)[2];
-
-	_pipe_count = pipe_count(ptr) - 1;
+	int	counter;
+	int	status;
+	
+	pip_count = pipe_count(ptr) - 1;
+	sisk = malloc(sizeof(*sisk) * pip_count);
+	if(!sisk)
+		return ;
 	i = -1;
-	pipes = malloc(sizeof(*pipes) * _pipe_count);
-	while(++i < _pipe_count)
-		pipe(pipes[i]);
-	command_count_execution = do_pipe_execute(ptr, pipes, _pipe_count);
-	i = -1;
+	while (++i < pip_count)
+		pipe(sisk[i]);
+	counter = do_pipe_execute(ptr, sisk, pip_count);
 }
 
-int	do_pipe_execute(t_element *ptr, int (*pipes)[2], int _pipe_count)
+int	do_pipe_execute(t_element *ptr, int (*pipes)[2], int pip_count)
 {
-	int		status;
-	int		i;
-	int		execution_count;
-	int		instream;
-	int		outstream;
-	
-	execution_count = 0;
+	int	i;
+	int	status;
+
 	i = 0;
-	status = 0;
-	while (ptr)
+	while(ptr != NULL)
 	{
-		if (ptr->type == 1)
+		if (!ptr->command->args)
 			ptr = ptr->next;
+		dup2(ptr->command->in, STDIN_FILENO);
+		dup2(ptr->command->out, STDOUT_FILENO);
+		if (i == 0)
+		{
+			printf("%d:%d\n", pipes[i][0], pipes[i][1]);
+			dup2(pipes[i][0], STDOUT_FILENO);
+			close(pipes[i][0]);
+		}
+		else if (i > 0 && i < pip_count)
+		{
+			dup2(pipes[i - 1][0], STDIN_FILENO);
+			dup2(pipes[i][1], STDOUT_FILENO);
+		}
 		else
 		{
-			if (!ptr->command->args || !ptr->command->args[0] || !ptr->command->args[0][0])
-			{
-				ptr = ptr->next;
-				continue ;
-			}
-			else
-			{	
-				dup2(g_lobal->all_fd[0], STDIN_FILENO);			
-				dup2(g_lobal->all_fd[1], STDOUT_FILENO);			
-				ptr->proc_id = fork();
-				if (ptr->proc_id == 0)
-				{
-					if (i == 0)
-					{
-						outstream = pipe_or_redir_out(ptr->command, pipes[i][1]);
-						dup2(outstream, STDOUT_FILENO);
-					}
-					else if (i > 0 && i < _pipe_count)
-					{
-						instream = pipe_or_redir_input(ptr->command, pipes[i - 1][0]);
-						outstream = pipe_or_redir_out(ptr->command, pipes[i][1]);
-						dup2(outstream, STDOUT_FILENO);
-						dup2(instream, STDIN_FILENO);
-					}
-					else
-					{
-						instream = pipe_or_redir_input(ptr->command, pipes[i - 1][0]);
-						dup2(instream, STDIN_FILENO);
-						dup2(ptr->command->out, STDOUT_FILENO);
-						printf("ptr->out %d\ninstream %d\n", ptr->command->out, instream);
-					}
-					
-					int a = -1;
-					while(++a < _pipe_count)
-					{
-						close(pipes[a][0]);
-						close(pipes[a][1]);
-					}
-					if(execve(get_abs_path(get_paths(), ptr->command->cmd), ptr->command->args, g_lobal->real_env) == -1)
-					{
-						fprintf(stderr, "Command Not found\n");
-						exit (set_status(127));
-					}
-				}
-				else
-				{
-					int a = -1;
-					while(++a < _pipe_count)
-					{
-						close(pipes[a][0]);
-						close(pipes[a][1]);
-					}
-					wait(&status);
-					// hd_wait(&status, &pid);
-				}
-			}
-			
-			int a = -1;
-			while(++a < _pipe_count)
-			{
-				close(pipes[a][0]);
-				close(pipes[a][1]);
-			}
-			i++;
-			execution_count++;
-			ptr = ptr->next;
+			printf("%d:%d\n", pipes[i-1][0], pipes[i-1][1]);
+			dup2(pipes[i - 1][1], STDIN_FILENO);
+			close(pipes[i - 1][1]);
+			printf("cmd->out %d\n", STDIN_FILENO);
+			dup2(ptr->command->out, STDOUT_FILENO);
 		}
+		// printf("hasa\n");
+		close_all_pipes(pipes, pip_count);
+		_execute(ptr);
+		close_all_pipes(pipes, pip_count);
+		i++;
+		ptr = ptr->next;
 	}
-	return (execution_count);
+	return (i);
 }
 
 int pipe_count(t_element *ptr)
@@ -281,16 +234,28 @@ int pipe_count(t_element *ptr)
 	return (count);
 }
 
-int	pipe_or_redir_input(t_command *command, int newfd)
+void	close_all_pipes(int pips[][2], int pip)
+{
+	int	a;
+
+	a = -1;
+	while (++a < pip)
+	{
+		close(pips[a][1]);
+		close(pips[a][0]);
+	}
+}
+
+int	pipe_or_redir_input(t_command *command, int (*pipes)[2], int i)
 {
 	if(command->in == g_lobal->all_fd[0] || command->in == 0)
-		return (newfd);
+		return (pipes[i - 1][0]);
 	return (command->in);
 }
 
-int	pipe_or_redir_out(t_command *command, int newfd)
+int	pipe_or_redir_out(t_command *command, int (*pipes)[2], int i)
 {
 	if(command->out == g_lobal->all_fd[1] || command->out == 1)
-		return (newfd);
+		return (pipes[i][1]);
 	return (command->out);
 }
