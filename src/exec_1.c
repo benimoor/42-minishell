@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 19:11:28 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/01/25 21:14:43 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/01/26 19:00:26 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,7 @@ void	_execute(t_element *ptr)
 		}
 		else if (set_status(is_directory(ptr->command->cmd, 0)) > 125)
 		{
-			ft_putstr_fd("Minishell-$: ", 2);
+			ft_putstr_fd("KARGIN-SHELL	-$: ", 2);
 			ft_putstr_fd(ptr->command->cmd, 2);
 			ft_putstr_fd(": ", 2);
 			ft_putstr_fd(strerror(errno), 2);
@@ -162,60 +162,76 @@ void	execution(void)
 
 void pipe_execution(t_element *ptr)
 {
-	int	(*sisk)[2];
+	int	(*pipes)[2];
 	int	pip_count;
 	int	i;
 	int	counter;
 	int	status;
 	
 	pip_count = pipe_count(ptr) - 1;
-	sisk = malloc(sizeof(*sisk) * pip_count);
-	if(!sisk)
+	pipes = malloc(sizeof(*pipes) * pip_count);
+	if(!pipes)
 		return ;
 	i = -1;
 	while (++i < pip_count)
-		pipe(sisk[i]);
-	counter = do_pipe_execute(ptr, sisk, pip_count);
+	{
+		if (pipe(pipes[i]) == -1) {
+            perror("pipe failed");
+            exit(1);
+        }
+	}
+	i = 0;
+	counter = do_pipe_execute(ptr, pipes, pip_count);
+	while(i < counter)
+	{
+		wait(&status);
+		i++;
+	}
+	close_all_pipes(pipes, pip_count);
 }
 
 int	do_pipe_execute(t_element *ptr, int (*pipes)[2], int pip_count)
 {
 	int	i;
 	int	status;
+	pid_t	pid;
+	int		file;
 
+	
 	i = 0;
 	while(ptr != NULL)
 	{
 		if (!ptr->command->args)
 			ptr = ptr->next;
-		dup2(ptr->command->in, STDIN_FILENO);
-		dup2(ptr->command->out, STDOUT_FILENO);
-		if (i == 0)
+		pid = fork();
+		if (pid == 0)
 		{
-			printf("%d:%d\n", pipes[i][0], pipes[i][1]);
-			dup2(pipes[i][0], STDOUT_FILENO);
-			close(pipes[i][0]);
+			if (i == 0)
+			{
+				dup2(pipes[i][1], STDOUT_FILENO);
+			}
+			else if (i > 0 && i < (pip_count - 1))
+			{
+				dup2(pipes[i - 1][0], STDIN_FILENO);
+				dup2(pipes[i][1], STDOUT_FILENO);
+			}
+			else
+			{
+				dup2(pipes[i - 1][0], STDIN_FILENO);
+				dup2(g_lobal->all_fd[1], STDOUT_FILENO);
+			}
+			close_all_pipes(pipes, pip_count);
+			if (execve(get_abs_path(get_paths(), ptr->command->cmd), ptr->command->args, g_lobal->real_env) == -1)
+			{
+				close_all_pipes(pipes, pip_count);
+				exit(127);
+			}
+			exit(0);
 		}
-		else if (i > 0 && i < pip_count)
-		{
-			dup2(pipes[i - 1][0], STDIN_FILENO);
-			dup2(pipes[i][1], STDOUT_FILENO);
-		}
-		else
-		{
-			printf("%d:%d\n", pipes[i-1][0], pipes[i-1][1]);
-			dup2(pipes[i - 1][1], STDIN_FILENO);
-			close(pipes[i - 1][1]);
-			printf("cmd->out %d\n", STDIN_FILENO);
-			dup2(ptr->command->out, STDOUT_FILENO);
-		}
-		// printf("hasa\n");
-		close_all_pipes(pipes, pip_count);
-		_execute(ptr);
-		close_all_pipes(pipes, pip_count);
 		i++;
 		ptr = ptr->next;
 	}
+	close_all_pipes(pipes, pip_count);
 	return (i);
 }
 
