@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 17:49:11 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/01/21 23:32:51 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/01/26 19:43:46 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,14 @@ int	set_status(int status)
 	t_env	*ptr;
 
 	ptr = g_lobal->env;
-	while (ptr && ptr->val_name[0] != '?')
+	while (ptr && ptr->val_name && ptr->val_name[0] != '?')
 		ptr = ptr->next;
-	free(ptr->val_value);
-	ptr->val_value = ft_itoa(status);
-	return (status);
+	if (ptr && ptr->val_name && ptr->val_name[0] == '?')
+	{	free(ptr->val_value);
+		ptr->val_value = ft_itoa(status);
+		return (status);
+	}
+	return (0);
 }
 
 char	*ft_free_strjoin(char *s1, char *s2)

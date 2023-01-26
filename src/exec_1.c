@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 19:11:28 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/01/26 19:00:26 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/01/26 20:08:18 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,8 @@ void	_execute(t_element *ptr)
 	char	*path;
 	pid_t	pid;
 	int		status;
-
+	if (!ptr->command || !ptr->command->args || ! ptr->command->args[0])
+		return ;
 	if (is_builtin(ptr->command->cmd) == 0)
 		printf ("run_builtin(ptr->command)\n");
 	else
@@ -136,7 +137,7 @@ void	_execute(t_element *ptr)
 
 void	single_execution(t_element *ptr)
 {
-	if (!ptr->command->args)
+	if (!ptr->command && !ptr->command->args)
 		return ;
 	dup2(ptr->command->in, STDIN_FILENO);
 	dup2(ptr->command->out, STDOUT_FILENO);
