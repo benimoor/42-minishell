@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 18:00:05 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/01/21 20:12:51 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/01/27 00:12:57 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	qt_analyser(t_token **token)
 		if (ptr && ptr->type == DOUBLE_QUOTES)
 			ptr = ptr->next;
 		else
-			return (set_status(258), ft_putstr_fd("Error DBQT\n", 2), 1);
+			return (ft_putstr_fd("Error DBQT\n", 2), set_status(258));
 	}
 	else if (ptr->type == SINGLE_QUOTES)
 	{
@@ -34,7 +34,7 @@ int	qt_analyser(t_token **token)
 		if (ptr->next && ptr->next->type == SINGLE_QUOTES)
 			ptr = ptr->next->next;
 		else
-			return (set_status(258), ft_putstr_fd("Error SQT\n", 2), 1);
+			return (ft_putstr_fd("Error SQT\n", 2), set_status(258));
 	}
 	*token = ptr;
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 20:00:36 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/01/21 23:36:57 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/01/27 00:00:50 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,11 @@ int	get_env_var_count(t_env *l_env)
 	l = 0;
 	while (l_env->next)
 	{
-		l++;
+		if(l_env->hidden != 1)
+			l++;
 		l_env = l_env->next;
 	}
-	return (l + 1);
+	return (l);
 }
 
 
@@ -36,18 +37,14 @@ char	*get_line_env(t_env *l_env)
 
 	name = ft_strlen(l_env->val_name);
 	value = ft_strlen(l_env->val_value);
-	i = 0;
-	line = malloc(name + value + 2);
-	while (i < name)
-	{
+	i = -1;
+	line = ft_calloc((name + value + 2), sizeof(char));
+	while (++i < name)
 		line[i] = l_env->val_name[i];
-		i++;
-	}
 	line[i] = '=';
 	j = 0;
 	while (j < value)
-		line[++i] = l_env->val_value[++j];
-	line[i] = '\0';
+		line[++i] = l_env->val_value[j++];
 	return (line);
 }
 
@@ -59,14 +56,16 @@ char	**get_arr_env(t_env *l_env)
 	int		i;
 
 	l = get_env_var_count(l_env);
-	env = (char **)malloc((1 + l) * sizeof(char *));
+	env = ft_calloc((l + 1), sizeof(char *));
 	i = 0;
 	while (i < l)
 	{
-		env[i] = get_line_env(l_env);
+		if (l_env->hidden != 1)
+		{
+			env[i] = get_line_env(l_env);
+			i++;
+		}
 		l_env = l_env->next;
-		i++;
 	}
-	env[i] = NULL;
 	return (env);
 }

@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 19:11:28 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/01/26 20:08:18 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/01/27 00:14:36 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ char	*get_abs_path(char **paths, char *cmd)
 	else
 	{
 		// dup2(S)
-		printf("minishell: %s: command not found\n", cmd);
+		printf("KARGIN-Shell: %s: command not found\n", cmd);
 	}
 	return (NULL);
 }
@@ -116,8 +116,7 @@ void	_execute(t_element *ptr)
 				path = get_abs_path(get_paths(), ptr->command->cmd);
 				if (execve(path, ptr->command->args, g_lobal->real_env) == -1)
 				{
-					set_status(127);
-					exit(127);
+					exit(set_status(127));
 				}
 				exit(0);
 			}
@@ -189,6 +188,7 @@ void pipe_execution(t_element *ptr)
 		i++;
 	}
 	close_all_pipes(pipes, pip_count);
+	free(pipes);
 }
 
 int	do_pipe_execute(t_element *ptr, int (*pipes)[2], int pip_count)
@@ -209,23 +209,27 @@ int	do_pipe_execute(t_element *ptr, int (*pipes)[2], int pip_count)
 		{
 			if (i == 0)
 			{
-				dup2(pipes[i][1], STDOUT_FILENO);
+				ptr->command->out = pipe_or_redir_out(ptr->command, pipes, i);
+				dup2(ptr->command->out, STDOUT_FILENO);
 			}
 			else if (i > 0 && i < (pip_count - 1))
 			{
-				dup2(pipes[i - 1][0], STDIN_FILENO);
-				dup2(pipes[i][1], STDOUT_FILENO);
+				ptr->command->out = pipe_or_redir_out(ptr->command, pipes, i);
+				ptr->command->in = pipe_or_redir_input(ptr->command, pipes, i);
+				dup2(ptr->command->in, STDIN_FILENO);
+				dup2(ptr->command->out, STDOUT_FILENO);
 			}
 			else
 			{
-				dup2(pipes[i - 1][0], STDIN_FILENO);
-				dup2(g_lobal->all_fd[1], STDOUT_FILENO);
+				ptr->command->in = pipe_or_redir_input(ptr->command, pipes, i);
+				dup2(ptr->command->in, STDIN_FILENO);
+				dup2(ptr->command->out, STDOUT_FILENO);
 			}
 			close_all_pipes(pipes, pip_count);
 			if (execve(get_abs_path(get_paths(), ptr->command->cmd), ptr->command->args, g_lobal->real_env) == -1)
 			{
 				close_all_pipes(pipes, pip_count);
-				exit(127);
+				exit(set_status(127));
 			}
 			exit(0);
 		}

@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 17:42:37 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/01/26 20:02:45 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/01/26 23:56:36 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	main(int argc, char **argv, char **_env)
 	(void)argv;
 	g_lobal = ft_calloc(sizeof(t_global), 1);
 	g_lobal->env = pars_env(_env);
-	g_lobal->real_env = _env;
+	g_lobal->real_env = get_arr_env(g_lobal->env);
 	makefd();
 	cmd_line = NULL;
 	status = 0;

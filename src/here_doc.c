@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 18:05:55 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/01/26 20:17:04 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/01/26 21:43:11 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ void	make_doc(char *doc, int flag)
 		hd_wait(&status, &pid);
 	close(file);
 	g_lobal->all_fd[g_lobal->fd_index++] = open(name, O_RDONLY);
+	free(name);
 }
 
 char	*make_doc_name(t_token **token, int *flag)
