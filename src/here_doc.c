@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 18:05:55 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/01/26 21:43:11 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/01/27 00:19:18 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,8 @@ int	hd_maker(t_token **token)
 void	norm_make_doc(char *name, char *doc, int flag, int file)
 {
 	char	*line;
-
+	
+	(void)name;
 	while (1)
 	{
 		line = readline("> ");

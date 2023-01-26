@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 19:11:28 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/01/27 00:14:36 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/01/27 00:18:17 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ int	is_directory(char *cmd, int flag)
 	}
 	if (S_ISDIR(_path.st_mode) == 1)
 	{
-		int	fd = open(cmd, O_WRONLY, 0644);
 		return (set_status(126));
 	}
 	else if (access(cmd, X_OK | R_OK) == 0)
@@ -193,11 +192,8 @@ void pipe_execution(t_element *ptr)
 
 int	do_pipe_execute(t_element *ptr, int (*pipes)[2], int pip_count)
 {
-	int	i;
-	int	status;
+	int		i;
 	pid_t	pid;
-	int		file;
-
 	
 	i = 0;
 	while(ptr != NULL)
