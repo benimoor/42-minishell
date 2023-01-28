@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 17:42:37 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/01/26 23:56:36 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/01/28 04:25:41 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	mshloop(struct termios *gago, char *cmd_line, int status)
 		if (tcsetattr(0, TCSANOW, gago) < 0)
 			ft_putstr_fd("Error\n", 2);
 		signal_call(1);
-		cmd_line = readline("[KARGIN-Shell]$. ");
+		cmd_line = readline(get_val_value("PS1"));
 		if (cmd_line == NULL)
 			return (ft_putstr_fd("exit\n", 1), 1);
 		if (empty_line(cmd_line) != 1)

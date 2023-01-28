@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/08 16:33:14 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/01/26 18:50:44 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/01/28 04:16:58 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -189,4 +189,29 @@ int				do_pipe_execute(t_element *ptr, int (*pipes)[2], int _pipe_count);
 int				pipe_or_redir_input(t_command *command, int (*pipes)[2], int i);
 int				pipe_or_redir_out(t_command *command, int (*pipes)[2], int i);
 void			close_all_pipes(int pips[][2], int pip);
+char			*get_val_value(char *key);
+
+////////////////////////////////////////////////////////////////////////////
+//built_ins
+int				built_in_echo(t_element *elem);
+void			built_in_cd(t_element *elem);
+void			built_in_pwd(t_element *elem);
+void			built_in_export(t_element *elem);
+//export built-in
+void			export_error_log(char *command);
+int				command_parsing(char *command);
+void			print_exported_env(t_env *env);
+t_env			*ft_lstnew_env(char *val_name, char *val_value, int hidden);
+void			ft_lstadd_back_env(t_env **lst, t_env *new);
+void			swap_nodes_2(t_env *prev, t_env *start, t_env *last);
+void			swap_nodes(t_env *prev, t_env *start, t_env *last);
+void			sort_env(t_env	**head);
+t_env			*env_exist(t_env *head, char *name);
+int				export_with_equal(char *name,
+					char *command, t_env *new_node, t_env *node);
+int				built_in_unset(t_element *elem);
+int				built_in_exit(t_element *elem);
+void			run_builtin(t_element **ptr);
+void			print_env(char **eenv);
+
 #endif

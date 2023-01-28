@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 18:48:25 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/01/19 20:11:39 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/01/27 23:36:47 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,4 +108,18 @@ char	*get_env_value(t_env *env, char *str, int *i)
 	if (ptr == NULL)
 		return (free(tmp), ft_strdup(""));
 	return (free(tmp), ft_strdup(ptr->val_value));
+}
+
+char	*get_val_value(char *key)
+{
+	t_env *envv;
+
+	envv = g_lobal->env;
+	while(envv)
+	{
+		if (ft_strcmp(key, envv->val_name) == 0)
+			return (envv->val_value);
+		envv = envv->next;
+	}
+	return (NULL);
 }

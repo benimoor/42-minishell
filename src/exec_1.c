@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 19:11:28 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/01/27 00:18:17 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/01/28 05:12:06 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,16 @@ int	is_directory(char *cmd, int flag)
 
 	i = 0;
 	stat(cmd, &_path);
+	if (*cmd == '\0')
+	{
+		return(set_status(127));
+	}
 	while (cmd[i])
 	{
 		if (cmd[i] == '/')
 			break ;
 		i++;
-		if (cmd[i] == '\0' && !flag)
+		if (cmd[i] == '\0' && !flag && i != 1)
 			return (1);
 	}
 	if (S_ISDIR(_path.st_mode) == 1)
@@ -71,8 +75,7 @@ char	*get_abs_path(char **paths, char *cmd)
 		return (temp);
 	else
 	{
-		// dup2(S)
-		printf("KARGIN-Shell: %s: command not found\n", cmd);
+		printf("%s : %s: command not found\n", get_val_value("PS1"), cmd);
 	}
 	return (NULL);
 }
@@ -96,39 +99,46 @@ int	is_builtin(char *cmd)
 	else
 		return (1);
 }
-
+void	print_error(char *cmd, char *error)
+{
+	ft_putstr_fd(get_val_value("PS1"), 2);
+	ft_putstr_fd(" : ", 2);
+	ft_putstr_fd(cmd, 2);
+	ft_putstr_fd(": ", 2);
+	ft_putstr_fd(error, 2);
+	ft_putstr_fd("\n", 2);
+}
 void	_execute(t_element *ptr)
 {
-	char	*path;
 	pid_t	pid;
 	int		status;
-	if (!ptr->command || !ptr->command->args || ! ptr->command->args[0])
+	
+	if (!ptr->command || !ptr->command->args || !ptr->command->args[0])
 		return ;
+	if (ptr->command->cmd[0] == '\0')
+	{
+		print_error(ptr->command->cmd, "command not found");
+		set_status(127);
+		return ;
+	}
+	signal_call(3);
 	if (is_builtin(ptr->command->cmd) == 0)
-		printf ("run_builtin(ptr->command)\n");
+		run_builtin(&ptr);
 	else
 	{
 		if (is_directory(ptr->command->cmd, 0) == 1){
 			pid = fork();
 			if (pid == 0)
-			{
-				path = get_abs_path(get_paths(), ptr->command->cmd);
-				if (execve(path, ptr->command->args, g_lobal->real_env) == -1)
-				{
+			{	
+				if (execve(get_abs_path(get_paths(), ptr->command->cmd), ptr->command->args, get_arr_env(g_lobal->env)) == -1)
 					exit(set_status(127));
-				}
-				exit(0);
 			}
 			else
 				hd_wait(&status, &pid);
 		}
-		else if (set_status(is_directory(ptr->command->cmd, 0)) > 125)
+		else if (set_status(is_directory(ptr->command->cmd, 1)) > 125)
 		{
-			ft_putstr_fd("KARGIN-SHELL	-$: ", 2);
-			ft_putstr_fd(ptr->command->cmd, 2);
-			ft_putstr_fd(": ", 2);
-			ft_putstr_fd(strerror(errno), 2);
-			ft_putstr_fd("\n", 2);
+			print_error(ptr->command->cmd, strerror(errno));
 		}
 	}
 }
@@ -188,6 +198,7 @@ void pipe_execution(t_element *ptr)
 	}
 	close_all_pipes(pipes, pip_count);
 	free(pipes);
+	set_status(WEXITSTATUS(status));
 }
 
 int	do_pipe_execute(t_element *ptr, int (*pipes)[2], int pip_count)
@@ -222,12 +233,18 @@ int	do_pipe_execute(t_element *ptr, int (*pipes)[2], int pip_count)
 				dup2(ptr->command->out, STDOUT_FILENO);
 			}
 			close_all_pipes(pipes, pip_count);
-			if (execve(get_abs_path(get_paths(), ptr->command->cmd), ptr->command->args, g_lobal->real_env) == -1)
+			if (ptr->command->cmd[0] == '\0')
+			{
+				print_error(ptr->command->cmd, "command not found");
+				exit(set_status(127));
+			}
+			if (is_builtin(ptr->command->cmd) == 0)
+				run_builtin(&ptr);
+			else if (execve(get_abs_path(get_paths(), ptr->command->cmd), ptr->command->args, g_lobal->real_env) == -1)
 			{
 				close_all_pipes(pipes, pip_count);
 				exit(set_status(127));
 			}
-			exit(0);
 		}
 		i++;
 		ptr = ptr->next;

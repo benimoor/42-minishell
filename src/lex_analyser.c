@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 18:00:05 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/01/27 00:12:57 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/01/28 00:46:16 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,12 +88,6 @@ int	analyse_part2(t_token **token)
 	{
 		ptr = ptr->next;
 	}
-	// else
-	// {
-	// 	if (ptr)
-	// 		ptr = ptr->next;
-	// 	return (0);
-	// }
 	*token = ptr;
 	return (0);
 }
@@ -121,6 +115,5 @@ int	lex_analyser(t_token *token)
 			return (get_status());
 		}
 	}
-	set_status(0);
 	return (0);
 }

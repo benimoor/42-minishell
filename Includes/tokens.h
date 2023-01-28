@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/08 19:44:48 by ergrigor          #+#    #+#             */
-/*   Updated: 2022/10/10 21:04:05 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/01/27 23:35:56 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,5 +30,5 @@
 # define WORD						14 // {a..Z}
 # define ASTERIX					15 // *
 # define VARIABLE_TK				16 // $...
-
+# define PS1						"[KARGIN-Shell] $."
 #endif

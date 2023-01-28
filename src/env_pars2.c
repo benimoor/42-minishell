@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 17:45:50 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/01/27 00:03:29 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/01/28 04:25:57 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	add_hidden_values(t_env **env_new)
 	free(tmp);
 	add_env_value("?", "0", 1, env_new);
 	add_env_value("0", "KARGIN-shell", 1, env_new);
+	add_env_value("PS1", "[KARGIN-Shell]$. ", 1, env_new);
 	check_shlvl(env_new);
 }
 
