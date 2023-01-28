@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 18:05:55 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/01/28 07:04:31 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/01/28 14:30:31 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,27 @@ int	hd_maker(t_token **token)
 	return (0);
 }
 
+char	*handle_line(char *fl, char *line)
+{
+	line = ft_free_strjoin(line, "\n");
+	fl = ft_free_strjoin(fl, line);
+	free(line);
+	return (fl);
+}
+
+void	put_in_file_and_close(char *fl, int file, int flag, int len)
+{
+	put_in_file(fl, file, flag, len);
+	free(fl);
+	close(file);
+	exit(0);
+}
+
 void	norm_make_doc(char *name, char *doc, int flag, int file)
 {
 	char	*line;
 	char	*fl;
-	
+
 	(void)name;
 	fl = ft_strdup("");
 	while (1)
@@ -56,21 +72,11 @@ void	norm_make_doc(char *name, char *doc, int flag, int file)
 			exit(set_status(1));
 		}
 		else if (ft_strcmp(doc, line) != 0)
-		{
-			line = ft_free_strjoin(line, "\n");
-			fl = ft_free_strjoin(fl, line);
-			free(line);
-		}
+			fl = handle_line(fl, line);
 		else if (ft_strcmp(doc, line) == 0)
-		{
-			free(line);
 			break ;
-		}
 	}
-	put_in_file(fl, file, flag, ft_strlen(fl));
-	free(fl);
-	close(file);
-	exit(0);
+	put_in_file_and_close(fl, file, flag, ft_strlen(fl));
 }
 
 void	make_doc(char *doc, int flag)
@@ -122,8 +128,9 @@ char	*make_doc_name(t_token **token, int *flag)
 		if (ptr->next && ptr->next->type == f)
 		{
 			ptr = ptr->next;
-			if (!ptr->next || (ptr->next && (ptr->next->type == SPACE_TK || ptr->next->type == PIPE)))
-				return(ft_strdup(""));
+			if (!ptr->next || (ptr->next && (ptr->next->type == SPACE_TK
+						|| ptr->next->type == PIPE)))
+				return (ft_strdup(""));
 		}
 	}
 	res = concate_string(token);

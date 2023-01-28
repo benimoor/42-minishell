@@ -1,4 +1,4 @@
-prefix=/Users/ergrigor/Desktop/minish/readline/readline_out
+prefix=/home/kali/Desktop/minish/readline/readline_out
 exec_prefix=${prefix}
 libdir=${exec_prefix}/lib
 includedir=${prefix}/include

@@ -6,11 +6,32 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 18:13:23 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/01/23 20:05:06 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/01/28 12:58:35 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.h"
+
+void	norm_arg_count(t_token **token, int *res, int *flag)
+{
+	t_token	*ptr;
+
+	ptr = *token;
+	if (ptr->type == WORD)
+	{
+		(*res)++;
+		ptr = ptr->next;
+	}
+	else if (ptr->type == SINGLE_QUOTES || ptr->type == DOUBLE_QUOTES)
+	{
+		(*flag) = ptr->type;
+		while (ptr->next->type != (*flag))
+			ptr = ptr->next;
+		ptr = ptr->next->next;
+		(*res)++;
+	}
+	*token = ptr;
+}
 
 int	arg_count(t_token *tok)
 {
@@ -24,24 +45,12 @@ int	arg_count(t_token *tok)
 	{
 		if (ptr->type == SPACE_TK)
 			ptr = ptr->next;
-		else if (ptr->type == WORD)
-		{
-			res++;
-			ptr = ptr->next;
-		}
-		else if (ptr->type == SINGLE_QUOTES || ptr->type == DOUBLE_QUOTES)
-		{
-			flag = ptr->type;
-			while (ptr->next->type != flag)
-				ptr = ptr->next;
-			ptr = ptr->next->next;
-			res++;
-		}
+		else if (ptr->type == WORD || ptr->type == SINGLE_QUOTES
+			|| ptr->type == DOUBLE_QUOTES)
+			norm_arg_count(&ptr, &res, &flag);
 		else if (ptr->type == HERE_DOC || ptr->type == RED_OUTPUT_APP
 			|| ptr->type == RED_OUTPUT || ptr->type == RED_INPUT)
-		{
 			skip_redir(&ptr);
-		}
 	}
 	return (res);
 }
@@ -74,6 +83,23 @@ void	skip_redir(t_token **tok)
 	*tok = ptr;
 }
 
+void	norm_fill_cmd(t_command *cmd, int *hd, t_token **tok)
+{
+	t_token	*ptr;
+
+	ptr = *tok;
+	if (ptr->type == HERE_DOC || ptr->type == RED_INPUT)
+	{
+		cmd->in = g_lobal->all_fd[(*hd)++];
+	}
+	else if (ptr->type == RED_OUTPUT || ptr->type == RED_OUTPUT_APP)
+	{
+		cmd->out = g_lobal->all_fd[(*hd)++];
+	}
+	skip_redir(&ptr);
+	*tok = ptr;
+}
+
 void	fill_cmd(t_command *cmd, int arg_count, t_token	**tok)
 {
 	t_token	*ptr;
@@ -86,24 +112,14 @@ void	fill_cmd(t_command *cmd, int arg_count, t_token	**tok)
 	cmd->args = ft_calloc(sizeof(char *), arg_count + 1);
 	while (ptr && ptr->type != PIPE)
 	{
-		if (ptr->type == WORD || ptr->type == DOUBLE_QUOTES || ptr->type == SINGLE_QUOTES)
-		{
+		if (ptr->type == WORD || ptr->type == DOUBLE_QUOTES
+			|| ptr->type == SINGLE_QUOTES)
 			cmd->args[i++] = concate_string(&ptr);
-		}
-		else if (ptr->type == HERE_DOC || ptr->type == RED_INPUT || ptr->type == RED_OUTPUT || ptr->type == RED_OUTPUT_APP)
-		{
-			if (ptr->type == HERE_DOC || ptr->type == RED_INPUT)
-			{
-				cmd->in = g_lobal->all_fd[hd++];
-			}
-			else if (ptr->type == RED_OUTPUT || ptr->type == RED_OUTPUT_APP)
-			{	cmd->out = g_lobal->all_fd[hd++];
-			}skip_redir(&ptr);
-		}
+		else if (ptr->type == HERE_DOC || ptr->type == RED_INPUT
+			|| ptr->type == RED_OUTPUT || ptr->type == RED_OUTPUT_APP)
+			norm_fill_cmd(cmd, &hd, &ptr);
 		else if (ptr->type == SPACE_TK)
-		{
 			ptr = ptr->next;
-		}
 	}
 	*tok = ptr;
 }

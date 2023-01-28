@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 19:11:28 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/01/28 06:35:12 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/01/28 14:20:53 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,15 +28,13 @@ char	**get_paths(void)
 
 int	is_directory(char *cmd, int flag)
 {
-	int	i;
-	struct stat _path;
+	int			i;
+	struct stat	_path;
 
 	i = 0;
 	stat(cmd, &_path);
 	if (*cmd == '\0')
-	{
-		return(set_status(127));
-	}
+		return (set_status(127));
 	while (cmd[i])
 	{
 		if (cmd[i] == '/')
@@ -99,6 +97,7 @@ int	is_builtin(char *cmd)
 	else
 		return (1);
 }
+
 void	print_error(char *cmd, char *error)
 {
 	ft_putstr_fd(get_val_value("PS1"), 2);
@@ -108,11 +107,38 @@ void	print_error(char *cmd, char *error)
 	ft_putstr_fd(error, 2);
 	ft_putstr_fd("\n", 2);
 }
-void	_execute(t_element *ptr)
+
+void	execute_cmd(t_element *ptr)
 {
 	pid_t	pid;
 	int		status;
-	
+
+	if (is_directory(ptr->command->cmd, 0) == 1)
+	{
+		pid = fork();
+		if (pid == 0)
+		{	
+			if (g_lobal->hd_sig == 1)
+			{
+				printf("mtav\n");
+				exit(set_status(1));
+			}
+			signal(SIGINT, handler);
+			if (execve(get_abs_path(get_paths(), ptr->command->cmd),
+					ptr->command->args, get_arr_env(g_lobal->env)) == -1)
+				exit(set_status(127));
+		}
+		else
+			hd_wait(&status, &pid);
+	}
+	else if (set_status(is_directory(ptr->command->cmd, 1)) > 125)
+	{
+		print_error(ptr->command->cmd, strerror(errno));
+	}
+}
+
+void	_execute(t_element *ptr)
+{
 	if (!ptr->command || !ptr->command->args || !ptr->command->args[0])
 		return ;
 	if (ptr->command->cmd[0] == '\0')
@@ -121,36 +147,12 @@ void	_execute(t_element *ptr)
 		set_status(127);
 		return ;
 	}
-	// signal(SIGINT, SIG_IGN);
-	// signal(SIGQUIT, SIG_IGN);
-				signal(SIGINT, SIG_IGN);
-				signal(SIGQUIT, handle_quit);
-	// signal_call(2);
+	signal(SIGINT, SIG_IGN);
+	signal(SIGQUIT, handle_quit);
 	if (is_builtin(ptr->command->cmd) == 0)
 		run_builtin(&ptr);
 	else
-	{
-		if (is_directory(ptr->command->cmd, 0) == 1){
-			pid = fork();
-			if (pid == 0)
-			{	
-				if (g_lobal->hd_sig == 1)
-				{
-					printf("mtav\n");
-					exit(set_status(1));
-				}
-				signal(SIGINT, handler);
-				if (execve(get_abs_path(get_paths(), ptr->command->cmd), ptr->command->args, get_arr_env(g_lobal->env)) == -1)
-					exit(set_status(127));
-			}
-			else
-				hd_wait(&status, &pid);
-		}
-		else if (set_status(is_directory(ptr->command->cmd, 1)) > 125)
-		{
-			print_error(ptr->command->cmd, strerror(errno));
-		}
-	}
+		execute_cmd(ptr);
 }
 
 void	single_execution(t_element *ptr)
@@ -179,29 +181,30 @@ void	execution(void)
 		pipe_execution(ptr);
 }
 
-void pipe_execution(t_element *ptr)
+void	pipe_execution(t_element *ptr)
 {
 	int	(*pipes)[2];
 	int	pip_count;
 	int	i;
 	int	counter;
 	int	status;
-	
+
 	pip_count = pipe_count(ptr) - 1;
 	pipes = malloc(sizeof(*pipes) * pip_count);
-	if(!pipes)
+	if (!pipes)
 		return ;
 	i = -1;
 	while (++i < pip_count)
 	{
-		if (pipe(pipes[i]) == -1) {
-            perror("pipe failed");
-            exit(1);
-        }
+		if (pipe(pipes[i]) == -1)
+		{
+			perror("pipe failed");
+			exit(1);
+		}
 	}
 	i = 0;
 	counter = do_pipe_execute(ptr, pipes, pip_count);
-	while(i < counter)
+	while (i < counter)
 	{
 		wait(&status);
 		i++;
@@ -215,9 +218,9 @@ int	do_pipe_execute(t_element *ptr, int (*pipes)[2], int pip_count)
 {
 	int		i;
 	pid_t	pid;
-	
+
 	i = 0;
-	while(ptr != NULL)
+	while (ptr != NULL)
 	{
 		if (!ptr->command->args)
 			ptr = ptr->next;
@@ -250,7 +253,8 @@ int	do_pipe_execute(t_element *ptr, int (*pipes)[2], int pip_count)
 			}
 			if (is_builtin(ptr->command->cmd) == 0)
 				run_builtin(&ptr);
-			else if (execve(get_abs_path(get_paths(), ptr->command->cmd), ptr->command->args, g_lobal->real_env) == -1)
+			else if (execve(get_abs_path(get_paths(), ptr->command->cmd),
+					ptr->command->args, g_lobal->real_env) == -1)
 			{
 				close_all_pipes(pipes, pip_count);
 				exit(set_status(127));
@@ -263,14 +267,14 @@ int	do_pipe_execute(t_element *ptr, int (*pipes)[2], int pip_count)
 	return (i);
 }
 
-int pipe_count(t_element *ptr)
+int	pipe_count(t_element *ptr)
 {
-	int count;
+	int			count;
 	t_element	*pptr;
 
 	count = 0;
 	pptr = ptr;
-	while(pptr)
+	while (pptr)
 	{
 		count++;
 		pptr = pptr->next;
@@ -292,14 +296,14 @@ void	close_all_pipes(int pips[][2], int pip)
 
 int	pipe_or_redir_input(t_command *command, int (*pipes)[2], int i)
 {
-	if(command->in == g_lobal->all_fd[0] || command->in == 0)
+	if (command->in == g_lobal->all_fd[0] || command->in == 0)
 		return (pipes[i - 1][0]);
 	return (command->in);
 }
 
 int	pipe_or_redir_out(t_command *command, int (*pipes)[2], int i)
 {
-	if(command->out == g_lobal->all_fd[1] || command->out == 1)
+	if (command->out == g_lobal->all_fd[1] || command->out == 1)
 		return (pipes[i][1]);
 	return (command->out);
 }

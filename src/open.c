@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 18:02:33 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/01/21 20:13:00 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/01/28 14:22:04 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	open_file(char *file, int flag)
 		g_lobal->all_fd[g_lobal->fd_index]
 			= open(file, O_WRONLY | O_APPEND | O_CREAT, 0644);
 	if (g_lobal->all_fd[g_lobal->fd_index] < 0)
-		return (ft_putstr_fd("minishell : ", 2), ft_putstr_fd(strerror(errno), 2), 1);
+		return (print_error("", strerror(errno)), 1);
 	g_lobal->fd_index++;
 	return (0);
 }

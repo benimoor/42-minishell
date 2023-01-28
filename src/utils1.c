@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 17:49:11 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/01/26 19:43:46 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/01/28 13:02:12 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ int	set_status(int status)
 	while (ptr && ptr->val_name && ptr->val_name[0] != '?')
 		ptr = ptr->next;
 	if (ptr && ptr->val_name && ptr->val_name[0] == '?')
-	{	free(ptr->val_value);
+	{
+		free(ptr->val_value);
 		ptr->val_value = ft_itoa(status);
 		return (status);
 	}

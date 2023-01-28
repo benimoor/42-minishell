@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 18:21:19 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/01/28 06:58:29 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/01/28 14:17:59 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ void	signal_call(int i)
 	}
 	if (i == 2)
 	{
+		g_lobal->hd_sig = 1;
 		signal(SIGQUIT, SIG_IGN);
 		signal(SIGINT, SIG_DFL);
 	}

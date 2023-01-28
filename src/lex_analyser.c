@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 18:00:05 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/01/28 00:46:16 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/01/28 14:18:20 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ int	analyser_part1(t_token **token)
 	t_token	*ptr;
 
 	ptr = *token;
-	
 	if (ptr && ptr->type == HERE_DOC && hd_maker(&ptr) == -1)
 	{
 		return (set_status(1));
