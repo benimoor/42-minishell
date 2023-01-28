@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 19:11:28 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/01/28 05:12:06 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/01/28 06:35:12 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,11 @@ void	_execute(t_element *ptr)
 		set_status(127);
 		return ;
 	}
-	signal_call(3);
+	// signal(SIGINT, SIG_IGN);
+	// signal(SIGQUIT, SIG_IGN);
+				signal(SIGINT, SIG_IGN);
+				signal(SIGQUIT, handle_quit);
+	// signal_call(2);
 	if (is_builtin(ptr->command->cmd) == 0)
 		run_builtin(&ptr);
 	else
@@ -130,6 +134,7 @@ void	_execute(t_element *ptr)
 			pid = fork();
 			if (pid == 0)
 			{	
+				signal(SIGINT, handler);
 				if (execve(get_abs_path(get_paths(), ptr->command->cmd), ptr->command->args, get_arr_env(g_lobal->env)) == -1)
 					exit(set_status(127));
 			}

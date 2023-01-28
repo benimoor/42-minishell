@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 17:42:37 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/01/28 04:25:41 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/01/28 06:22:49 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ int	mshloop(struct termios *gago, char *cmd_line, int status)
 			{
 				make_struct();
 				execution();
+				// printf("%d\n", SIGQUIT);
 			}
 			free(cmd_line);
 			destroy_struct();

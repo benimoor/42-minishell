@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/08 16:33:14 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/01/28 04:16:58 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/01/28 06:57:43 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ typedef struct s_global
 	int			all_fd[OPEN_MAX];
 	int			hd_count;
 	int			signal;
+	int			hd_sig;
 }				t_global;
 
 extern t_global					*g_lobal;
@@ -105,6 +106,7 @@ void			check_shlvl(t_env **env);
 //SINGALS.c
 void			handler(int signal);
 void			signal_call(int i);
+void			handle_quit(int i);
 //////////////////////////////////////////////////////////////////////////////
 //UTILS
 //utils1.c
