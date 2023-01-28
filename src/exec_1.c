@@ -134,6 +134,11 @@ void	_execute(t_element *ptr)
 			pid = fork();
 			if (pid == 0)
 			{	
+				if (g_lobal->hd_sig == 1)
+				{
+					printf("mtav\n");
+					exit(set_status(1));
+				}
 				signal(SIGINT, handler);
 				if (execve(get_abs_path(get_paths(), ptr->command->cmd), ptr->command->args, get_arr_env(g_lobal->env)) == -1)
 					exit(set_status(127));

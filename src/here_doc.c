@@ -43,17 +43,22 @@ int	hd_maker(t_token **token)
 void	norm_make_doc(char *name, char *doc, int flag, int file)
 {
 	char	*line;
+	char	*fl;
 	
 	(void)name;
+	fl = ft_strdup("");
 	while (1)
 	{
 		line = readline("> ");
-		if (!line || g_lobal->hd_sig == 1)
+		if (!line)
+		{
+			put_in_file(fl, file, flag, ft_strlen(fl));
 			exit(set_status(1));
+		}
 		else if (ft_strcmp(doc, line) != 0)
 		{
 			line = ft_free_strjoin(line, "\n");
-			put_in_file(line, file, flag, ft_strlen(line));
+			fl = ft_free_strjoin(fl, line);
 			free(line);
 		}
 		else if (ft_strcmp(doc, line) == 0)
@@ -62,6 +67,8 @@ void	norm_make_doc(char *name, char *doc, int flag, int file)
 			break ;
 		}
 	}
+	put_in_file(fl, file, flag, ft_strlen(fl));
+	free(fl);
 	close(file);
 	exit(0);
 }
