@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 18:05:55 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/01/29 09:38:49 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/01/29 17:02:12 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,8 @@ void	make_doc(char *doc, int flag)
 	else
 		hd_wait(&status, &pid);
 	close(file);
+	if (get_status() == 130)
+		g_lobal->hd_sig = 130;
 	g_lobal->all_fd[g_lobal->fd_index++] = open(name, O_RDONLY);
 	free(name);
 }

@@ -7,7 +7,7 @@ void	run_builtin(t_element **ptr)
 
 	elem = *ptr;
 	if (ft_strcmp(elem->command->args[0], "echo") == 0)
-		built_in_echo(elem);
+		set_status(built_in_echo(elem));
 	else if (ft_strcmp(elem->command->args[0], "cd") == 0)
 		built_in_cd(elem);
 	else if (ft_strcmp(elem->command->args[0], "pwd") == 0)
