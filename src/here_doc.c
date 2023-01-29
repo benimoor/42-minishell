@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 18:05:55 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/01/28 14:30:31 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/01/29 09:38:49 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,46 +102,4 @@ void	make_doc(char *doc, int flag)
 	close(file);
 	g_lobal->all_fd[g_lobal->fd_index++] = open(name, O_RDONLY);
 	free(name);
-}
-
-char	*make_doc_name(t_token **token, int *flag)
-{
-	char	*res;
-	t_token	*ptr;
-	int		f;
-
-	ptr = *token;
-	while (ptr && ptr->type != SPACE_TK && ptr->type != PIPE
-		&& ptr->type != RED_INPUT && ptr->type != RED_OUTPUT
-		&& ptr->type != RED_OUTPUT_APP && ptr->type != HERE_DOC)
-	{
-		if (ptr->type == DOUBLE_QUOTES || ptr->type == SINGLE_QUOTES)
-		{
-			*flag = 1;
-			break ;
-		}
-		ptr = ptr->next;
-	}
-	if (ptr && (ptr->type == DOUBLE_QUOTES || ptr->type == SINGLE_QUOTES))
-	{
-		f = ptr->type;
-		if (ptr->next && ptr->next->type == f)
-		{
-			ptr = ptr->next;
-			if (!ptr->next || (ptr->next && (ptr->next->type == SPACE_TK
-						|| ptr->next->type == PIPE)))
-				return (ft_strdup(""));
-		}
-	}
-	res = concate_string(token);
-	if (!*res)
-	{
-		if (*token && ((*token)->type == RED_INPUT
-				|| (*token)->type == RED_OUTPUT
-				|| (*token)->type == RED_OUTPUT_APP))
-				(*token) = (*token)->next;
-		return (NULL);
-	}
-	*token = ptr;
-	return (res);
 }

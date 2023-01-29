@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 17:49:11 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/01/28 13:02:12 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/01/29 10:01:02 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,20 +64,46 @@ char	*ft_free_strjoin(char *s1, char *s2)
 		while (s2[f_index])
 			new_str[s_index++] = s2[f_index++];
 	new_str[s_index] = '\0';
-	if (s1)
+	if (s1 && new_str)
 		free(s1);
 	return (new_str);
+}
+
+char	*resolve_var_line(char *line, int *i)
+{
+	char	*tmp;
+
+	if (!line[*i + 1] || line[*i + 1] == ' ')
+	{
+		tmp = ft_substr(line, *i, 2);
+		if (!line[*i + 1])
+			(*i)++;
+		else
+			(*i) += 2;
+		return (tmp);
+	}
+	else
+		return (get_env_value(g_lobal->env, line, i));
+}
+
+char	*append_to_result(char *result, char *line, int start, int end)
+{
+	char	*tmp;
+
+	tmp = ft_substr(line, start, end - start);
+	result = ft_free_strjoin(result, tmp);
+	free(tmp);
+	return (result);
 }
 
 char	*remake_var_line(char *line, int len)
 {
 	int		i;
 	int		j;
-	char	*tmp;
-	char	*str;
+	char	*result;
 
 	i = 0;
-	str = ft_strdup("");
+	result = ft_strdup("");
 	while (line[i] && i < len)
 	{
 		if (line[i] != '$' && i < len)
@@ -85,26 +111,12 @@ char	*remake_var_line(char *line, int len)
 			j = i;
 			while (line[i] && line[i] != '$' && i < len)
 				i++;
-			tmp = ft_substr(line, j, i);
-			str = ft_free_strjoin(str, tmp);
-			free(tmp);
-		}
-		if (line[i] == '$' && (!line[i + 1] || line[i + 1] == ' '))
-		{
-			tmp = ft_substr(line, i, 2);
-			str = ft_free_strjoin(str, tmp);
-			free(tmp);
-			if (!line[i + 1])
-				i++;
-			else
-				i += 2;
+			result = append_to_result(result, line, j, i);
 		}
 		else if (line[i] == '$' && i < len)
 		{
-			tmp = get_env_value(g_lobal->env, line, &i);
-			str = ft_free_strjoin(str, tmp);
-			free(tmp);
+			result = ft_free_strjoin(result, resolve_var_line(line, &i));
 		}
 	}
-	return (str);
+	return (result);
 }
