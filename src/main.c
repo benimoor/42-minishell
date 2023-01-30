@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 17:42:37 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/01/29 17:01:07 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/01/30 07:56:02 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ int	mshloop(struct termios *gago, char *cmd_line, int status)
 
 	while (1)
 	{
-		g_lobal->hd_sig = 0;
 		if (tcsetattr(0, TCSANOW, gago) < 0)
 			ft_putstr_fd("Error\n", 2);
 		signal_call(1);
@@ -40,7 +39,7 @@ int	mshloop(struct termios *gago, char *cmd_line, int status)
 			add_history(cmd_line);
 			g_lobal->tokens = lexer(cmd_line);
 			status = lex_analyser(g_lobal->tokens);
-			if (status == 0 && g_lobal->hd_sig == 0)
+			if (status == 0 && g_lobal->hd_sig != 130)
 			{
 				make_struct();
 				execution();

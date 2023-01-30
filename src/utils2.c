@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 18:48:25 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/01/29 10:20:52 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/01/30 07:53:12 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ char	*get_env_value(t_env *env, char *str, int *i)
 		return (get_dollar());
 	}
 	while (str[j] && str[j] != ' ' && str[j] != '\0' && str[j] != '\''
-		&& str[j] != '"' && str[j] != '\n' && str[j] != '$')
+		&& str[j] != '"' && str[j] != '\n' && str[j] != '$' && str[j] != '=')
 		j++;
 	tmp = ft_substr(str, a, (j - (*i) - 1));
 	*i = j;

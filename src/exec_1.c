@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 19:11:28 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/01/28 14:20:53 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/01/30 07:55:19 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,11 +118,6 @@ void	execute_cmd(t_element *ptr)
 		pid = fork();
 		if (pid == 0)
 		{	
-			if (g_lobal->hd_sig == 1)
-			{
-				printf("mtav\n");
-				exit(set_status(1));
-			}
 			signal(SIGINT, handler);
 			if (execve(get_abs_path(get_paths(), ptr->command->cmd),
 					ptr->command->args, get_arr_env(g_lobal->env)) == -1)
