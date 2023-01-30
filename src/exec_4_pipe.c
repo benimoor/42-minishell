@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 23:01:48 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/01/31 00:48:52 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/01/31 01:36:27 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,16 @@ void	do_pipe_execute_child_execution(t_element *ptr,
 void	do_pipe_execute_child(t_element *ptr,
 		int (*pipes)[2], int pip_count, int i)
 {
+	if (ptr->command->in == -1 || ptr->command->out == -1)
+	{
+		print_error(ptr->command->cmd, "No such file or directory");
+		exit(set_status(1));
+	}
+	dup2(ptr->command->in, STDIN_FILENO);
+	dup2(ptr->command->out, STDOUT_FILENO);
 	do_pipe_execute_child_pipes(ptr, pipes, pip_count, i);
 	do_pipe_execute_child_execution(ptr, pipes, pip_count);
+	dup2(ptr->command->in, STDIN_FILENO);
 }
 
 int	do_pipe_execute(t_element *ptr, int (*pipes)[2], int pip_count)

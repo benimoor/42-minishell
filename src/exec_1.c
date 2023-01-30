@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 19:11:28 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/01/30 20:42:37 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/01/31 01:49:29 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,14 @@ int	is_directory(char *cmd, int flag)
 	stat(cmd, &_path);
 	if (*cmd == '\0')
 		return (set_status(127));
+	if (access(cmd, F_OK | X_OK) == 0)
+	{
+		return (set_status(126));
+	}
+	if (S_ISDIR(_path.st_mode) == 1)
+	{
+		return (set_status(126));
+	}
 	while (cmd[i])
 	{
 		if (cmd[i] == '/')
@@ -43,12 +51,6 @@ int	is_directory(char *cmd, int flag)
 		if (cmd[i] == '\0' && !flag && i != 1)
 			return (1);
 	}
-	if (S_ISDIR(_path.st_mode) == 1)
-	{
-		return (set_status(126));
-	}
-	else if (access(cmd, X_OK | R_OK) == 0)
-		return (1);
 	return (set_status(127));
 }
 

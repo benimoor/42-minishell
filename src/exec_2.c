@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 20:41:04 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/01/31 00:50:25 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/01/31 01:44:00 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,11 @@ void	_execute(t_element *ptr)
 	}
 	signal(SIGINT, SIG_IGN);
 	signal(SIGQUIT, handle_quit);
-	if (is_builtin(ptr->command->cmd) == 0)
+	if (ptr->command->in == -1)
+		print_error(ptr->command->cmd, "No such file or directory");
+	else if (ptr->command->out == -1)
+		print_error(ptr->command->cmd, "Is a directory");
+	else if (is_builtin(ptr->command->cmd) == 0)
 		run_builtin(&ptr);
 	else
 		execute_cmd(ptr);
@@ -121,7 +125,6 @@ void	pipe_execution(t_element *ptr)
 	while (++i < counter)
 		wait(&status);
 	close_all_pipes(pipes, pip_count);
-	close_all_elem_fd();
 	free(pipes);
 	set_status(WEXITSTATUS(status));
 }

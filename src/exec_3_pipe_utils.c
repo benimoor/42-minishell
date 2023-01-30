@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 20:49:07 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/01/31 00:26:22 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/01/31 01:33:03 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,5 @@ int	pipe_or_redir_out(t_command *command, int (*pipes)[2], int i)
 		close(command->out);
 		return (pipes[i][1]);
 	}
-	close(pipes[i][1]);
 	return (command->out);
 }

@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 18:02:33 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/01/28 14:22:04 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/01/31 01:23:50 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,6 @@ int	open_file(char *file, int flag)
 	else
 		g_lobal->all_fd[g_lobal->fd_index]
 			= open(file, O_WRONLY | O_APPEND | O_CREAT, 0644);
-	if (g_lobal->all_fd[g_lobal->fd_index] < 0)
-		return (print_error("", strerror(errno)), 1);
 	g_lobal->fd_index++;
 	return (0);
 }
