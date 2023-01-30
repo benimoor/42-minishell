@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 20:49:07 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/01/30 23:01:30 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/01/31 00:26:22 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,13 +42,21 @@ void	close_all_pipes(int pips[][2], int pip)
 int	pipe_or_redir_input(t_command *command, int (*pipes)[2], int i)
 {
 	if (command->in == g_lobal->all_fd[0] || command->in == 0)
+	{
+		close(command->in);
 		return (pipes[i - 1][0]);
+	}
+	close(pipes[i - 1][0]);
 	return (command->in);
 }
 
 int	pipe_or_redir_out(t_command *command, int (*pipes)[2], int i)
 {
 	if (command->out == g_lobal->all_fd[1] || command->out == 1)
+	{
+		close(command->out);
 		return (pipes[i][1]);
+	}
+	close(pipes[i][1]);
 	return (command->out);
 }

@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 18:05:55 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/01/29 17:02:12 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/01/31 00:10:41 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ void	put_in_file_and_close(char *fl, int file, int flag, int len)
 	put_in_file(fl, file, flag, len);
 	free(fl);
 	close(file);
-	exit(0);
 }
 
 void	norm_make_doc(char *name, char *doc, int flag, int file)
@@ -77,6 +76,7 @@ void	norm_make_doc(char *name, char *doc, int flag, int file)
 			break ;
 	}
 	put_in_file_and_close(fl, file, flag, ft_strlen(fl));
+	exit(0);
 }
 
 void	make_doc(char *doc, int flag)
@@ -87,19 +87,20 @@ void	make_doc(char *doc, int flag)
 	int		file;
 
 	name = get_doc_name();
-	file = open(name, O_TRUNC | O_WRONLY | O_APPEND | O_CREAT | O_RDONLY, 0644);
-	pid = fork();
 	signal (SIGQUIT, SIG_IGN);
 	signal (SIGINT, SIG_IGN);
+	pid = fork();
 	if (pid == 0)
 	{
+		file = open(name, O_TRUNC | O_WRONLY | O_APPEND
+				| O_CREAT | O_RDONLY, 0644);
 		signal_call(2);
 		norm_make_doc(name, doc, flag, file);
+		close(file);
 		exit(0);
 	}
 	else
 		hd_wait(&status, &pid);
-	close(file);
 	if (get_status() == 130)
 		g_lobal->hd_sig = 130;
 	g_lobal->all_fd[g_lobal->fd_index++] = open(name, O_RDONLY);

@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 18:48:25 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/01/30 23:10:16 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/01/30 23:57:03 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	no_var(char *line, size_t len)
 
 char	*return_spec_value(char *str, int a, int *i)
 {
-	if ((ft_isdigit(str[a]) == 1 && str[a] != '0') || str[a] == '$')
+	if (ft_isdigit(str[a]) == 1 && str[a] != '0')
 	{
 		*i = a + 1;
 		return (ft_strdup(""));

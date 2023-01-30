@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 20:41:04 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/01/30 20:57:20 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/01/31 00:50:25 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,23 @@ void	execution(void)
 		pipe_execution(ptr);
 }
 
+// void	close_all_elem_fd(void)
+// {
+// 	t_element *elem;
+
+// 	elem = g_lobal->elem;
+// 	while(elem)
+// 	{
+// 		if(elem->command)
+// 		{
+// 			close(elem->command->in);
+// 			close(elem->command->out);
+// 			close(elem->command->err);
+// 		}
+// 		elem = elem->next;
+// 	}
+// }
+
 void	pipe_execution(t_element *ptr)
 {
 	int	(*pipes)[2];
@@ -104,6 +121,7 @@ void	pipe_execution(t_element *ptr)
 	while (++i < counter)
 		wait(&status);
 	close_all_pipes(pipes, pip_count);
+	close_all_elem_fd();
 	free(pipes);
 	set_status(WEXITSTATUS(status));
 }
