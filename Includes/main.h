@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/08 16:33:14 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/01/28 13:00:36 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/01/30 20:52:41 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ typedef struct s_global
 	t_element	*elem;
 	char		**real_env;
 	int			fd_index;
-	int			all_fd[FOPEN_MAX];
+	int			all_fd[OPEN_MAX];
 	int			hd_count;
 	int			signal;
 	int			hd_sig;
@@ -194,6 +194,18 @@ int				pipe_or_redir_out(t_command *command, int (*pipes)[2], int i);
 void			close_all_pipes(int pips[][2], int pip);
 char			*get_val_value(char *key);
 void			print_error(char *cmd, char *error);
+char			*get_abs_path(char **paths, char *cmd);
+char			**get_paths(void);
+int				is_builtin(char *cmd);
+char			*append_to_result(char *result, char *line, int start, int end);
+char			*resolve_var_line(char *line, int *i);
+
+
+
+
+
+
+
 
 ////////////////////////////////////////////////////////////////////////////
 //built_ins

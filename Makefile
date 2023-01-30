@@ -9,7 +9,7 @@ CC = cc
 OBJS_DIR = objs
 SRCS_DIR = src
 FLAGS =  -I $(INC) -I./readline/readline_out/include# -Wall -Wextra -Werror #-ggdb #-fsanitize=address
-LINKERS = -L./readline/readline_out/lib -lreadline -ltinfo -L$(LIBFT) -lft
+LINKERS = -L./readline/readline_out/lib -lreadline  -L$(LIBFT) -lft
 DIRS = $(shell find $(SRCS_DIR) -type d)
 
 OBJS_DIRS = $(patsubst src/%, objs/%, $(DIRS))

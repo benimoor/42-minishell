@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 18:48:25 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/01/30 08:08:49 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/01/30 23:10:16 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,48 +28,28 @@ int	no_var(char *line, size_t len)
 	return (0);
 }
 
-int	hd_count_check(t_token *token)
+char	*return_spec_value(char *str, int a, int *i)
 {
-	int		count;
-	int		flag;
-	t_token	*ptr;
-
-	count = 0;
-	ptr = token;
-	while (ptr)
+	if ((ft_isdigit(str[a]) == 1 && str[a] != '0') || str[a] == '$')
 	{
-		if (ptr && ptr->type == HERE_DOC)
-		{
-			if (ptr->next && ptr->next->type == SPACE_TK)
-				ptr = ptr->next->next;
-			else
-				ptr = ptr->next;
-			if (!ptr)
-				return (count);
-			else if (ptr->type == WORD)
-			{
-				count++;
-				ptr = ptr->next;
-			}
-			else if (ptr->type == DOUBLE_QUOTES || ptr->type == SINGLE_QUOTES)
-			{
-				flag = ptr->type;
-				ptr = ptr->next;
-				while (ptr && ptr->type != flag)
-					ptr = ptr->next;
-				if (!ptr)
-					return (count);
-				else
-					count++;
-				ptr = ptr->next;
-			}
-			else
-				return (count);
-		}
-		else
-			ptr = ptr->next;
+		*i = a + 1;
+		return (ft_strdup(""));
 	}
-	return (count);
+	else if (str[a] == '$')
+	{
+		*i = a + 1;
+		return (get_dollar());
+	}
+	return (NULL);
+}
+
+int	spec_symbol(char *str, int j)
+{
+	if (str[j] && str[j] != ' ' && str[j] != '\0' && str[j] != '\''
+		&& str[j] != '"' && str[j] != '\n' && str[j] != '$' && str[j] != '='
+		&& str[j] != '\\' && str[j] != '/')
+		return (0);
+	return (1);
 }
 
 char	*get_env_value(t_env *env, char *str, int *i)
@@ -82,18 +62,9 @@ char	*get_env_value(t_env *env, char *str, int *i)
 	a = *i + 1;
 	j = a;
 	ptr = env;
-	if (ft_isdigit(str[a]) == 1 && str[a] != '0')
-	{
-		*i = a + 1;
-		return (ft_strdup(""));
-	}
-	else if (str[a] == '$')
-	{
-		*i = a + 1;
-		return (get_dollar());
-	}
-	while (str[j] && str[j] != ' ' && str[j] != '\0' && str[j] != '\''
-		&& str[j] != '"' && str[j] != '\n' && str[j] != '$' && str[j] != '=' && str[j] != '\\' && str[j] != '/')
+	if ((ft_isdigit(str[a]) == 1 && str[a] != '0') || str[a] == '$')
+		return (return_spec_value(str, a, i));
+	while (spec_symbol(str, j) == 0)
 		j++;
 	tmp = ft_substr(str, a, (j - (*i) - 1));
 	*i = j;

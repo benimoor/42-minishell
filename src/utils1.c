@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 17:49:11 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/01/29 10:01:02 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/01/30 20:46:40 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,30 +93,5 @@ char	*append_to_result(char *result, char *line, int start, int end)
 	tmp = ft_substr(line, start, end - start);
 	result = ft_free_strjoin(result, tmp);
 	free(tmp);
-	return (result);
-}
-
-char	*remake_var_line(char *line, int len)
-{
-	int		i;
-	int		j;
-	char	*result;
-
-	i = 0;
-	result = ft_strdup("");
-	while (line[i] && i < len)
-	{
-		if (line[i] != '$' && i < len)
-		{
-			j = i;
-			while (line[i] && line[i] != '$' && i < len)
-				i++;
-			result = append_to_result(result, line, j, i);
-		}
-		else if (line[i] == '$' && i < len)
-		{
-			result = ft_free_strjoin(result, resolve_var_line(line, &i));
-		}
-	}
 	return (result);
 }
