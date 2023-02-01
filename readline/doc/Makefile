@@ -22,7 +22,7 @@ topdir = ..
 srcdir = .
 
 
-prefix = 
+prefix = /home/kali/Desktop/minish/readline/readline_out
 
 datarootdir = ${prefix}/share
 

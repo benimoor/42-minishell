@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 19:11:28 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/01/31 01:49:29 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/02/01 02:32:06 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,41 +26,40 @@ char	**get_paths(void)
 	return (NULL);
 }
 
-int	is_directory(char *cmd, int flag)
+int	is_directory(char *cmd)
 {
 	int			i;
 	struct stat	_path;
 
 	i = 0;
-	stat(cmd, &_path);
-	if (*cmd == '\0')
+	if (!cmd || cmd[0] == '\0')
 		return (set_status(127));
-	if (access(cmd, F_OK | X_OK) == 0)
-	{
-		return (set_status(126));
-	}
-	if (S_ISDIR(_path.st_mode) == 1)
-	{
-		return (set_status(126));
-	}
+	stat(cmd, &_path);
 	while (cmd[i])
 	{
 		if (cmd[i] == '/')
-			break ;
+		{
+			if (S_ISDIR(_path.st_mode) == 1 && access(cmd, F_OK | X_OK) == 0)
+				return (set_status(126));
+			else if (S_ISDIR(_path.st_mode) != 1)
+				return (set_status(126), 125);
+			else
+				return (0);
+		}
 		i++;
-		if (cmd[i] == '\0' && !flag && i != 1)
-			return (1);
 	}
-	return (set_status(127));
+	return (0);
 }
 
 char	*get_abs_path(char **paths, char *cmd)
 {
-	int		i;
-	char	*temp;
+	int			i;
+	char		*temp;
+	struct stat	_path;
 
+	stat(cmd, &_path);
 	i = 0;
-	if (access(cmd, X_OK | R_OK) == 0)
+	if (access(cmd, F_OK && X_OK && R_OK) == 0 && S_ISDIR(_path.st_mode) != 1)
 		return (cmd);
 	while (paths[i])
 	{

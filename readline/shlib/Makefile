@@ -52,7 +52,7 @@ SHELL = /bin/sh
 host_os = linux-gnu
 host_vendor = pc
 
-prefix = 
+prefix = /home/kali/Desktop/minish/readline/readline_out
 exec_prefix = ${prefix}
 includedir = ${prefix}/include
 bindir = ${exec_prefix}/bin

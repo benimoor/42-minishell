@@ -21,7 +21,7 @@ RL_LIBRARY_VERSION = 8.2
 SHELL = /bin/sh
 RM = rm -f
 
-prefix = 
+prefix = /home/kali/Desktop/minish/readline/readline_out
 exec_prefix = ${prefix}
 
 datarootdir = ${prefix}/share

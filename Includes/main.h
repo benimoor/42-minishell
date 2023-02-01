@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/08 16:33:14 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/01/30 20:52:41 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/02/01 02:04:45 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ typedef struct s_global
 	t_element	*elem;
 	char		**real_env;
 	int			fd_index;
-	int			all_fd[OPEN_MAX];
+	int			all_fd[FOPEN_MAX];
 	int			hd_count;
 	int			signal;
 	int			hd_sig;
@@ -182,7 +182,7 @@ void			close_fd(void);
 void			free_cmd(t_element **elem);
 void			free_token(t_token	**token);
 ////////////////////////////////////////////////////////////////////////////
-int				is_directory(char *cmd, int flag);
+int				is_directory(char *cmd);
 void			execution(void);
 void			makefd(void);
 int				pipe_count(t_element *ptr);

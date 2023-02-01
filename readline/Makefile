@@ -48,7 +48,7 @@ MV = mv
 
 SHELL = /bin/sh
 
-prefix = 
+prefix = /home/kali/Desktop/minish/readline/readline_out
 exec_prefix = ${prefix}
 
 datarootdir = ${prefix}/share

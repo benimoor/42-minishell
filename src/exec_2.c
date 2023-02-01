@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 20:41:04 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/01/31 01:44:00 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/02/01 02:27:21 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,23 +17,26 @@ void	execute_cmd(t_element *ptr)
 	pid_t	pid;
 	int		status;
 
-	if (is_directory(ptr->command->cmd, 0) == 1)
+	if (set_status(is_directory(ptr->command->cmd)) >= 125)
 	{
-		pid = fork();
-		if (pid == 0)
-		{	
-			signal(SIGINT, handler);
-			if (execve(get_abs_path(get_paths(), ptr->command->cmd),
-					ptr->command->args, get_arr_env(g_lobal->env)) == -1)
-				exit(set_status(127));
-		}
+		if (get_status() == 125)
+			print_error(ptr->command->cmd, "\nNo such file or directory\n");
 		else
-			hd_wait(&status, &pid);
+			print_error(ptr->command->cmd, "\nIs a directory\n");
+		return ;
 	}
-	else if (set_status(is_directory(ptr->command->cmd, 1)) > 125)
-	{
-		print_error(ptr->command->cmd, strerror(errno));
+	pid = fork();
+	if (pid == 0)
+	{	
+		signal(SIGINT, handler);
+		if (execve(get_abs_path(get_paths(), ptr->command->cmd),
+				ptr->command->args, get_arr_env(g_lobal->env)) == -1)
+		{
+			exit(set_status(127));
+		}
 	}
+	else
+		hd_wait(&status, &pid);
 }
 
 void	_execute(t_element *ptr)
@@ -48,6 +51,8 @@ void	_execute(t_element *ptr)
 	}
 	signal(SIGINT, SIG_IGN);
 	signal(SIGQUIT, handle_quit);
+	if (ptr->command->in == -1 || ptr->command->out == -1)
+		set_status(1);
 	if (ptr->command->in == -1)
 		print_error(ptr->command->cmd, "No such file or directory");
 	else if (ptr->command->out == -1)
