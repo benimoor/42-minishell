@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 19:11:28 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/02/01 02:32:06 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/02/01 03:28:41 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	is_directory(char *cmd)
 		{
 			if (S_ISDIR(_path.st_mode) == 1 && access(cmd, F_OK | X_OK) == 0)
 				return (set_status(126));
-			else if (S_ISDIR(_path.st_mode) != 1)
+			else if (S_ISDIR(_path.st_mode) != 1 && i != 0 && cmd[i - 1] != '.')
 				return (set_status(126), 125);
 			else
 				return (0);
@@ -74,7 +74,7 @@ char	*get_abs_path(char **paths, char *cmd)
 		return (temp);
 	else
 	{
-		printf("%s : %s: command not found\n", get_val_value("PS1"), cmd);
+		print_error(cmd, "command not found\n");
 	}
 	return (NULL);
 }
