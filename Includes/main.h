@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/08 16:33:14 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/02/02 23:40:37 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/02/03 00:11:29 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -209,6 +209,8 @@ char			*resolve_var_line(char *line, int *i);
 
 ////////////////////////////////////////////////////////////////////////////
 //built_ins
+void			cd_many_arg_err(void);
+void			print_cd_err(char *path);
 int				built_in_echo(t_element *elem);
 void			built_in_cd(t_element *elem);
 void			built_in_pwd(t_element *elem);
@@ -220,7 +222,8 @@ void			print_exported_env(t_env *env);
 t_env			*ft_lstnew_env(char *val_name, char *val_value, int hidden);
 void			ft_lstadd_back_env(t_env **lst, t_env *new);
 void			swap_nodes_2(t_env *prev, t_env *start, t_env *last);
-void			swap_nodes(t_env *prev, t_env *start, t_env *last);
+void			swap_nodes(t_env *prev, t_env *start,
+					t_env *last, t_env ***head);
 void			sort_env(t_env	**head);
 t_env			*env_exist(t_env *head, char *name);
 int				export_with_equal(char *name,

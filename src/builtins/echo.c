@@ -21,6 +21,18 @@ void	ft_putstr_fd(char *s, int fd)
 		write(fd, &s[i], 1);
 }
 
+int	flag_checking(char *command)
+{
+	int	j;
+
+	j = 1;
+	while (command[j] == 'n')
+		j++;
+	if (command[j] == '\0')
+		return (1);
+	return (0);
+}
+
 int	built_in_echo(t_element *elem)
 {
 	char	**command;
@@ -30,12 +42,13 @@ int	built_in_echo(t_element *elem)
 	i = 1;
 	command = elem->command->args;
 	flag = 0;
-	if ((command[1]) && (ft_strcmp(command[i], "-n") == 0))
+	if ((command[i]) && (command[i][0] == '-'))
 	{
-		flag = 1;
-		i++;
-		if (!command[i])
-			return (0);
+		while (flag_checking(command[i]) == 1)
+		{
+			flag = 1;
+			i++;
+		}
 	}
 	while (command[i])
 	{
@@ -46,5 +59,5 @@ int	built_in_echo(t_element *elem)
 	}
 	if (!flag)
 		ft_putstr_fd("\n", 1);
-	return (0);
+	return (set_status(0));
 }

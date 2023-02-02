@@ -2,30 +2,10 @@
 
 void	exit_error_log(char *command)
 {
-	ft_putstr_fd("Say - Hello myalmo >: exit: ", 2);
+	ft_putstr_fd(get_val_value("PS1"), 2);
+	ft_putstr_fd(": exit: ", 2);
 	ft_putstr_fd(command, 2);
 	ft_putstr_fd(": numeric argument required\n", 2);
-}
-
-int	set_shell_status(int n)
-{
-	t_env	*sh_s;
-	char	*num;
-
-	num = ft_itoa(n);
-	sh_s = env_exist(g_lobal->env, "?");
-	if (sh_s != NULL)
-		sh_s->val_value = num;
-	else
-	{
-		sh_s = malloc(sizeof(t_env));
-		sh_s->val_name = "?";
-		sh_s->val_value = num;
-		sh_s->hidden = 1;
-		sh_s->next = NULL;
-		ft_lstadd_back_env(&g_lobal->env, sh_s);
-	}
-	return (0);
 }
 
 int	exit_parsing(char *command)
@@ -45,33 +25,43 @@ int	exit_parsing(char *command)
 	return (1);
 }
 
-int	do_exit(char *command)
+void	do_exit_2(char *command)
 {
 	unsigned int	n;
 	int				num;
 
+	num = ft_atoi(command);
+	n = num;
+	if (n > 255)
+		n = n % 256;
+	else if (n < 0)
+	{
+		while (n < 0)
+			n = n + 256;
+	}
+	set_status(n);
+	ft_putstr_fd("exit\n", 1);
+	exit (0);
+}
+
+void	do_exit(char *command)
+{
 	if (!exit_parsing(command) || ft_strlen(command) >= 20)
 	{
-		set_shell_status(2);
+		set_status(2);
+		ft_putstr_fd("exit\n", 1);
 		exit_error_log(command);
-		return (0);
+		exit (0);
 	}
 	else if (ft_strlen(command) >= 20)
 	{
-		set_shell_status(2);
+		set_status(2);
+		ft_putstr_fd("exit\n", 1);
 		exit_error_log(command);
 		exit(0);
 	}
 	else
-	{
-		num = ft_atoi(command);
-		n = num;
-		if (n > 255)
-			n = n % 256;
-		set_shell_status(n);
-		exit (0);
-	}
-	return (0);
+		do_exit_2(command);
 }
 
 int	built_in_exit(t_element *elem)
@@ -82,14 +72,17 @@ int	built_in_exit(t_element *elem)
 	command = elem->command->args;
 	if (!command[1])
 	{
-		set_shell_status(0);
+		set_status(0);
+		ft_putstr_fd("exit\n", 1);
 		exit(0);
 	}
 	else if (command[2])
 	{
-		ft_putstr_fd("Say - Hello myalmo >: exit: too many arguments\n", 2);
-		set_shell_status(1);
-		return (0);
+		ft_putstr_fd("exit\n", 1);
+		ft_putstr_fd(get_val_value("PS1"), 2);
+		ft_putstr_fd(": exit: too many arguments\n", 2);
+		set_status(1);
+		exit (0);
 	}
 	else if (command[1])
 		do_exit(command[1]);

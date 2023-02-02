@@ -2,7 +2,8 @@
 
 void	export_error_log(char *command)
 {
-	ft_putstr_fd("Say - Hello myalmo >: export: `", 2);
+	ft_putstr_fd(get_val_value("PS1"), 2);
+	ft_putstr_fd(": export: `", 2);
 	ft_putstr_fd(command, 2);
 	ft_putstr_fd("': not a valid identifier\n", 2);
 }
@@ -24,10 +25,10 @@ int	command_parsing(char *command)
 				return (1);
 		}
 		if (command[i] == '+' && command[i + 1] == '=')
-			i++;
+			return (1);
 		if (command [i] == '=')
-			i++;
-		if ((ft_isalpha(command[i]) == 1)
+			return (1);
+		if ((ft_isalpha(command[i]) == 1) || (command[i] == ' ')
 			|| (ft_isdigit(command[i]) == 1) || (command[i] == '_'))
 			i++;
 		else
@@ -43,10 +44,13 @@ void	print_exported_env(t_env *env)
 	ptr = env;
 	while (ptr)
 	{
-		if (ptr->val_value != NULL)
-			printf("declare -x %s=\"%s\"\n", ptr->val_name, ptr->val_value);
-		else
-			printf("declare -x %s\n", ptr->val_name);
+		if (ptr->hidden != 1)
+		{
+			if (ptr->val_value != NULL)
+				printf("declare -x %s=\"%s\"\n", ptr->val_name, ptr->val_value);
+			else
+				printf("declare -x %s\n", ptr->val_name);
+		}
 		ptr = ptr->next;
 	}
 }
@@ -81,4 +85,3 @@ t_env	*ft_lstnew_env(char *val_name, char *val_value, int hidden)
 	new->next = NULL;
 	return (new);
 }
-

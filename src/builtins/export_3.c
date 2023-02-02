@@ -20,7 +20,7 @@ void	swap_nodes_2(t_env *prev, t_env *start, t_env *last)
 	}
 }
 
-void	swap_nodes(t_env *prev, t_env *start, t_env *last)
+void	swap_nodes(t_env *prev, t_env *start, t_env *last, t_env ***head)
 {
 	if (!prev)
 	{
@@ -28,11 +28,13 @@ void	swap_nodes(t_env *prev, t_env *start, t_env *last)
 		{
 			start->next = last->next;
 			last->next = start;
+			**head = last;
 		}
 		else
 		{
 			start->next = NULL;
 			last->next = start;
+			**head = last;
 		}
 	}
 	else if (prev)
@@ -46,24 +48,23 @@ void	sort_env(t_env	**head)
 	t_env	*start;
 	t_env	*prev;
 	int		bouble;
-	int		i;
 
 	start = *head;
 	prev = NULL;
-	i = 0;
 	bouble = 0;
 	while (start->next)
 	{
 		if (ft_strcmp(start->val_name, start->next->val_name) > 0)
 		{
-			swap_nodes(prev, start, start->next);
+			swap_nodes(prev, start, start->next, &head);
 			bouble = 1;
 		}
 		prev = start;
 		if (start->next)
 			start = start->next;
-		if (!(start->next) && bouble == 1)
+		if (!(start->next) && (bouble == 1))
 		{
+			prev = NULL;
 			bouble = 0;
 			start = *head;
 		}
@@ -103,5 +104,7 @@ int	export_with_equal(char *name, char *command, t_env *new_node, t_env *node)
 		node->val_value = ft_strjoin(node->val_value, get_val(command));
 	else
 		node->val_value = get_val(command);
+	if (node)
+		node->hidden = 0;
 	return (1);
 }
