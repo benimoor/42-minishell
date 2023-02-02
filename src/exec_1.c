@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 19:11:28 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/02/01 03:28:41 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/02/02 23:53:33 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ char	*get_abs_path(char **paths, char *cmd)
 
 	stat(cmd, &_path);
 	i = 0;
-	if (access(cmd, F_OK && X_OK && R_OK) == 0 && S_ISDIR(_path.st_mode) != 1)
+	if (access(cmd, F_OK | X_OK | R_OK) == 0 && S_ISDIR(_path.st_mode) != 1)
 		return (cmd);
 	while (paths[i])
 	{
@@ -74,7 +74,7 @@ char	*get_abs_path(char **paths, char *cmd)
 		return (temp);
 	else
 	{
-		print_error(cmd, "command not found\n");
+		print_error(cmd, "command not found");
 	}
 	return (NULL);
 }
