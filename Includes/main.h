@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/08 16:33:14 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/02/03 00:11:29 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/02/03 09:29:45 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ typedef struct s_global
 	t_element	*elem;
 	char		**real_env;
 	int			fd_index;
-	int			all_fd[OPEN_MAX];
+	int			all_fd[FOPEN_MAX];
 	int			hd_count;
 	int			signal;
 	int			hd_sig;
@@ -231,6 +231,6 @@ int				export_with_equal(char *name,
 int				built_in_unset(t_element *elem);
 int				built_in_exit(t_element *elem);
 void			run_builtin(t_element **ptr);
-void			print_env(char **eenv);
+void			print_env(t_env *eenvv);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 20:41:04 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/02/01 03:23:17 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/02/03 10:34:16 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,10 +119,11 @@ void	pipe_execution(t_element *ptr)
 	i = -1;
 	while (++i < pip_count)
 	{
-		if (pipe(pipes[i]) == -1)
+		if (pip_count > 1015 || pipe(pipes[i]) == -1)
 		{
-			perror("pipe failed");
-			exit(1);
+			print_error("pipe failed", "Too many open files");
+			set_status(1);
+			return ;
 		}
 	}
 	i = -1;

@@ -27,6 +27,7 @@ uname -v = #1 SMP PREEMPT_DYNAMIC Debian 6.0.10-2kali1 (2022-12-06)
 /usr/bin/oslevel       = unknown
 /bin/universe          = unknown
 
+PATH: /home/kali/.local/bin/
 PATH: /usr/local/sbin/
 PATH: /usr/sbin/
 PATH: /sbin/
@@ -1937,7 +1938,7 @@ configure:7048: $? = 0
 configure:7048: result: yes
 configure:7074: checking for tgetent
 configure:7074: gcc -o conftest -g -O2   conftest.c  >&5
-/usr/bin/ld: /tmp/ccKURXMY.o: in function `main':
+/usr/bin/ld: /tmp/ccABKR0f.o: in function `main':
 /home/kali/Desktop/minish/readline/conftest.c:123: undefined reference to `tgetent'
 collect2: error: ld returned 1 exit status
 configure:7074: $? = 1
@@ -2232,7 +2233,7 @@ configure:7414: $? = 0
 configure:7414: result: yes
 configure:7421: checking for mbscasecmp
 configure:7421: gcc -o conftest -g -O2   conftest.c  >&5
-/usr/bin/ld: /tmp/ccqar6r0.o: in function `main':
+/usr/bin/ld: /tmp/ccO9Kibl.o: in function `main':
 /home/kali/Desktop/minish/readline/conftest.c:128: undefined reference to `mbscasecmp'
 collect2: error: ld returned 1 exit status
 configure:7421: $? = 1
@@ -2371,7 +2372,7 @@ configure: failed program was:
 configure:7421: result: no
 configure:7428: checking for mbscmp
 configure:7428: gcc -o conftest -g -O2   conftest.c  >&5
-/usr/bin/ld: /tmp/ccBPYmKA.o: in function `main':
+/usr/bin/ld: /tmp/ccls2CZH.o: in function `main':
 /home/kali/Desktop/minish/readline/conftest.c:128: undefined reference to `mbscmp'
 collect2: error: ld returned 1 exit status
 configure:7428: $? = 1
@@ -2518,7 +2519,7 @@ configure:7442: $? = 0
 configure:7442: result: yes
 configure:7450: checking for mbschr
 configure:7450: gcc -o conftest -g -O2   conftest.c  >&5
-/usr/bin/ld: /tmp/cc78MNVT.o: in function `main':
+/usr/bin/ld: /tmp/ccM4mg7Y.o: in function `main':
 /home/kali/Desktop/minish/readline/conftest.c:130: undefined reference to `mbschr'
 collect2: error: ld returned 1 exit status
 configure:7450: $? = 1

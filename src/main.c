@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 17:42:37 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/01/30 07:56:02 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/02/03 10:34:43 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,5 +68,6 @@ int	main(int argc, char **argv, char **_env)
 	rl_catch_signals = 0;
 	if (tcgetattr(0, &gago) < 0)
 		ft_putstr_fd("Error\n", 2);
-	return (mshloop(&gago, cmd_line, status));
+	mshloop(&gago, cmd_line, status);
+	return (0);
 }

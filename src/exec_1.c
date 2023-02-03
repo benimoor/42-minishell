@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 19:11:28 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/02/02 23:53:33 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/02/03 09:23:35 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	**get_paths(void)
 	ptr = g_lobal->env;
 	while (ptr)
 	{
-		if (ft_strcmp(ptr->val_name, "PATH") == 0)
+		if (ft_strcmp(ptr->val_name, "PATH") == 0 && ptr->val_value)
 			return (ft_split(ptr->val_value, ':'));
 		ptr = ptr->next;
 	}

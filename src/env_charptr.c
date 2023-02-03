@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 20:00:36 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/01/28 14:21:42 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/02/03 09:29:18 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,14 +69,18 @@ char	**get_arr_env(t_env *l_env)
 	return (env);
 }
 
-void	print_env(char **eenv)
+void	print_env(t_env *eenvv)
 {
-	int	i;
+	int		i;
+	char	**eenv;
 
 	i = 0;
+	eenv = get_arr_env(eenvv);
 	while (eenv[i])
 	{
 		printf("%s\n", eenv[i]);
+		free(eenv[i]);
 		i++;
 	}
+	free(eenv);
 }

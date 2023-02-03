@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 23:01:48 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/02/01 03:28:35 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/02/03 10:04:51 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,14 +46,17 @@ void	do_pipe_execute_child_execution(t_element *ptr,
 		print_error(ptr->command->cmd, "command not found");
 		exit(set_status(127));
 	}
+	if (is_builtin(ptr->command->cmd) == 0)
+	{
+		run_builtin(&ptr);
+		exit(get_status());
+	}
 	paths = get_abs_path(get_paths(), ptr->command->cmd);
 	if (!paths)
 	{
 		close_all_pipes(pipes, pip_count);
 		exit(set_status(127));
 	}
-	if (is_builtin(ptr->command->cmd) == 0)
-		run_builtin(&ptr);
 	else if (execve(paths, ptr->command->args, g_lobal->real_env) == -1)
 	{
 		close_all_pipes(pipes, pip_count);

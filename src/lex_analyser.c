@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 18:00:05 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/01/28 14:18:20 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/02/03 09:24:41 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ int	lex_analyser(t_token *token)
 		return (set_status(258), ft_putstr_fd("PIPE Error\n", 2), 1);
 	if (hd_count_check(ptr) > 16)
 		return (ft_putstr_fd("maximum here-document count exceeded\n", 2), 1);
-	while (ptr)
+	while (ptr && g_lobal->hd_sig != 130)
 	{
 		if (ptr && analyser_part1(&ptr) != 0)
 		{

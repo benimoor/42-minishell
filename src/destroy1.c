@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 18:44:40 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/01/29 17:28:59 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/02/03 10:36:20 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,31 @@ void	free_elem(t_element	**elem)
 	free(*elem);
 }
 
+void	set__env(void)
+{
+	t_element	*ptr;
+	t_env		*envptr;
+	int			i;
+
+	i = 0;
+	envptr = g_lobal->env;
+	ptr = g_lobal->elem;
+	while (ptr && ptr->next)
+		ptr = ptr->next;
+	if (ptr && ptr->command && ptr->command->args)
+	{
+		while (ptr->command->args[i])
+			i++;
+		add_env_value("_", ptr->command->args[i - 1], 0, &envptr);
+	}
+}
+
 void	destroy_struct(void)
 {
 	free_token(&(g_lobal)->tokens);
+	set__env();
 	free_elem(&(g_lobal)->elem);
 	close_fd();
 	g_lobal->hd_sig = 0;
+	printf("\033[0m");
 }

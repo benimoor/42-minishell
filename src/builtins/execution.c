@@ -13,7 +13,7 @@ void	run_builtin(t_element **ptr)
 	else if (ft_strcmp(elem->command->args[0], "pwd") == 0)
 		built_in_pwd(elem);
 	else if (ft_strcmp(elem->command->args[0], "env") == 0)
-		print_env_list(g_lobal->env);
+		print_env(g_lobal->env);
 	else if (ft_strcmp(elem->command->args[0], "export") == 0)
 		built_in_export(elem);
 	else if (ft_strcmp(elem->command->args[0], "unset") == 0)
