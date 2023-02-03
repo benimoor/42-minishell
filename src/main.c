@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 17:42:37 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/02/03 10:34:43 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/02/03 11:34:19 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,6 @@ void	makefd(void)
 
 int	mshloop(struct termios *gago, char *cmd_line, int status)
 {
-	int	a;
-
 	while (1)
 	{
 		if (tcsetattr(0, TCSANOW, gago) < 0)

@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 18:11:25 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/01/26 22:04:24 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/02/03 11:34:50 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,7 @@ void	make_struct(void)
 t_command	*make_cmd(t_token **tok)
 {
 	t_command	*cmd;
-	int			i;
 
-	i = 0;
 	cmd = ft_calloc(sizeof(t_command), 1);
 	cmd->in = g_lobal->all_fd[0];
 	cmd->out = g_lobal->all_fd[1];
