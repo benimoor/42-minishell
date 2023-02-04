@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 17:49:11 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/02/04 10:43:26 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/02/04 11:28:28 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	empty_line(char *line)
 	{
 		while (line[i] == ' ' || line[i] == '\t')
 			i++;
-		if (i == ft_strlen(line))
+		if ((size_t)i == ft_strlen(line))
 			return (2);
 	}
 	return (0);
