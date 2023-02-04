@@ -1,11 +1,14 @@
 #include "../Includes/main.h"
 
-void	built_in_pwd(t_element *elem)
+void	built_in_pwd(void)
 {
 	char	pwd[PATH_MAX];
+	char	*pwd_ptr;
 
 	getcwd(pwd, sizeof(pwd));
-	ft_putstr_fd(pwd, 1);
+	pwd_ptr = ft_strdup(pwd);
+	ft_putstr_fd(pwd_ptr, 1);
 	ft_putstr_fd("\n", 1);
+	free (pwd_ptr);
 	set_status(0);
 }

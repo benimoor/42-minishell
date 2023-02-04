@@ -27,11 +27,11 @@ int	exit_parsing(char *command)
 
 void	do_exit_2(char *command)
 {
-	unsigned int	n;
-	int				num;
+	int	n;
+	// int				num;
 
-	num = ft_atoi(command);
-	n = num;
+	// num = ft_atoi(command);
+	n = ft_atoi(command);
 	if (n > 255)
 		n = n % 256;
 	else if (n < 0)
@@ -67,7 +67,6 @@ void	do_exit(char *command)
 int	built_in_exit(t_element *elem)
 {
 	char	**command;
-	int		num;
 
 	command = elem->command->args;
 	if (!command[1])

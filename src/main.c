@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 17:42:37 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/02/03 11:34:19 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/02/04 11:24:18 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,9 @@ int	mshloop(struct termios *gago, char *cmd_line, int status)
 		cmd_line = readline(get_val_value("PS1"));
 		if (cmd_line == NULL)
 			return (ft_putstr_fd("exit\n", 1), 1);
-		if (empty_line(cmd_line) != 1)
+		add_history(cmd_line);
+		if (empty_line(cmd_line) == 0)
 		{
-			add_history(cmd_line);
 			g_lobal->tokens = lexer(cmd_line);
 			status = lex_analyser(g_lobal->tokens);
 			if (status == 0 && g_lobal->hd_sig != 130)

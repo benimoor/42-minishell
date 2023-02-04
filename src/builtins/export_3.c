@@ -101,9 +101,13 @@ int	export_with_equal(char *name, char *command, t_env *new_node, t_env *node)
 		ft_lstadd_back_env(&g_lobal->env, new_node);
 	}
 	else if ((ft_strchr(command, '=') - 1)[0] == '+')
+	{
 		node->val_value = ft_strjoin(node->val_value, get_val(command));
+	}
 	else
+	{
 		node->val_value = get_val(command);
+	}
 	if (node)
 		node->hidden = 0;
 	return (1);

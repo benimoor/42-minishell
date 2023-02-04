@@ -23,6 +23,7 @@ int	export_with_arg(char *command)
 	if (command_parsing(command) == 0)
 	{
 		export_error_log(command);
+		free(new_node);
 		return (1);
 	}
 	if (ft_strchr(command, '=') != NULL)
@@ -31,10 +32,8 @@ int	export_with_arg(char *command)
 			return (1);
 	}
 	else
-	{
 		if (!node)
 			export_without_equal(name, new_node);
-	}
 	return (0);
 }
 
@@ -56,9 +55,7 @@ int	do_export(char **command, t_env	*head)
 		while (command[++i])
 		{
 			if (export_with_arg(command[i]) == 1)
-			{
 				return (set_status(1));
-			}
 		}
 	}
 	return (set_status(0));

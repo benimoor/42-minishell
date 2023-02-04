@@ -213,7 +213,7 @@ void			cd_many_arg_err(void);
 void			print_cd_err(char *path);
 int				built_in_echo(t_element *elem);
 void			built_in_cd(t_element *elem);
-void			built_in_pwd(t_element *elem);
+void			built_in_pwd();
 void			built_in_export(t_element *elem);
 //export built-in
 void			export_error_log(char *command);

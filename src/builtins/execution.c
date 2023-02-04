@@ -3,7 +3,6 @@
 void	run_builtin(t_element **ptr)
 {
 	t_element	*elem;
-	int			i;
 
 	elem = *ptr;
 	if (ft_strcmp(elem->command->args[0], "echo") == 0)
@@ -11,7 +10,7 @@ void	run_builtin(t_element **ptr)
 	else if (ft_strcmp(elem->command->args[0], "cd") == 0)
 		built_in_cd(elem);
 	else if (ft_strcmp(elem->command->args[0], "pwd") == 0)
-		built_in_pwd(elem);
+		built_in_pwd();
 	else if (ft_strcmp(elem->command->args[0], "env") == 0)
 		print_env(g_lobal->env);
 	else if (ft_strcmp(elem->command->args[0], "export") == 0)
