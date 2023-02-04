@@ -4,7 +4,7 @@ void	export_without_equal(char *name, t_env *new_node)
 {
 	new_node->val_name = get_val_name(name);
 	new_node->val_value = NULL;
-	new_node->hidden = 2;
+	new_node->hidden = 1;
 	new_node->next = NULL;
 	ft_lstadd_back_env(&g_lobal->env, new_node);
 }

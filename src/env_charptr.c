@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 20:00:36 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/02/04 11:25:18 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/02/04 13:15:08 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	get_env_var_count(t_env *l_env)
 	int	l;
 
 	l = 0;
-	while (l_env->next)
+	while (l_env)
 	{
 		if (l_env->hidden == 0)
 			l++;
@@ -57,7 +57,7 @@ char	**get_arr_env(t_env *l_env)
 	l = get_env_var_count(l_env);
 	env = ft_calloc((l + 1), sizeof(char *));
 	i = 0;
-	while (i <= l)
+	while (i < l)
 	{
 		if (l_env->hidden == 0)
 		{
