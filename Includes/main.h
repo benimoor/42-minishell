@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/08 16:33:14 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/02/03 09:29:45 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/02/06 18:53:23 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,13 +78,13 @@ typedef struct s_global
 	t_element	*elem;
 	char		**real_env;
 	int			fd_index;
-	int			all_fd[FOPEN_MAX];
+	int			all_fd[OPEN_MAX];
 	int			hd_count;
 	int			signal;
 	int			hd_sig;
 }				t_global;
 
-extern t_global					*g_lobal;
+extern t_global				*g_lobal;
 
 //////////////////////////////////////////////////////////////////////////////
 //ENV
@@ -199,22 +199,16 @@ char			**get_paths(void);
 int				is_builtin(char *cmd);
 char			*append_to_result(char *result, char *line, int start, int end);
 char			*resolve_var_line(char *line, int *i);
-
-
-
-
-
-
-
-
 ////////////////////////////////////////////////////////////////////////////
 //built_ins
 void			cd_many_arg_err(void);
 void			print_cd_err(char *path);
 int				built_in_echo(t_element *elem);
 void			built_in_cd(t_element *elem);
-void			built_in_pwd();
+void			built_in_pwd(void);
 void			built_in_export(t_element *elem);
+void			free_exported_env(t_env **head);
+int				export_free(t_env *new_node, char *name);
 //export built-in
 void			export_error_log(char *command);
 int				command_parsing(char *command);
@@ -224,7 +218,7 @@ void			ft_lstadd_back_env(t_env **lst, t_env *new);
 void			swap_nodes_2(t_env *prev, t_env *start, t_env *last);
 void			swap_nodes(t_env *prev, t_env *start,
 					t_env *last, t_env ***head);
-void			sort_env(t_env	**head);
+t_env			*sort_env(t_env	**head);
 t_env			*env_exist(t_env *head, char *name);
 int				export_with_equal(char *name,
 					char *command, t_env *new_node, t_env *node);

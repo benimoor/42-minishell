@@ -1,6 +1,17 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cd.c                                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/02/06 18:48:41 by ergrigor          #+#    #+#             */
+/*   Updated: 2023/02/06 20:08:40 by ergrigor         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../Includes/main.h"
 // if $PWD or $OLDPWD is unseted there will be hidden in env after cd
-
 int	save_old_pwd(char *old_pwd_value)
 {
 	char	new_pwd[PATH_MAX];

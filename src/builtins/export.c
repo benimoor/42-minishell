@@ -1,10 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   export.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/02/06 18:49:06 by ergrigor          #+#    #+#             */
+/*   Updated: 2023/02/06 18:50:34 by ergrigor         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../Includes/main.h"
 
 void	export_without_equal(char *name, t_env *new_node)
 {
 	new_node->val_name = get_val_name(name);
 	new_node->val_value = NULL;
-	new_node->hidden = 1;
+	new_node->hidden = 2;
 	new_node->next = NULL;
 	ft_lstadd_back_env(&g_lobal->env, new_node);
 }
@@ -23,13 +35,12 @@ int	export_with_arg(char *command)
 	if (command_parsing(command) == 0)
 	{
 		export_error_log(command);
-		free(new_node);
-		return (1);
+		return (export_free(new_node, name));
 	}
 	if (ft_strchr(command, '=') != NULL)
 	{
 		if (!export_with_equal(name, command, new_node, node))
-			return (1);
+			return (export_free(new_node, name));
 	}
 	else
 		if (!node)
@@ -46,8 +57,8 @@ int	do_export(char **command, t_env	*head)
 	tmp = NULL;
 	if (!command[1])
 	{
-		sort_env(&head);
 		tmp = head;
+		tmp = sort_env(&tmp);
 		print_exported_env(tmp);
 	}
 	else
@@ -58,6 +69,8 @@ int	do_export(char **command, t_env	*head)
 				return (set_status(1));
 		}
 	}
+	if (tmp)
+		free_exported_env(&tmp);
 	return (set_status(0));
 }
 
@@ -65,7 +78,6 @@ void	built_in_export(t_element *elem)
 {
 	char	**command;
 	t_env	*head;
-	t_env	*node;
 	t_env	*tmp;
 
 	tmp = g_lobal->env;
@@ -73,12 +85,10 @@ void	built_in_export(t_element *elem)
 	tmp = tmp->next;
 	while (tmp)
 	{
-		node = ft_lstnew_env(tmp->val_name, tmp->val_value, tmp->hidden);
-		ft_lstadd_back_env(&head, node);
+		ft_lstadd_back_env(&head, ft_lstnew_env(tmp->val_name,
+				tmp->val_value, tmp->hidden));
 		tmp = tmp->next;
 	}
-	node->next = NULL;
 	command = elem->command->args;
-	if (do_export(command, head) == 1)
-		return ;
+	do_export(command, head);
 }

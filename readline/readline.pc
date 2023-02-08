@@ -1,4 +1,4 @@
-prefix=/home/kali/Desktop/minish/readline/readline_out
+prefix=/home/mkhit/Desktop/dev_daveinc/minishell/readline/readline_out
 exec_prefix=${prefix}
 libdir=${exec_prefix}/lib
 includedir=${prefix}/include

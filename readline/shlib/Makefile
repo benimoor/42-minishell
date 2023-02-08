@@ -32,7 +32,7 @@ datarootdir = ${prefix}/share
 srcdir = .
 VPATH = ..
 topdir = ..
-BUILD_DIR = /home/kali/Desktop/minish/readline
+BUILD_DIR = /home/mkhit/Desktop/dev_daveinc/minishell/readline
 
 INSTALL = /usr/bin/install -c
 INSTALL_PROGRAM = ${INSTALL}
@@ -52,7 +52,7 @@ SHELL = /bin/sh
 host_os = linux-gnu
 host_vendor = pc
 
-prefix = /home/kali/Desktop/minish/readline/readline_out
+prefix = /home/mkhit/Desktop/dev_daveinc/minishell/readline/readline_out
 exec_prefix = ${prefix}
 includedir = ${prefix}/include
 bindir = ${exec_prefix}/bin

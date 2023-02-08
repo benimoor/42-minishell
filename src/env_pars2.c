@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 17:45:50 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/02/03 10:02:47 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/02/06 18:49:57 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ void	add_env_value(char *name, char *val, int hidden, t_env **env_new)
 	{
 		if (ft_strcmp(name, ptr->val_name) == 0)
 		{
-
 			if (ptr->val_value)
 				free(ptr->val_value);
 			ptr->val_value = ft_strdup(val);

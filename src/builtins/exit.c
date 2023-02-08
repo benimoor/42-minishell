@@ -1,67 +1,75 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exit.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/02/06 18:48:51 by ergrigor          #+#    #+#             */
+/*   Updated: 2023/02/06 20:10:09 by ergrigor         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "main.h"
 
-void	exit_error_log(char *command)
-{
-	ft_putstr_fd(get_val_value("PS1"), 2);
-	ft_putstr_fd(": exit: ", 2);
-	ft_putstr_fd(command, 2);
-	ft_putstr_fd(": numeric argument required\n", 2);
-}
-
-int	exit_parsing(char *command)
+int	check_char(char *str)
 {
 	int	i;
 
 	i = 0;
-	if (command[0] == '+' || command[0] == '-')
-		i++;
-	while (command[i])
+	while (str && str[i])
 	{
-		if (ft_isdigit(command[i]))
-			i++;
-		else
-			return (0);
+		if (!(str[i] >= '0' && str[i] <= '9'))
+			return (1);
+		i++;
 	}
-	return (1);
+	return (0);
 }
 
-void	do_exit_2(char *command)
+int	check_long_num(char *str, int j, int status)
 {
-	int	n;
-	// int				num;
+	int				i;
 
-	// num = ft_atoi(command);
-	n = ft_atoi(command);
-	if (n > 255)
-		n = n % 256;
-	else if (n < 0)
+	i = -1;
+	if (check_char(str) == 1)
 	{
-		while (n < 0)
-			n = n + 256;
+		ft_putstr_fd(get_val_value("PS1: "), 2);
+		ft_putstr_fd(str, 2);
+		ft_putstr_fd(": exit: numeric argument required\n", 2);
+		exit(255);
+	}	
+	if (ft_strlen(str) >= 19
+		&& ((ft_strcmp(str, "9223372036854775807") <= 0) || \
+	(j == 1 && ft_strcmp(str, "9223372036854775808") <= 0)))
+	{
+		ft_putstr_fd(get_val_value("PS1: "), 2);
+		ft_putstr_fd(str, 2);
+		ft_putstr_fd(": exit: numeric argument required\n", 2);
+		exit(255);
 	}
-	set_status(n);
-	ft_putstr_fd("exit\n", 1);
-	exit (0);
+	else
+	{
+		exit (status);
+	}
+	return (0);
 }
 
 void	do_exit(char *command)
 {
-	if (!exit_parsing(command) || ft_strlen(command) >= 20)
+	unsigned char	gago;
+	int				k;
+
+	k = 0;
+	gago = ft_atoi(command);
+	while (*command && *command == ' ')
+		*command += 1;
+	if (*command == '-' || *command == '+')
 	{
-		set_status(2);
-		ft_putstr_fd("exit\n", 1);
-		exit_error_log(command);
-		exit (0);
+		if (*command == '-')
+			k = 1;
+		*command += 1;
 	}
-	else if (ft_strlen(command) >= 20)
-	{
-		set_status(2);
-		ft_putstr_fd("exit\n", 1);
-		exit_error_log(command);
-		exit(0);
-	}
-	else
-		do_exit_2(command);
+	check_long_num(command, k, gago);
 }
 
 int	built_in_exit(t_element *elem)
@@ -80,8 +88,7 @@ int	built_in_exit(t_element *elem)
 		ft_putstr_fd("exit\n", 1);
 		ft_putstr_fd(get_val_value("PS1"), 2);
 		ft_putstr_fd(": exit: too many arguments\n", 2);
-		set_status(1);
-		exit (0);
+		return (set_status(1));
 	}
 	else if (command[1])
 		do_exit(command[1]);
