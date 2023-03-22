@@ -3,14 +3,39 @@
 /*                                                        :::      ::::::::   */
 /*   open.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
+/*   By: ergrigor <ergrigor@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 18:02:33 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/01/31 01:23:50 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/03/22 22:49:50 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.h"
+
+int	is_correct(t_token *ptr)
+{
+	int	flag;
+
+	flag = 0;
+	while (ptr && ptr->type != SPACE_TK && ptr->type != PIPE
+		&& ptr->type != RED_INPUT && ptr->type != RED_OUTPUT
+		&& ptr->type != RED_OUTPUT_APP && ptr->type != HERE_DOC)
+	{
+		if (ptr->type == DOUBLE_QUOTES || ptr->type == SINGLE_QUOTES)
+		{
+			flag = ptr->type;
+			if (!ptr->next)
+				return (1);
+			while (ptr->next && ptr->next->type != flag)
+				ptr = ptr->next;
+			if (!ptr->next || ptr->next->type != flag)
+				return (1);
+			flag = 1;
+		}
+		ptr = ptr->next;
+	}
+	return (0);
+}
 
 int	make_open(t_token **tmp)
 {
@@ -25,6 +50,8 @@ int	make_open(t_token **tmp)
 	else
 		ptr = ptr->next;
 	*tmp = ptr;
+	if (is_correct(ptr) != 0)
+		return (ft_putstr_fd("syntax error", 2), 2);
 	file = concate_string(tmp);
 	if (!file)
 		return (1);

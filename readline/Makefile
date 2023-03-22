@@ -31,7 +31,7 @@ PACKAGE_TARNAME = readline
 srcdir = .
 
 top_srcdir = .
-BUILD_DIR = /home/mkhit/Desktop/dev_daveinc/minishell/readline
+BUILD_DIR = /Users/ergrigor/Desktop/42mini/readline
 
 INSTALL = /usr/bin/install -c
 INSTALL_PROGRAM = ${INSTALL}
@@ -48,7 +48,7 @@ MV = mv
 
 SHELL = /bin/sh
 
-prefix = /home/mkhit/Desktop/dev_daveinc/minishell/readline/readline_out
+prefix = /Users/ergrigor/Desktop/42mini/readline/readline_out
 exec_prefix = ${prefix}
 
 datarootdir = ${prefix}/share

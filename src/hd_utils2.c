@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hd_utils2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
+/*   By: ergrigor <ergrigor@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 20:51:09 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/01/29 09:39:07 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/03/22 20:55:38 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,8 +92,14 @@ char	*make_doc_name(t_token **token, int *flag)
 	{
 		if (ptr->type == DOUBLE_QUOTES || ptr->type == SINGLE_QUOTES)
 		{
+			*flag = ptr->type;
+			if (!ptr->next)
+				return (NULL);
+			while (ptr->next && ptr->next->type != *flag)
+				ptr = ptr->next;
+			if (!ptr->next || ptr->next->type != *flag)
+				return (NULL);
 			*flag = 1;
-			break ;
 		}
 		ptr = ptr->next;
 	}

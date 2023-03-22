@@ -22,7 +22,7 @@ topdir = ..
 srcdir = .
 
 
-prefix = /home/mkhit/Desktop/dev_daveinc/minishell/readline/readline_out
+prefix = /Users/ergrigor/Desktop/42mini/readline/readline_out
 
 datarootdir = ${prefix}/share
 
@@ -49,7 +49,7 @@ RM = rm -f
 INSTALL = /usr/bin/install -c
 INSTALL_DATA = ${INSTALL} -m 644
 
-BUILD_DIR = /home/mkhit/Desktop/dev_daveinc/minishell/readline
+BUILD_DIR = /Users/ergrigor/Desktop/42mini/readline
 TEXINPUTDIR = $(srcdir)
 
 MAKEINFO    = LANGUAGE= makeinfo

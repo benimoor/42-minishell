@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 18:08:06 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/02/08 19:22:23 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/01/21 00:30:35 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,21 +21,14 @@ void	concate_quot(t_token **token, char *tmp, char **res)
 	ptr = *token;
 	flag = ptr->type;
 	tmp2 = ft_strdup("");
-	while (ptr && ptr->next && ptr->next->type != flag)
+	while (ptr->next->type != flag)
 	{
 		tmp = ft_substr(ptr->next->str, 0, ptr->next->len);
 		tmp2 = ft_free_strjoin(tmp2, tmp);
 		free(tmp);
 		ptr = ptr->next;
 	}
-	if (ptr->next && ptr->next->type == flag)
-		ptr = ptr->next->next;
-	else
-	{
-		*res = 0x0;
-		g_lobal->hd_sig = 130;
-		return ;
-	}
+	ptr = ptr->next->next;
 	if (flag == DOUBLE_QUOTES)
 	{
 		tmp = remake_var_line(tmp2, ft_strlen(tmp2));

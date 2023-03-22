@@ -6,7 +6,7 @@
 /*   By: ergrigor < ergrigor@student.42yerevan.am > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 19:11:28 by ergrigor          #+#    #+#             */
-/*   Updated: 2023/02/08 19:17:05 by ergrigor         ###   ########.fr       */
+/*   Updated: 2023/02/03 09:23:35 by ergrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,11 +58,10 @@ char	*get_abs_path(char **paths, char *cmd)
 	struct stat	_path;
 
 	stat(cmd, &_path);
-	temp = 0x0;
 	i = 0;
 	if (access(cmd, F_OK | X_OK | R_OK) == 0 && S_ISDIR(_path.st_mode) != 1)
 		return (cmd);
-	while (paths && paths[i])
+	while (paths[i])
 	{
 		temp = ft_strjoin(paths[i], "/");
 		temp = ft_strjoin(temp, cmd);
@@ -71,10 +70,12 @@ char	*get_abs_path(char **paths, char *cmd)
 		free (temp);
 		i++;
 	}
-	if (temp && access(temp, X_OK | R_OK) == 0)
+	if (access(temp, X_OK | R_OK) == 0)
 		return (temp);
 	else
+	{
 		print_error(cmd, "command not found");
+	}
 	return (NULL);
 }
 
