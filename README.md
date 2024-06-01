@@ -82,4 +82,4 @@ Implementation Details
     Signal Handling: Signals such as SIGINT (Ctrl+C) are captured and handled to ensure the shell remains interactive.
 
 
-YErik Grigoryan - ergrigor@student.42yerevan.am
+Erik Grigoryan - ergrigor@student.42yerevan.am
