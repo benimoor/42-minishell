@@ -32,8 +32,6 @@ To build and run the minishell project, follow these steps:
 
     Build the project
 
-    sh
-
     make
 
 Usage
