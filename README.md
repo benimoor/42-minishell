@@ -48,27 +48,19 @@ Examples
 
     Running a command
 
-    sh
-
-minishell> ls -l
+    minishell> ls -l
 
 Using built-ins
 
-sh
-
-minishell> cd /path/to/directory
-minishell> echo "Hello, world!"
+    minishell> cd /path/to/directory
+    minishell> echo "Hello, world!"
 
 Redirections
 
-sh
-
-minishell> echo "Hello, file!" > output.txt
-minishell> cat < input.txt
+    minishell> echo "Hello, file!" > output.txt
+    minishell> cat < input.txt
 
 Pipes
-
-sh
 
     minishell> ls -l | grep minishell
 
