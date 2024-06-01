@@ -12,6 +12,15 @@
 
 #ifndef MAIN_H
 # define MAIN_H
+#include <stdio.h>
+
+#if defined(__APPLE__) && defined(__MACH__)
+    #define MAX_OPEN_FILES OPEN_MAX
+#elif defined(__linux__)
+    #define MAX_OPEN_FILES FOPEN_MAX
+#else
+    #error "Unsupported OS"
+#endif
 
 //error
 # include "error.h"
@@ -78,7 +87,7 @@ typedef struct s_global
 	t_element	*elem;
 	char		**real_env;
 	int			fd_index;
-	int			all_fd[OPEN_MAX];
+	int			all_fd[MAX_OPEN_FILES];
 	int			hd_count;
 	int			signal;
 	int			hd_sig;
