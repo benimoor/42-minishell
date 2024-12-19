@@ -32,6 +32,7 @@ To build and run the minishell project, follow these steps:
 
     Build the project
 
+    sudo apt-get install libreadline-dev
     make readline
     make
 
